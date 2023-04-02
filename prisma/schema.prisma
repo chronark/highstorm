@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id            String       @id
+  name          String
+  email         String       @unique
+  emailVerified DateTime?
+  image         String?
+  teams         Membership[]
+  createdAt     DateTime     @default(now())
+
+  teamInvitations TeamInvitation[]
+}
+
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Membership {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String
+
+  role MemberRole
+
+  @@id([userId, teamId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model Token {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Fetch token by a clerk session id
+  name      String
+  hash      String   @id
+
+  userId  String
+  expires DateTime?
+
+  permissions String
+}
+
+enum Plan {
+  DISABLED // non-personal teams can not be free and are therefore disabled
+  FREE // for new personal teams
+  PRO // No flat fee, just pay as you go
+  ENTERPRISE
+}
+
+model Team {
+  id        String   @id
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members Membership[]
+
+  plan Plan
+
+  stripeCustomerId String?   @unique
+  trialExpires     DateTime?
+
+  invitations TeamInvitation[]
+
+  // When the user deletes a team it is marked as deactivated until all billing is done
+  deactivatedAt DateTime?
+  channels      Channel[]
+  events        Event[]
+
+  @@index([slug])
+}
+
+model TeamInvitation {
+  id        String   @id
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expires   DateTime
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+
+  @@unique([teamId, userId])
+  @@index([userId])
+}
+
+model Channel {
+  id          String  @id
+  // no spaces or special characters
+  name        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teamId String
+  team   Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  events Event[]
+
+  @@unique([teamId, name])
+}
+
+model Event {
+  id String @id
+
+  time   DateTime @default(now())
+  teamId String
+  team   Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  // emoji I guess
+  icon      String?
+  // title
+  event     String
+  // optional content
+  content   String? @db.Text
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+
+  @@index([teamId])
+  @@index([channelId])
+}
