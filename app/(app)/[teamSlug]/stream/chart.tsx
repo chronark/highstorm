@@ -31,20 +31,25 @@ export const Chart: React.FC<Props> = ({ data }) => {
 
     return <Area
         autoFit={true}
-        smooth={true}
         data={series}
-        padding={[0, 40, 40, 40]}
+        smooth={true}
+        padding={[40, 40, 30, 40]}
 
         xField="time"
         yField="usage"
-        color={"#7c3aed"}
+        color="#34d399"
+        areaStyle={() => {
+            return {
+                fill: 'l(270) 0:#ffffff 1:#34d399',
+            };
+        }}
 
         xAxis={{
             tickCount: 3,
-            
+
         }}
         yAxis={{
-            tickCount: 0,
+            tickCount: 3,
             label: {
                 formatter: (v: string) =>
                     Intl.NumberFormat(undefined, { notation: "compact" }).format(Number(v)),

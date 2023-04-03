@@ -4,7 +4,7 @@ import { Event, db } from "@/prisma/db"
 import { getSession } from "@/lib/auth"
 
 import { getChannelActivity } from "@/lib/tinybird";
-import { Chart, CumulativeEventsPerday, EventsPerday } from "./charts";
+import { CumulativeEventsPerday, EventsPerday } from "./charts";
 
 export default async function IndexPage(props: {
     params: { teamSlug: string; channelName: string }
@@ -44,16 +44,16 @@ export default async function IndexPage(props: {
     return (
         <div>
 
-            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50 p-2">
-                <span className="text-neutral-600 text-sm font-medium">Events per Day</span>
+            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50">
+                <span className="text-neutral-600 text-sm font-medium p-2">Events per Day</span>
                 <div className="h-32">
 
                     <EventsPerday data={activity.data} />
                 </div>
             </div>
-            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50 p-2">
-                <span className="text-neutral-600 text-sm font-medium">Total Events</span>
-                <div className="h-32">
+            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50">
+                <span className="text-neutral-600 text-sm font-medium p-2">Total Events</span>
+                <div className="h-32 inset-x-0">
 
                     <CumulativeEventsPerday data={activity.data} />
                 </div>

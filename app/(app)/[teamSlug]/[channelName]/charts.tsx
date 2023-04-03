@@ -32,18 +32,18 @@ export const EventsPerday: React.FC<Props> = ({ data }) => {
     return <Column
         autoFit={true}
         data={series}
-        padding={[0, 40, 40, 40]}
+    padding={[40, 40, 30, 40]}
 
         xField="time"
         yField="usage"
-        color={"#14b8a6"}
+        color={"#34d399"}
 
         xAxis={{
             tickCount: 3,
-            
+
         }}
         yAxis={{
-            tickCount: 0,
+            tickCount: 3,
             label: {
                 formatter: (v: string) =>
                     Intl.NumberFormat(undefined, { notation: "compact" }).format(Number(v)),
@@ -82,18 +82,23 @@ export const CumulativeEventsPerday: React.FC<Props> = ({ data }) => {
         autoFit={true}
         data={series}
         smooth={true}
-        padding={[0, 40, 40, 40]}
+        padding={[40, 40, 30, 40]}
 
         xField="time"
         yField="usage"
-        color={"#14b8a6"}
+        color="#34d399"
+        areaStyle={() => {
+            return {
+                fill: 'l(270) 0:#ffffff 1:#34d399',
+            };
+        }}
 
         xAxis={{
             tickCount: 3,
-            
+
         }}
         yAxis={{
-            tickCount: 0,
+            tickCount: 3,
             label: {
                 formatter: (v: string) =>
                     Intl.NumberFormat(undefined, { notation: "compact" }).format(Number(v)),
