@@ -1,45 +1,69 @@
-import { Inter as FontSans } from "@next/font/google"
-
-import "@/styles/globals.css"
-import { cn } from "@/lib/utils"
-import { Analytics } from "@/components/analytics"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
-import { db } from "@/prisma/db"
-import { BarChart, CreditCard, Filter, FormInput, Hash, Keyboard, LayoutList, List, LogOut, Mail, MessageSquare, PlusCircle, Settings, User, UserPlus, Users } from "lucide-react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuCheckboxItem, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ClerkProvider, SignIn } from "@clerk/nextjs"
-import { auth } from "@clerk/nextjs/app-beta"
+import { redirect } from "next/navigation"
+import { db } from "@/prisma/db"
+import { Inter as FontSans } from "@next/font/google"
+import {
+  BarChart,
+  CreditCard,
+  Filter,
+  FormInput,
+  Hash,
+  Keyboard,
+  LayoutList,
+  List,
+  LogOut,
+  Mail,
+  MessageSquare,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react"
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
+import { getSession } from "@/lib/auth"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface RootLayoutProps {
   children: React.ReactNode
   params: { teamSlug: string }
 }
 
-export default async function RootLayout({ children, params }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootLayoutProps) {
+  const { session } = await getSession()
 
-  const { userId } = auth()
-  if (!userId) {
-    return <div className="w-screen h-screen flex items-center justify-center">
-      <SignIn />
-    </div>
+  if (!session) {
+    return redirect("/auth/sign-in")
+  }
+  const user = await db.user.findUnique({ where: { id: session.user.id } })
+  if (!user) {
+    return redirect("/auth/sign-in")
   }
   const teams = await db.team.findMany()
   const channels = await db.channel.findMany()
   return (
-
-
     <div className="flex min-h-screen flex-col">
       <div className="container flex-1">
         <div className="bg-white  transition-all dark:bg-neutral-900">
@@ -47,7 +71,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
             <aside className="pb-12">
               <div className="px-8 py-6">
                 <p className="flex items-center text-2xl font-semibold tracking-tight">
-                  Bivrost
+                  {/* Bivrost */}
                 </p>
               </div>
               <div className="space-y-4">
@@ -84,19 +108,20 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
                         </div> */}
                 <div className="px-6 py-2">
                   <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-                    Events
+                    {/* Events */}
                   </h2>
                   <div className="space-y-1">
+                    <Link href={`/${params.teamSlug}/stream`}>
 
-                    <Button
-                      variant="ghost"
-                      disabled
-                      size="sm"
-                      className="w-full justify-start"
-                    >
-                      <FormInput className="mr-2 h-4 w-4" />
-                      Stream
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                      >
+                        <FormInput className="mr-2 h-4 w-4" />
+                        Stream
+                      </Button>
+                    </Link>
                     <Button
                       variant="ghost"
                       disabled
@@ -119,14 +144,13 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
                 </div>
                 <div className="py-2">
                   <h2 className="relative px-8 text-lg font-semibold tracking-tight">
-                    Channels
+                    Events
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
                       {channels.map((channel) => (
-                        <Link href={`/${params.teamSlug}/}${channel.name}`}>
+                        <Link href={`/${params.teamSlug}/${channel.name}`}>
                           <Button
-
                             variant="ghost"
                             size="sm"
                             className="w-full justify-start font-normal"
@@ -146,14 +170,17 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
                       {teams.map((team) => (
-                        <Button
-                          variant={team.name === "Personal" ? "subtle" : "ghost"}
-                          size="sm"
-                          className="w-full justify-start font-normal"
-                        >
-                          {/* <Hash className="mr-2 h-4 w-4" /> */}
-                          {team.name}
-                        </Button>
+                        <Link href={`/${team.slug}`}>
+                          <Button
+                            variant={
+                              params.teamSlug === team.slug ? "subtle" : "ghost"
+                            }
+                            size="sm"
+                            className="w-full justify-start font-normal"
+                          >
+                            {team.name}
+                          </Button>
+                        </Link>
                       ))}
                     </div>
                   </ScrollArea>
@@ -163,9 +190,8 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
             <div className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
               <div className="h-full px-8 py-6">
                 <div className="space-between flex items-center">
-
                   <div className="ml-auto mr-4">
-                    <h3 className="text-sm font-semibold">chronark</h3>
+                    <h3 className="text-sm font-semibold">{user.name}</h3>
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -174,10 +200,9 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
                         className="relative h-10 w-10 rounded-full"
                       >
                         <Avatar>
-                          <AvatarImage
-                            src="https://github.com/chronark.png"
-                            alt="@chronark"
-                          />
+                          {user.image ? (
+                            <AvatarImage src={user.image} alt={user.name} />
+                          ) : null}
                           <AvatarFallback>SC</AvatarFallback>
                         </Avatar>
                       </Button>
@@ -255,10 +280,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
-
   )
 }

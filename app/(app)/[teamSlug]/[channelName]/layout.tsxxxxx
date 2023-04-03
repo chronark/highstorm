@@ -1,0 +1,36 @@
+"use client"
+
+import { Menubar } from "@/components/ui/menubar"
+import { NavigationMenuItem, NavigationMenu, NavigationMenuLink, navigationMenuTriggerStyle, NavigationMenuContent, NavigationMenuList } from "@/components/ui/navigation-menu"
+import Link from "next/link"
+
+
+
+
+export default function Layout(props: { params: { teamSlug: string, channelName: string }, children: React.ReactNode }) {
+
+    return <div>
+
+        <NavigationMenu>
+            <NavigationMenuList>
+
+                <NavigationMenuItem>
+                    <Link href={`/${props.params.teamSlug}/${props.params.channelName}`} passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Events
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link href={`/${props.params.teamSlug}/${props.params.channelName}/charts`} passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Charts
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+            </NavigationMenuList>
+
+        </NavigationMenu>
+        {props.children}
+    </div>
+}  

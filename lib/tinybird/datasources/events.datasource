@@ -1,0 +1,11 @@
+VERSION 1
+
+SCHEMA >
+    `id` String `json:$.id`,
+    `teamId` String `json:$.teamId`,
+    `channelId` String `json:$.channelId`,
+    `time` DateTime `json:$.time`
+    
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "teamId,channelId,time"

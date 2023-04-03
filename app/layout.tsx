@@ -1,44 +1,43 @@
-import { Inter as FontSans } from "@next/font/google"
+import { Inter } from "@next/font/google"
+import LocalFont from "@next/font/local"
 
-import "@/styles/globals.css"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@/components/analytics"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
+import "tailwindcss/tailwind.css"
 
-const fontSans = FontSans({
-    subsets: ["latin"],
-    variable: "--font-sans",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 })
 
+const calSans = LocalFont({
+  src: "../public/fonts/CalSans-SemiBold.ttf",
+  variable: "--font-calsans",
+})
 interface RootLayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={[inter.variable, calSans.variable].join(" ")}
+      >
+        <head />
+        <body className="min-h-screen bg-white  text-neutral-900 antialiased dark:bg-neutral-900 dark:text-neutral-50">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
 
-    return (
-        <>
-            <html lang="en" suppressHydrationWarning>
-                <head />
-                <body
-                    className={cn(
-                        "min-h-screen bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-900 dark:text-neutral-50",
-                        fontSans.variable
-                    )}
-                >
-
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-
-                        {children}
-
-                        <TailwindIndicator />
-                    </ThemeProvider>
-
-
-                </body>
-            </html>
-            <Analytics />
-        </>
-    )
+            <TailwindIndicator />
+          </ThemeProvider>
+        </body>
+      </html>
+      <Analytics />
+    </>
+  )
 }

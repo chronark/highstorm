@@ -1,0 +1,20 @@
+VERSION 1
+
+NODE endpoint
+SQL >
+%
+SELECT
+    count() AS count,
+    {% if defined(granularity) and granularity == "1h" %}
+        toStartOfHour(time) as time
+    {% else %} toStartOfDay(time) as time
+    {% end %}
+FROM events__v1
+
+WHERE
+    teamId = {{ String(teamId, required=True)}} AND
+    {% if defined(channelId) %}
+        channelId = {{ String(channelId, required=True) }} AND
+    {% end %}
+    time >= fromUnixTimestamp64Milli({{ Int64(since, required=True) }})
+GROUP BY time

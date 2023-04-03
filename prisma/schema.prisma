@@ -21,6 +21,36 @@ model User {
   createdAt     DateTime     @default(now())
 
   teamInvitations TeamInvitation[]
+  accounts        Account[]
+  sessions        Session[]
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  sessionToken String   @id
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 enum MemberRole {
@@ -43,6 +73,14 @@ model Membership {
   @@id([userId, teamId])
   @@index([teamId])
   @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Token {
@@ -85,6 +123,7 @@ model Team {
   deactivatedAt DateTime?
   channels      Channel[]
   events        Event[]
+  apikeys       ApiKey[]
 
   @@index([slug])
 }
@@ -127,14 +166,29 @@ model Event {
   team   Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   // emoji I guess
-  icon      String?
+  icon        String?
   // title
-  event     String
+  event       String
   // optional content
-  content   String? @db.Text
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  channelId String
+  description String? @db.Text
+  metadata    Json?
+  channel     Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId   String
 
   @@index([teamId])
   @@index([channelId])
+}
+
+model ApiKey {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  name    String
+  keyHash String @unique
+
+  @@index([teamId])
 }

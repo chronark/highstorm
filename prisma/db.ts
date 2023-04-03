@@ -1,16 +1,17 @@
-export * from "@prisma/client";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"
 
-let cachedPrisma: PrismaClient | undefined = undefined;
+export * from "@prisma/client"
 
-let prisma: PrismaClient;
+let cachedPrisma: PrismaClient | undefined = undefined
+
+let prisma: PrismaClient
 if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
+  prisma = new PrismaClient()
 } else {
   if (!cachedPrisma) {
-    cachedPrisma = new PrismaClient();
+    cachedPrisma = new PrismaClient()
   }
-  prisma = cachedPrisma;
+  prisma = cachedPrisma
 }
 
-export const db = prisma;
+export const db = prisma
