@@ -155,6 +155,9 @@ model Channel {
   team   Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
   events Event[]
 
+  //  Some custom value the user wants to track
+  valueName String?
+
   @@unique([teamId, name])
 }
 
@@ -166,14 +169,17 @@ model Event {
   team   Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   // emoji I guess
-  icon        String?
+  icon      String?
   // title
-  event       String
+  event     String
   // optional content
-  description String? @db.Text
-  metadata    Json?
-  channel     Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  channelId   String
+  content   String? @db.Text
+  metadata  Json?
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+
+  // Some custom value the user wants to track
+  value Float?
 
   @@index([teamId])
   @@index([channelId])

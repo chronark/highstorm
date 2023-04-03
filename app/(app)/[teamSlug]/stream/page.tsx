@@ -4,6 +4,7 @@ import { Event, db } from "@/prisma/db"
 import { getSession } from "@/lib/auth"
 import { getChannelActivity } from "@/lib/tinybird"
 import { Chart } from "./chart"
+import { Feed } from "@/components/feed"
 
 export default async function IndexPage(props: {
     params: { teamSlug: string }
@@ -18,7 +19,7 @@ export default async function IndexPage(props: {
     if (!team) {
         return notFound()
     }
-    const allEvents = await db.event.findMany({
+    const events= await db.event.findMany({
         where: {
             team: {
                 slug: props.params.teamSlug,
@@ -29,19 +30,7 @@ export default async function IndexPage(props: {
         },
         take: 100,
     })
-    const events: Record<
-        string,
-        Event[]
-    > = {}
-    allEvents
-        .sort((a, b) => a.time.getTime() - b.time.getTime())
-        .forEach((e) => {
-            const key = e.time.toDateString()
-            if (!events[key]) {
-                events[key] = []
-            }
-            events[key].push(e)
-        })
+   
     const activity = await getChannelActivity({
         teamId: team.id,
         since: Date.now() - 1000 * 60 * 60 * 24,
@@ -64,51 +53,10 @@ export default async function IndexPage(props: {
 
                 <Chart data={activity.data} />
             </div>
-            <div className="relative mt-4">
-                <div className="overflow-y-auto h-full">
-                    {Object.keys(events).map((day) => (
-                        <div key={day} className="relative">
-                            <div className="sticky top-0 z-10 border border-neutral-300 rounded-md bg-neutral-50 px-6 py-1 text-sm font-medium text-neutral-500">
-                                <h3>{day}</h3>
-                            </div>
-                            <ul
-                                role="list"
-                                className="relative z-0 divide-y divide-neutral-200"
-                            >
-                                {events[day].map((event) => (
-                                    <li
-                                        key={event.id}
-                                        className="relative bg-white px-4 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50"
-                                    >
-                                        <div className="flex justify-between space-x-3">
-                                            <div className="min-w-0 flex-1">
-                                                <a href="#" className="block focus:outline-none">
-                                                    <span
-                                                        className="absolute inset-0"
-                                                        aria-hidden="true"
-                                                    />
-                                                    <p className="truncate text-sm font-medium text-gray-900">
-                                                        {event.event}
-                                                    </p>
-                                                    <p className="truncate text-sm text-gray-500">
-                                                        {event.description}
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <time
-                                                dateTime={event.time.toISOString()}
-                                                className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
-                                            >
-                                                {event.time.toLocaleTimeString()}
-                                            </time>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <div className="mt-8">
+
+<Feed events={events} />
+</div>
         </div>
     )
 }

@@ -5,29 +5,51 @@ import { t } from "../trpc";
 import { db } from "@/prisma/db";
 
 export const channelRouter = t.router({
-  create: t.procedure
+  delete: t.procedure
     .input(
       z.object({
-        name: z.string(),
-        slug: z.string().optional(),
+        channelId: z.string()
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.user.id) {
+      if (!ctx.session?.user.id) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 
       const user = await db.user.findUnique({
         where: {
-          id: ctx.user.id,
+          id: ctx.session.user.id,
         },
         include: {
-          teams: true,
+          teams: {
+            include: {
+              team: {
+                include: {
+                  channels: {
+                    where: {
+                      id: input.channelId
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
       });
       if (!user) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
 
+      if (!user.teams.some(t => t.team.channels.some(c => c.id === input.channelId))) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      await db.channel.delete({
+        where: {
+          id: input.channelId
+        }
+      })
+
     }),
+
 });

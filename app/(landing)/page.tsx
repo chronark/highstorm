@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Check, DollarSign, Menu, X, User, Server } from "lucide-react"
+import { ArrowLeft, Check, DollarSign, Menu, X, User, Server, Speaker, Bug } from "lucide-react"
 
 
 const features = [
@@ -15,9 +15,9 @@ const features = [
     icon: DollarSign,
   },
   {
-    name: 'Deployments',
-    description: 'Stay on top of your deployments. Get notified when a new release is deployed to production.',
-    icon: Server,
+    name: 'Feedback',
+    description: 'Collect user feedback from your app.',
+    icon: Bug,
   },
 ]
 
@@ -113,12 +113,14 @@ export default function Example() {
                     </div>
                     <div className="px-6 pb-14 pt-6">{
                       <pre className="font-mono whitespace-pre text-neutral-200 text-left">
-                        {`curl https://highstorm.vercel.app/api/v1/events/users.signup' \\
+                        {`curl https://highstorm.vercel.app/api/v1/events/users.signup?create=auto' \\
   -H 'Authorization: Bearer api_xxxx' \\
   -H 'Content-Type: application/json' \\
   -d '{
     "event": "Chronark has signed up",
-    "content": "userId: user_abcdef123456"
+    "meta": {
+      "userId": "user_123
+    }
   }'
 `}
                       </pre>

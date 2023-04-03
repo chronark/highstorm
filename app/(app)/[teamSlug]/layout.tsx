@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { db } from "@/prisma/db"
-import { Inter as FontSans } from "@next/font/google"
 import {
   BarChart,
   CreditCard,
@@ -42,6 +41,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { NavLink } from "@/app/(app)/[teamSlug]/[channelName]/nav-link"
+import { ChannelLink } from "./channelLink"
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -149,16 +150,9 @@ export default async function RootLayout({
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
                       {channels.map((channel) => (
-                        <Link href={`/${params.teamSlug}/${channel.name}`}>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="w-full justify-start font-normal"
-                          >
-                            <Hash className="mr-2 h-4 w-4" />
-                            {channel.name}
-                          </Button>
-                        </Link>
+                        <ChannelLink key={channel.name} href={`/${params.teamSlug}/${channel.name}`}  channelName={channel.name}/>
+                         
+
                       ))}
                     </div>
                   </ScrollArea>

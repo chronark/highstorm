@@ -5,23 +5,28 @@ import { z } from "zod"
 import { newId } from "@/lib/id"
 import { publishEvent } from "@/lib/tinybird"
 
-const contentTypeValidation = z.object({
+const headerValidation = z.object({
   "content-type": z.literal("application/json"),
-})
-
-const authorizationValidation = z.object({
   authorization: z.string(),
 })
-
-const channelValidation = z.string().regex(/^[a-zA-Z0-9._-]{3,}$/)
 
 const bodyValidation = z.object({
   event: z.string(),
   icon: z.string().optional(),
-  description: z.string().optional(),
+  content: z.string().optional(),
   metadata: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
   time: z.number().optional(),
+  value: z.number().optional()
 })
+
+const queryValidation = z.object({
+  create: z.string().optional().transform(s => s === "auto"),
+  channel: z.string().regex(/^[a-zA-Z0-9._-]{3,}$/),
+})
+
+
+
+
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,37 +36,30 @@ export default async function handler(
     if (req.method !== "POST") {
       return res.status(405)
     }
-    if (!contentTypeValidation.safeParse(req.headers).success) {
+    const headers = headerValidation.safeParse(req.headers)
+    if (!headers.success) {
       res.status(400)
-      return res.json({ error: "Expected json" })
-    }
-    const auth = authorizationValidation.safeParse(req.headers)
-    if (!auth.success) {
-      res.status(400)
-      return res.json({ error: "Expected auth" })
+      return res.json({ error: `Bad request: ${headers.error.message}` })
     }
 
-    const hash = authorizationValidation.safeParse(req.headers)
-    if (!hash.success) {
-      return res.status(403).json({ error: "Unauthorized" })
+
+
+    const query = queryValidation.safeParse(req.query)
+    if (!query.success) {
+      return res.json({ error: `Bad request: ${query.error.message}` })
     }
+
 
     const apikey = await db.apiKey.findUnique({
       where: {
-        keyHash: hash.data.authorization.replace("Bearer ", ""),
-      },
-      include: {
-        team: true,
-      },
+        keyHash: headers.data.authorization.replace("Bearer ", ""),
+      }
     })
     if (!apikey) {
       return res.status(403).json({ error: "Unauthorized" })
     }
 
-    const channel = channelValidation.safeParse(req.query.channel)
-    if (!channel.success) {
-      return res.status(400).json({ error: "Invalid channel name" })
-    }
+
 
     const body = bodyValidation.safeParse(req.body)
     if (!body.success) {
@@ -70,11 +68,33 @@ export default async function handler(
         .json({ error: `Invalid body: ${body.error.message}` })
     }
 
+
+    if (query.data.create) {
+      await db.channel.upsert({
+        where: {
+          teamId_name: {
+            teamId: apikey.teamId,
+            name: query.data.channel
+          }
+        },
+        update: {},
+        create: {
+          id: newId("channel"),
+          name: query.data.channel,
+          team: {
+            connect: {
+              id: apikey.teamId
+            }
+          }
+        }
+      })
+    }
+
     const event = await db.event.create({
       data: {
         id: newId("event"),
         event: body.data.event,
-        description: body.data.description,
+        content: body.data.content,
         metadata: body.data.metadata,
         icon: body.data.icon,
         time: body.data.time ? new Date(body.data.time) : new Date(),
@@ -84,18 +104,12 @@ export default async function handler(
           },
         },
         channel: {
-          connectOrCreate: {
-            where: {
-              teamId_name: {
-                teamId: apikey.teamId,
-                name: channel.data,
-              },
-            },
-            create: {
-              id: newId("channel"),
-              name: channel.data,
+          connect: {
+            teamId_name: {
               teamId: apikey.teamId,
+              name: query.data.channel,
             },
+
           },
         },
       },

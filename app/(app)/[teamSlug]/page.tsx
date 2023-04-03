@@ -31,11 +31,12 @@ export default async function Teampage(props: {
       Try the following curl command to send an event, then reload this page to
       see the event in the list.
       <pre className="font-mono whitespace-pre mt-20 border border-neutral-300 rounded-md p-4">
-        {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup' \\
+        {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup?create=auto' \\
   -H 'Authorization: Bearer ${team.apikeys.at(0)?.keyHash}' \\
   -H 'Content-Type: application/json' \\
   -d '{
     "event": "${user?.name} has signed up",
+    "content": "A new user has signed up",
     "metadata": {"userId": "${user?.id}"}
   }'
 `}
