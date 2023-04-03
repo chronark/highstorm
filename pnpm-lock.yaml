@@ -61,6 +61,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-hook-form: ^7.43.9
+  react-wrap-balancer: ^0.4.0
   sharp: ^0.32.0
   slugify: ^1.6.6
   superjson: ^1.12.2
@@ -120,6 +121,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.9_react@18.2.0
+  react-wrap-balancer: 0.4.0_react@18.2.0
   sharp: 0.32.0
   slugify: 1.6.6
   superjson: 1.12.2
@@ -4275,6 +4277,14 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.5.0
+    dev: false
+
+  /react-wrap-balancer/0.4.0_react@18.2.0:
+    resolution: {integrity: sha512-MUsROihHd7bFHCo9kCOifKDYBEZPgKTyGvfa8RcwRQKtT2cL7Um9Cc8A7GvuT8t3np7LAGsEkzdEyJdKrr5lVQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react/18.2.0:

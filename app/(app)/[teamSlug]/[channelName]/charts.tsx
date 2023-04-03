@@ -16,6 +16,7 @@ type Props = {
 
 export const EventsPerday: React.FC<Props> = ({ data }) => {
     const day = new Date();
+    day.setUTCDate(0)
     day.setUTCHours(0, 0, 0, 0)
     const series = [];
     for (let i = 0; i < 30; i++) {
@@ -24,15 +25,15 @@ export const EventsPerday: React.FC<Props> = ({ data }) => {
         });
         series.unshift({
             time: day.toDateString(),
-            usage: usage?.count ?? 0,
+            usage: usage?.count ?? 0
         });
-        day.setUTCDate(day.getUTCDate() - 1);
+        day.setUTCDate(day.getUTCDate() + 1);
     }
 
     return <Column
         autoFit={true}
         data={series}
-    padding={[40, 40, 30, 40]}
+        padding={[40, 40, 30, 40]}
 
         xField="time"
         yField="usage"
@@ -61,21 +62,21 @@ export const EventsPerday: React.FC<Props> = ({ data }) => {
 
 export const CumulativeEventsPerday: React.FC<Props> = ({ data }) => {
     const day = new Date();
+    day.setUTCDate(0)
     day.setUTCHours(0, 0, 0, 0)
     const series = [];
-    let last = 0
+    let usage = 0
     for (let i = 0; i < 30; i++) {
         const d = data.find((u) => {
             return new Date(u.time).toDateString() === day.toDateString();
         });
-        const usage = d?.count ?? 0
 
-        series.unshift({
+        usage += d?.count ?? 0
+        series.push({
             time: day.toDateString(),
             usage,
         });
-        last += usage
-        day.setUTCDate(day.getUTCDate() - 1);
+        day.setUTCDate(day.getUTCDate() + 1);
     }
 
     return <Area

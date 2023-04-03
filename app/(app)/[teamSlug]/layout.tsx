@@ -65,11 +65,11 @@ export default async function RootLayout({
   const teams = await db.team.findMany()
   const channels = await db.channel.findMany()
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="container flex-1">
-        <div className="bg-white  transition-all dark:bg-neutral-900">
+    <div className="flex min-h-screen flex-col ">
+      <div className="container">
+        <div className="transition-all dark:bg-neutral-900">
           <div className="grid grid-cols-4 xl:grid-cols-5">
-            <aside className="pb-12">
+            <aside className="pb-12 ">
               <div className="px-8 py-6">
                 <p className="flex items-center text-2xl font-semibold tracking-tight">
                   {/* Bivrost */}

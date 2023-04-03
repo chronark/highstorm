@@ -42,16 +42,16 @@ export default async function IndexPage(props: {
     })
 
     return (
-        <div>
+        <div className="flex flex-col gap-8 mt-8">
 
-            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50">
+            <div className="border border-neutral-300 rounded-md bg-white p-2">
                 <span className="text-neutral-600 text-sm font-medium p-2">Events per Day</span>
                 <div className="h-32">
 
                     <EventsPerday data={activity.data} />
                 </div>
             </div>
-            <div className="mt-4 border border-neutral-300 rounded-md bg-neutral-50">
+            <div className="border border-neutral-300 rounded-md bg-white p-2">
                 <span className="text-neutral-600 text-sm font-medium p-2">Total Events</span>
                 <div className="h-32 inset-x-0">
 

@@ -61,7 +61,7 @@ export const Feed: React.FC<Props> = ({ events }) => {
                                                     dateTime={event.time.toISOString()}
                                                     className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
                                                 >
-                                                    {duration(Date.now()-event.time.getTime())} ago
+                                                    {duration(Date.now() - event.time.getTime())} ago
                                                 </time>
 
 
