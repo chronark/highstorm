@@ -5,6 +5,7 @@ import slugify from "slugify"
 
 import { env } from "@/lib/env"
 import { newId } from "@/lib/id"
+import { highstorm } from "@/lib/client"
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL
 
@@ -137,6 +138,41 @@ export const authOptions: NextAuthOptions = {
       return session
     },
   },
+  events: {
+    createUser: async ({ user }) => {
+      await highstorm("user.signup", {
+        event: `${user.name} has signed up`,
+        metadata: {
+          userId: user.id
+        }
+      })
+    },
+
+    signIn: async ({ user }) => {
+      await highstorm("user.signin", {
+        event: `${user.name} has signed in`,
+        metadata: {
+          userId: user.id
+        }
+      })
+    },
+    signOut: async ({ token }) => {
+      highstorm("user.signout", {
+        event: `${token.name} has signed out`,
+        metadata: {
+          userId: token.sub ?? null
+        }
+      })
+    },
+    updateUser: async ({ user }) => {
+      highstorm("user.update", {
+        event: `${user.name} has changed their email`,
+        metadata: {
+          userId: user.id
+        }
+      })
+    },
+  }
 }
 
 export default NextAuth(authOptions)
