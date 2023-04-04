@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChannelLink } from "./channelLink"
+import { Navbar } from "@/components/navbar"
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -74,6 +75,9 @@ export default async function RootLayout({
     },
   })
   if (!user) {
+    return redirect("/auth/sign-in")
+  }
+  if (!user.teams.find((team) => team.team.slug === params.teamSlug)) {
     return redirect("/auth/sign-in")
   }
   const channels =
@@ -202,100 +206,20 @@ export default async function RootLayout({
                 </div>
               </div>
             </aside>
-            <div className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
-              <div className="h-full px-8 py-6">
-                <div className="space-between flex items-center">
-                  <div className="ml-auto mr-4">
-                    <h3 className="text-sm font-semibold">{user.name}</h3>
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="relative h-10 w-10 rounded-full"
-                      >
-                        <Avatar>
-                          {user.image ? (
-                            <AvatarImage src={user.image} alt={user.name} />
-                          ) : null}
-                          <AvatarFallback>SC</AvatarFallback>
-                        </Avatar>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-56"
-                      align="end"
-                      forceMount
-                    >
-                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                          <User className="mr-2 h-4 w-4" />
-                          <span>Profile</span>
-                          <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <CreditCard className="mr-2 h-4 w-4" />
-                          <span>Billing</span>
-                          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Settings className="mr-2 h-4 w-4" />
-                          <span>Settings</span>
-                          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Keyboard className="mr-2 h-4 w-4" />
-                          <span>Keyboard shortcuts</span>
-                          <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                          <Users className="mr-2 h-4 w-4" />
-                          <span>Team</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            <UserPlus className="mr-2 h-4 w-4" />
-                            <span>Invite users</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuPortal>
-                            <DropdownMenuSubContent forceMount>
-                              <DropdownMenuItem>
-                                <Mail className="mr-2 h-4 w-4" />
-                                <span>Email</span>
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>
-                                <MessageSquare className="mr-2 h-4 w-4" />
-                                <span>Message</span>
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem>
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                <span>More...</span>
-                              </DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                          </DropdownMenuPortal>
-                        </DropdownMenuSub>
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
-                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+            <main className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
+              <div className="h-full px-8 py-6 space-y-8">
+                <Navbar user={{
+                  id: user.id,
+                  name: user.name,
+                  image: user.image,
+                }} />
+
                 {children}
               </div>
-            </div>
+            </main>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }

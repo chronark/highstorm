@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@ant-design/plots': ^1.2.5
   '@chronark/prefixed-id': ^0.4.1
+  '@faker-js/faker': ^7.6.0
   '@headlessui/react': ^1.7.13
   '@ianvs/prettier-plugin-sort-imports': ^3.7.2
   '@next/font': ^13.1.6
@@ -133,6 +134,7 @@ dependencies:
   zod: 3.21.4
 
 devDependencies:
+  '@faker-js/faker': 7.6.0
   '@ianvs/prettier-plugin-sort-imports': 3.7.2_prettier@2.8.7
   '@types/node': 18.15.11
   '@types/react': 18.0.33
@@ -575,6 +577,11 @@ packages:
   /@eslint/js/8.37.0:
     resolution: {integrity: sha512-x5vzdtOOGgFVDCUs81QRB2+liax8rFg3+7hqM+QhBG0/G3F1ZsoYl97UrqgHgQ9KKT7G6c4V+aTUCgu/n22v1A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: true
 
   /@floating-ui/core/0.7.3:

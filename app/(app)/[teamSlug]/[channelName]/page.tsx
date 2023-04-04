@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast"
 import useSWR from "swr"
 
 import { trpc } from "@/lib/trpc"
-import { CumulativeEventsPerday, EventsPerday } from "./charts"
+import { CumulativeEventsPerday, EventsPerDay } from "./charts"
 
 export default function AnalyticsPage(props: {
   params: { teamSlug: string; channelName: string }
@@ -42,7 +42,7 @@ export default function AnalyticsPage(props: {
           Events per Day
         </span>
         <div className="h-32">
-          <EventsPerday data={activity.data?.data ?? []} />
+          <EventsPerDay data={activity.data?.data ?? []} />
         </div>
       </div>
       <div className="border border-neutral-300 rounded-md bg-white p-2">

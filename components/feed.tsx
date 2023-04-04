@@ -72,7 +72,7 @@ export const Feed: React.FC<Props> = ({ teamSlug, channelId, fallback }) => {
       ) : data && data.data.length === 0 ? (
         fallback
       ) : (
-        <ScrollArea className="max-h-[60vh]">
+        <ScrollArea className="h-[60vh]">
           {Object.keys(feed).map((day) => (
             <div key={day} className="relative">
               <div className="sticky top-0 z-10 bg-neutral-200  px-4 py-1 text-sm font-medium text-neutral-800">

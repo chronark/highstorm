@@ -4,6 +4,7 @@ import { z } from "zod"
 
 import { newId } from "@/lib/id"
 import { publishEvent } from "@/lib/tinybird"
+import { InMemoryCache } from "@/lib/cache"
 
 const headerValidation = z.object({
   "content-type": z.literal("application/json"),
@@ -27,6 +28,14 @@ const bodyValidation = z.object({
 const queryValidation = z.object({
   channel: z.string().regex(/^[a-zA-Z0-9._-]{3,}$/),
 })
+
+/**
+ * Cache api keys
+ */
+const cache = new InMemoryCache<{
+  teamId: string,
+  channelId: string
+}>({ ttl: 10_000 })
 
 export default async function handler(
   req: NextApiRequest,

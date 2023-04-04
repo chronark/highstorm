@@ -41,8 +41,8 @@ export default async function IndexPage(props: {
         <Feed
           teamSlug={props.params.teamSlug}
           channelId={channel.id}
-          // @ts-expect-error Async RSC
           fallback={
+            // @ts-expect-error RSC
             <EmptyEventsFallback
               teamSlug={props.params.teamSlug}
               channelName={channel.name}

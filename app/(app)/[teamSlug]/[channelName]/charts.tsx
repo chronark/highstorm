@@ -9,16 +9,15 @@ type Props = {
   }[]
 }
 
-export const EventsPerday: React.FC<Props> = ({ data }) => {
-  const month = new Date().getUTCMonth()
+export const EventsPerDay: React.FC<Props> = ({ data }) => {
   const day = new Date()
-  day.setUTCDate(1)
+  day.setUTCDate(day.getUTCDate() - 30)
   const series = []
-  while (day.getUTCMonth() === month) {
+  while (day.getTime() <= new Date().getTime()) {
     const usage = data.find((u) => {
       return new Date(u.time).toDateString() === day.toDateString()
     })
-    series.unshift({
+    series.push({
       time: day.toDateString(),
       usage: usage?.count ?? 0,
     })
@@ -58,12 +57,11 @@ export const EventsPerday: React.FC<Props> = ({ data }) => {
 }
 
 export const CumulativeEventsPerday: React.FC<Props> = ({ data }) => {
-  const month = new Date().getUTCMonth()
   const day = new Date()
-  day.setUTCDate(1)
-  const series = []
+  day.setUTCDate(day.getUTCDate() - 30)
   let usage = 0
-  while (day.getUTCMonth() === month) {
+  const series = []
+  while (day.getTime() <= new Date().getTime()) {
     const d = data.find((u) => {
       return new Date(u.time).toLocaleDateString() === day.toLocaleDateString()
     })

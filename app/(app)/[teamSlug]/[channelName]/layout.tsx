@@ -75,6 +75,7 @@ export default async function Layout(props: {
     },
   })
   if (!channel) {
+    console.log("Channel not found, redirecting to team page")
     return redirect(`/${props.params.teamSlug}`)
   }
 

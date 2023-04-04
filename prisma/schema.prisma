@@ -170,6 +170,7 @@ model ApiKey {
 
   name    String
   keyHash String @unique
+  lastCharacters   String?
 
   @@index([teamId])
 }
