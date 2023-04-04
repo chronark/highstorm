@@ -140,7 +140,7 @@ export const authOptions: NextAuthOptions = {
   },
   events: {
     createUser: async ({ user }) => {
-      await highstorm("user.signup", {
+      highstorm("user.signup", {
         event: `${user.name} has signed up`,
         metadata: {
           userId: user.id
@@ -149,7 +149,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     signIn: async ({ user }) => {
-      await highstorm("user.signin", {
+      highstorm("user.signin", {
         event: `${user.name} has signed in`,
         metadata: {
           userId: user.id
