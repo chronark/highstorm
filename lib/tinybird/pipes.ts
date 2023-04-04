@@ -18,25 +18,23 @@ export const getChannelActivity = tb.buildPipe({
       .number()
       .nullable()
       .optional()
-      .transform((v) => (typeof v === "number" ? v : 0))
+      .transform((v) => (typeof v === "number" ? v : 0)),
   }),
 })
-
 
 export const getEvents = tb.buildPipe({
   pipe: "get_events__v1",
   parameters: z.object({
     teamId: z.string(),
     channelId: z.string().optional(),
-    since: z.number()
+    since: z.number(),
   }),
   data: z.object({
     id: z.string(),
     channelId: z.string(),
     event: z.string(),
-    time: z.string().transform(d => new Date(d).getTime()),
+    time: z.string().transform((d) => new Date(d).getTime()),
     content: z.string(),
-    metadata: z.string().transform(m => JSON.parse(m))
-  })
-
+    metadata: z.string().transform((m) => JSON.parse(m)),
+  }),
 })

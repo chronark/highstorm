@@ -14,18 +14,19 @@ const bodyValidation = z.object({
   event: z.string(),
   icon: z.string().optional(),
   content: z.string().optional(),
-  metadata: z.record(z.string(), z.union([z.string(), z.number(), z.boolean(), z.null()])).optional(),
+  metadata: z
+    .record(
+      z.string(),
+      z.union([z.string(), z.number(), z.boolean(), z.null()])
+    )
+    .optional(),
   time: z.number().optional(),
-  value: z.number().optional()
+  value: z.number().optional(),
 })
 
 const queryValidation = z.object({
   channel: z.string().regex(/^[a-zA-Z0-9._-]{3,}$/),
 })
-
-
-
-
 
 export default async function handler(
   req: NextApiRequest,
@@ -41,15 +42,10 @@ export default async function handler(
       return res.json({ error: `Bad request: ${headers.error.message}` })
     }
 
-
-
     const query = queryValidation.safeParse(req.query)
     if (!query.success) {
       return res.json({ error: `Bad request: ${query.error.message}` })
     }
-
-
-
 
     const apikey = await db.apiKey.findUnique({
       where: {
@@ -60,19 +56,16 @@ export default async function handler(
           include: {
             channels: {
               where: {
-                name: query.data.channel
-              }
-            }
-          }
-        }
-      }
+                name: query.data.channel,
+              },
+            },
+          },
+        },
+      },
     })
     if (!apikey) {
       return res.status(403).json({ error: "Unauthorized" })
     }
-
-
-
 
     const body = bodyValidation.safeParse(req.body)
     if (!body.success) {
@@ -81,7 +74,9 @@ export default async function handler(
         .json({ error: `Invalid body: ${body.error.message}` })
     }
 
-    let channel = apikey.team.channels.find(c => c.name === query.data.channel)
+    let channel = apikey.team.channels.find(
+      (c) => c.name === query.data.channel
+    )
     if (!channel) {
       channel = await db.channel.create({
         data: {
@@ -89,14 +84,12 @@ export default async function handler(
           name: query.data.channel,
           team: {
             connect: {
-              id: apikey.teamId
-            }
-          }
-        }
+              id: apikey.teamId,
+            },
+          },
+        },
       })
     }
-
-
 
     await publishEvent({
       id: newId("event"),
@@ -105,7 +98,7 @@ export default async function handler(
       time: new Date(body.data.time ?? Date.now()),
       event: body.data.event,
       content: body.data.content ?? "",
-      metadata: JSON.stringify(body.data.metadata ?? {})
+      metadata: JSON.stringify(body.data.metadata ?? {}),
     })
 
     return res.status(200)

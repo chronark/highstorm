@@ -1,63 +1,58 @@
-import {  redirect } from "next/navigation"
-import {  db } from "@/prisma/db"
+"use client"
 
-import { getSession } from "@/lib/auth"
+import { useEffect } from "react"
+import { useToast } from "@/hooks/use-toast"
+import useSWR from "swr"
 
-import { getChannelActivity } from "@/lib/tinybird";
-import { CumulativeEventsPerday, EventsPerday } from "./charts";
+import { trpc } from "@/lib/trpc"
+import { CumulativeEventsPerday, EventsPerday } from "./charts"
 
-export default async function IndexPage(props: {
-    params: { teamSlug: string; channelName: string }
+export default function AnalyticsPage(props: {
+  params: { teamSlug: string; channelName: string }
 }) {
-    const { session } = await getSession()
+  const d = new Date()
+  d.setUTCDate(1)
+  d.setUTCHours(0, 0, 0, 0)
 
-    if (!session) {
-        return redirect("/auth/sign-in")
+  const activity = useSWR(
+    {
+      teamSlug: props.params.teamSlug,
+      channelName: props.params.channelName,
+      since: d.getTime(),
+    },
+    trpc.event.dailyActivity.query,
+    { refreshInterval: 15000 }
+  )
+  const { toast } = useToast()
+  useEffect(() => {
+    if (activity.error) {
+      console.error(activity.error)
+      toast({
+        title: "Error",
+        description: "There was an error fetching the events",
+        variant: "destructive",
+      })
     }
+  }, [activity.error])
 
-    const channel = await db.channel.findFirst({
-        where: {
-            AND: {
-                team: {
-                    slug: props.params.teamSlug,
-                },
-                name: props.params.channelName,
-            },
-        },
-        include: {
-            team: true,
-        },
-    })
-    if (!channel) {
-        return redirect(`/${props.params.teamSlug}`)
-    }
-
-
-    const activity = await getChannelActivity({
-        teamId: channel.team.id,
-        channelId: channel.id,
-        since: Date.now() - 1000 * 60 * 60 * 24,
-        granularity: "1h",
-    })
-
-    return (
-        <div className="flex flex-col gap-8 mt-8">
-
-            <div className="border border-neutral-300 rounded-md bg-white p-2">
-                <span className="text-neutral-600 text-sm font-medium p-2">Events per Day</span>
-                <div className="h-32">
-
-                    <EventsPerday data={activity.data} />
-                </div>
-            </div>
-            <div className="border border-neutral-300 rounded-md bg-white p-2">
-                <span className="text-neutral-600 text-sm font-medium p-2">Total Events</span>
-                <div className="h-32 inset-x-0">
-
-                    <CumulativeEventsPerday data={activity.data} />
-                </div>
-            </div>
-
+  return (
+    <div className="flex flex-col gap-8 mt-8">
+      <div className="border border-neutral-300 rounded-md bg-white p-2">
+        <span className="text-neutral-600 text-sm font-medium p-2">
+          Events per Day
+        </span>
+        <div className="h-32">
+          <EventsPerday data={activity.data?.data ?? []} />
         </div>
-    )
+      </div>
+      <div className="border border-neutral-300 rounded-md bg-white p-2">
+        <span className="text-neutral-600 text-sm font-medium p-2">
+          Total Events
+        </span>
+        <div className="h-32 inset-x-0">
+          <CumulativeEventsPerday data={activity.data?.data ?? []} />
+        </div>
+      </div>
+    </div>
+  )
 }

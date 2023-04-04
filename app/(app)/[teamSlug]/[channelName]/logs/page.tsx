@@ -2,55 +2,54 @@ import { redirect } from "next/navigation"
 import { db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
-import { Feed } from "@/components/feed";
-import { EmptyEventsFallback } from "@/components/empty-events-fallback";
+import { EmptyEventsFallback } from "@/components/empty-events-fallback"
+import { Feed } from "@/components/feed"
 
 export default async function IndexPage(props: {
-    params: { teamSlug: string; channelName: string }
+  params: { teamSlug: string; channelName: string }
 }) {
-    const { session } = await getSession()
+  const { session } = await getSession()
 
-    if (!session) {
-        return redirect("/auth/sign-in")
-    }
+  if (!session) {
+    return redirect("/auth/sign-in")
+  }
 
-    const channel = await db.channel.findFirst({
-        where: {
-            AND: {
-                team: {
-                    slug: props.params.teamSlug,
-                },
-                name: props.params.channelName,
-            },
+  const channel = await db.channel.findFirst({
+    where: {
+      AND: {
+        team: {
+          slug: props.params.teamSlug,
         },
+        name: props.params.channelName,
+      },
+    },
+    include: {
+      team: {
         include: {
-            
-            team: {
-                include: {
-                    apikeys: true,
-
-
-                }
-            }
+          apikeys: true,
         },
-    })
-    if (!channel) {
-        return redirect(`/${props.params.teamSlug}`)
-    }
+      },
+    },
+  })
+  if (!channel) {
+    return redirect(`/${props.params.teamSlug}`)
+  }
 
-
-    return (
-        <div>
-
-
-            <div className="mt-8">
-                <Feed
-                    teamSlug={props.params.teamSlug}
-                    channelId={channel.id}
-                    // @ts-expect-error Async RSC
-                    fallback={<EmptyEventsFallback teamSlug={props.params.teamSlug} channelName={channel.name} />} 
-                    />
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <div className="mt-8">
+        <Feed
+          teamSlug={props.params.teamSlug}
+          channelId={channel.id}
+          // @ts-expect-error Async RSC
+          fallback={
+            <EmptyEventsFallback
+              teamSlug={props.params.teamSlug}
+              channelName={channel.name}
+            />
+          }
+        />
+      </div>
+    </div>
+  )
 }

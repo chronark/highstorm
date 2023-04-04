@@ -12,7 +12,7 @@ const eventValidation = z.object({
   event: z.string(),
   content: z.string().optional().default(""),
   // Stringified json
-  metadata: z.string().optional().default("")
+  metadata: z.string().optional().default(""),
 })
 
 export async function publishEvent(

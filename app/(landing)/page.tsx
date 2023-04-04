@@ -1,39 +1,59 @@
-import Link from "next/link"
-import { ArrowLeft, Check, DollarSign, Menu, X, User, Server, Speaker, Bug, Code, Network, ArrowUp, BellRing, BookOpen, MessageCircle, Send } from "lucide-react"
 import Image from "next/image"
-
+import Link from "next/link"
+import {
+  ArrowLeft,
+  ArrowUp,
+  BellRing,
+  BookOpen,
+  Bug,
+  Check,
+  Code,
+  DollarSign,
+  Menu,
+  MessageCircle,
+  Network,
+  Send,
+  Server,
+  Speaker,
+  User,
+  X,
+} from "lucide-react"
 import ReactWrapBalancer from "react-wrap-balancer"
-
 
 const features = [
   {
-    name: 'Simple Ingest API',
-    description: 'All you need is a simple HTTP POST request to send events to Highstorm.',
+    name: "Simple Ingest API",
+    description:
+      "All you need is a simple HTTP POST request to send events to Highstorm.",
     icon: Send,
   },
   {
-    name: 'API first',
-    description: 'Highstorm offers access to everything via API to allow for maximum flexibility.',
+    name: "API first",
+    description:
+      "Highstorm offers access to everything via API to allow for maximum flexibility.",
     icon: Code,
   },
   {
-    name: 'Built for developers',
-    description: 'Built by developers for developers. Highstorm is designed to be easy to use and integrate with.',
+    name: "Built for developers",
+    description:
+      "Built by developers for developers. Highstorm is designed to be easy to use and integrate with.",
     icon: Server,
   },
   {
-    name: 'Open Source',
-    description: 'Highstorm is open source and free to self host.',
+    name: "Open Source",
+    description: "Highstorm is open source and free to self host.",
     icon: BookOpen,
   },
   {
-    name: 'Alerts',
-    description: 'Get notified by email, slack or webhook for important events.',
+    name: "Alerts",
+    description:
+      "Get notified by email, slack or webhook for important events.",
     icon: BellRing,
   },
   {
-    name: 'Generour free tier',
-    description: "Highstorm's free tier is generous and allows you to send up to X events per month",
+    name: "Generour free tier",
+    description:
+      "Highstorm's free tier is generous and allows you to send up to X events per month",
     icon: ArrowUp,
   },
 ]
@@ -78,16 +98,15 @@ export default function Example() {
               </div>
             </div>
           </div>
-
-
         </div>
         <div className="bg-white py-24 sm:py-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl sm:text-center">
-              <h2 className="text-base font-semibold leading-7 text-emerald-400">Ingest Everything</h2>
+              <h2 className="text-base font-semibold leading-7 text-emerald-400">
+                Ingest Everything
+              </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 <ReactWrapBalancer>
-
                   Analytics At Your Fingertips
                 </ReactWrapBalancer>
               </p>
@@ -116,28 +135,33 @@ export default function Example() {
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-9">
                   <dt className="inline font-semibold text-gray-900">
-                    <feature.icon className="absolute left-1 top-1 h-5 w-5 text-emerald-500" aria-hidden="true" />
+                    <feature.icon
+                      className="absolute left-1 top-1 h-5 w-5 text-emerald-500"
+                      aria-hidden="true"
+                    />
                     {feature.name}
-                  </dt>{' '}
+                  </dt>{" "}
                   <dd className="inline">{feature.description}</dd>
                 </div>
               ))}
             </dl>
           </div>
         </div>
-
-
       </main>
 
       <footer className="bg-white">
         <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-
           <p className="mt-10 text-center text-xs leading-5 text-neutral-500">
-            Built by <Link href="https://twitter.com/chronark_" className="hover:text-neutral-800">@chronark_</Link>
+            Built by{" "}
+            <Link
+              href="https://twitter.com/chronark_"
+              className="hover:text-neutral-800"
+            >
+              @chronark_
+            </Link>
           </p>
         </div>
       </footer>
-
     </div>
   )
 }

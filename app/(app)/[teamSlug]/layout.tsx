@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { NavLink } from "@/app/(app)/[teamSlug]/[channelName]/nav-link"
 import { db } from "@/prisma/db"
 import {
   BarChart,
@@ -42,7 +43,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { NavLink } from "@/app/(app)/[teamSlug]/[channelName]/nav-link"
 import { ChannelLink } from "./channelLink"
 
 interface RootLayoutProps {
@@ -60,22 +60,25 @@ export default async function RootLayout({
     return redirect("/auth/sign-in")
   }
   const user = await db.user.findUnique({
-    where: { id: session.user.id }, include: {
+    where: { id: session.user.id },
+    include: {
       teams: {
         include: {
           team: {
             include: {
-              channels: true
-            }
-          }
-        }
-      }
-    }
+              channels: true,
+            },
+          },
+        },
+      },
+    },
   })
   if (!user) {
     return redirect("/auth/sign-in")
   }
-  const channels = user.teams.find((team) => team.team.slug === params.teamSlug)?.team.channels ?? []
+  const channels =
+    user.teams.find((team) => team.team.slug === params.teamSlug)?.team
+      .channels ?? []
   return (
     <div className="flex min-h-screen flex-col ">
       <div className="container">
@@ -126,7 +129,6 @@ export default async function RootLayout({
                   </h2>
                   <div className="space-y-1">
                     <Link href={`/${params.teamSlug}/stream`}>
-
                       <Button
                         variant="ghost"
                         size="sm"
@@ -163,9 +165,11 @@ export default async function RootLayout({
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
                       {channels.map((channel) => (
-                        <ChannelLink key={channel.name} href={`/${params.teamSlug}/${channel.name}`} channelName={channel.name} />
-
-
+                        <ChannelLink
+                          key={channel.name}
+                          href={`/${params.teamSlug}/${channel.name}`}
+                          channelName={channel.name}
+                        />
                       ))}
                     </div>
                   </ScrollArea>
@@ -176,19 +180,23 @@ export default async function RootLayout({
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
-                      {user.teams.map(t => t.team).map((team) => (
-                        <Link href={`/${team.slug}`} key={team.id}>
-                          <Button
-                            variant={
-                              params.teamSlug === team.slug ? "subtle" : "ghost"
-                            }
-                            size="sm"
-                            className="w-full justify-start font-normal"
-                          >
-                            {team.name}
-                          </Button>
-                        </Link>
-                      ))}
+                      {user.teams
+                        .map((t) => t.team)
+                        .map((team) => (
+                          <Link href={`/${team.slug}`} key={team.id}>
+                            <Button
+                              variant={
+                                params.teamSlug === team.slug
+                                  ? "subtle"
+                                  : "ghost"
+                              }
+                              size="sm"
+                              className="w-full justify-start font-normal"
+                            >
+                              {team.name}
+                            </Button>
+                          </Link>
+                        ))}
                     </div>
                   </ScrollArea>
                 </div>

@@ -32,11 +32,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body className="min-h-screen bg-white  text-neutral-900 antialiased dark:bg-neutral-900 dark:text-neutral-50">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <ToastProvider>
-
-              {children}
-
-            </ToastProvider>
+            <ToastProvider>{children}</ToastProvider>
             <TailwindIndicator />
           </ThemeProvider>
         </body>

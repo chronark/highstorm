@@ -61,7 +61,6 @@ export class Tinybird {
     }
     const body = await res.json()
 
-
     return body
   }
 

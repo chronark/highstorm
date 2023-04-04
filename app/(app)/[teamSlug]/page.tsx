@@ -12,7 +12,7 @@ export default async function Teampage(props: {
     return redirect("/auth/sign-in")
   }
 
-  const user = await db.user.findUnique({where:{id:session.user.id}})
+  const user = await db.user.findUnique({ where: { id: session.user.id } })
 
   const team = await db.team.findUnique({
     where: {
