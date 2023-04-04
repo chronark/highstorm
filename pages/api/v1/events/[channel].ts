@@ -35,7 +35,7 @@ const queryValidation = z.object({
 const cache = new InMemoryCache<{
   teamId: string,
   channelId: string
-}>({ ttl: 10_000 })
+}>({ ttl: 60_000 })
 
 export default async function handler(
   req: NextApiRequest,
@@ -55,26 +55,52 @@ export default async function handler(
     if (!query.success) {
       return res.json({ error: `Bad request: ${query.error.message}` })
     }
-
-    const apikey = await db.apiKey.findUnique({
-      where: {
-        keyHash: headers.data.authorization.replace("Bearer ", ""),
-      },
-      include: {
-        team: {
-          include: {
-            channels: {
-              where: {
-                name: query.data.channel,
+    const key = headers.data.authorization.replace("Bearer ", "")
+    let cached = cache.get(key)
+    if (!cached) {
+      const apiKey = await db.apiKey.findUnique({
+        where: {
+          keyHash: key, // TODO: hash first, will do this shortly
+        },
+        include: {
+          team: {
+            include: {
+              channels: {
+                where: {
+                  name: query.data.channel,
+                },
               },
             },
           },
         },
-      },
-    })
-    if (!apikey) {
-      return res.status(403).json({ error: "Unauthorized" })
+      })
+      if (!apiKey) {
+        return res.status(403).json({ error: "Unauthorized" })
+      }
+
+      let channel = apiKey.team.channels.find(
+        (c) => c.name === query.data.channel
+      )
+      if (!channel) {
+        channel = await db.channel.create({
+          data: {
+            id: newId("channel"),
+            name: query.data.channel,
+            team: {
+              connect: {
+                id: apiKey.teamId,
+              },
+            },
+          },
+        })
+      }
+
+      cached = { teamId: apiKey.team.id, channelId: channel.id }
+      cache.set(key, cached)
     }
+
+
+
 
     const body = bodyValidation.safeParse(req.body)
     if (!body.success) {
@@ -83,27 +109,12 @@ export default async function handler(
         .json({ error: `Invalid body: ${body.error.message}` })
     }
 
-    let channel = apikey.team.channels.find(
-      (c) => c.name === query.data.channel
-    )
-    if (!channel) {
-      channel = await db.channel.create({
-        data: {
-          id: newId("channel"),
-          name: query.data.channel,
-          team: {
-            connect: {
-              id: apikey.teamId,
-            },
-          },
-        },
-      })
-    }
+
 
     await publishEvent({
       id: newId("event"),
-      teamId: apikey.teamId,
-      channelId: channel!.id,
+      teamId: cached.teamId,
+      channelId: cached.channelId,
       time: new Date(body.data.time ?? Date.now()),
       event: body.data.event,
       content: body.data.content ?? "",
