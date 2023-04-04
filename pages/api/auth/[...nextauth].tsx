@@ -164,6 +164,14 @@ export const authOptions: NextAuthOptions = {
         }
       })
     },
+    session: async ({ token }) => {
+      highstorm("user.session.verification", {
+        event: `${token.name} has verified their session`,
+        metadata: {
+          userId: token.sub ?? null
+        }
+      })
+    },
     updateUser: async ({ user }) => {
       highstorm("user.update", {
         event: `${user.name} has changed their email`,
