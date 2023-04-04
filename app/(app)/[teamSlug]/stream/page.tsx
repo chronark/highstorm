@@ -1,9 +1,9 @@
 import { notFound, redirect } from "next/navigation"
-import { Event, db } from "@/prisma/db"
+import {  db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
 import { getChannelActivity } from "@/lib/tinybird"
-import { Chart } from "./chart"
+import { CumulativeEventsPerday } from "../[channelName]/charts"
 import { Feed } from "@/components/feed"
 
 export default async function IndexPage(props: {
@@ -19,18 +19,7 @@ export default async function IndexPage(props: {
     if (!team) {
         return notFound()
     }
-    const events= await db.event.findMany({
-        where: {
-            team: {
-                slug: props.params.teamSlug,
-            }
-        },
-        orderBy: {
-            time: "desc",
-        },
-        take: 100,
-    })
-   
+
     const activity = await getChannelActivity({
         teamId: team.id,
         since: Date.now() - 1000 * 60 * 60 * 24,
@@ -49,14 +38,14 @@ export default async function IndexPage(props: {
                     </p>
                 </div>
             </div>
-            <div className="h-32 mt-4 border border-neutral-300 rounded-md bg-neutral-50 py-2">
-
-                <Chart data={activity.data} />
-            </div>
+            <div className="border border-neutral-300 rounded-md bg-white p-2">
+                <span className="text-neutral-600 text-sm font-medium p-2">Total Events</span>
+                <div className="h-32 inset-x-0">
+                    <CumulativeEventsPerday data={activity.data} />
+                </div></div>
             <div className="mt-8">
-
-<Feed events={events} />
-</div>
+                <Feed  teamSlug={team.slug}/>
+            </div>
         </div>
     )
 }

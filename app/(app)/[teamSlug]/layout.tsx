@@ -15,6 +15,7 @@ import {
   MessageSquare,
   PlusCircle,
   Settings,
+  Tornado,
   User,
   UserPlus,
   Users,
@@ -58,12 +59,23 @@ export default async function RootLayout({
   if (!session) {
     return redirect("/auth/sign-in")
   }
-  const user = await db.user.findUnique({ where: { id: session.user.id } })
+  const user = await db.user.findUnique({
+    where: { id: session.user.id }, include: {
+      teams: {
+        include: {
+          team: {
+            include: {
+              channels: true
+            }
+          }
+        }
+      }
+    }
+  })
   if (!user) {
     return redirect("/auth/sign-in")
   }
-  const teams = await db.team.findMany()
-  const channels = await db.channel.findMany()
+  const channels = user.teams.find((team) => team.team.slug === params.teamSlug)?.team.channels ?? []
   return (
     <div className="flex min-h-screen flex-col ">
       <div className="container">
@@ -71,8 +83,9 @@ export default async function RootLayout({
           <div className="grid grid-cols-4 xl:grid-cols-5">
             <aside className="pb-12 ">
               <div className="px-8 py-6">
-                <p className="flex items-center text-2xl font-semibold tracking-tight">
-                  {/* Bivrost */}
+                <p className="flex items-center text-2xl font-semibold tracking-tight gap-2">
+                  <Tornado />
+                  Highstorm
                 </p>
               </div>
               <div className="space-y-4">
@@ -150,8 +163,8 @@ export default async function RootLayout({
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
                       {channels.map((channel) => (
-                        <ChannelLink key={channel.name} href={`/${params.teamSlug}/${channel.name}`}  channelName={channel.name}/>
-                         
+                        <ChannelLink key={channel.name} href={`/${params.teamSlug}/${channel.name}`} channelName={channel.name} />
+
 
                       ))}
                     </div>
@@ -163,8 +176,8 @@ export default async function RootLayout({
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
                     <div className="space-y-1 p-2">
-                      {teams.map((team) => (
-                        <Link href={`/${team.slug}`}>
+                      {user.teams.map(t => t.team).map((team) => (
+                        <Link href={`/${team.slug}`} key={team.id}>
                           <Button
                             variant={
                               params.teamSlug === team.slug ? "subtle" : "ghost"

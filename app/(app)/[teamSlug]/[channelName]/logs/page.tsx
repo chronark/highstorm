@@ -1,8 +1,9 @@
-import {  redirect } from "next/navigation"
-import {  db } from "@/prisma/db"
+import { redirect } from "next/navigation"
+import { db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
 import { Feed } from "@/components/feed";
+import { EmptyEventsFallback } from "@/components/empty-events-fallback";
 
 export default async function IndexPage(props: {
     params: { teamSlug: string; channelName: string }
@@ -23,8 +24,14 @@ export default async function IndexPage(props: {
             },
         },
         include: {
-            events: true,
-            team: true,
+            
+            team: {
+                include: {
+                    apikeys: true,
+
+
+                }
+            }
         },
     })
     if (!channel) {
@@ -35,10 +42,14 @@ export default async function IndexPage(props: {
     return (
         <div>
 
-           
-            <div className="mt-8">
 
-                <Feed events={channel.events} />
+            <div className="mt-8">
+                <Feed
+                    teamSlug={props.params.teamSlug}
+                    channelId={channel.id}
+                    // @ts-expect-error Async RSC
+                    fallback={<EmptyEventsFallback teamSlug={props.params.teamSlug} channelName={channel.name} />} 
+                    />
             </div>
         </div>
     )

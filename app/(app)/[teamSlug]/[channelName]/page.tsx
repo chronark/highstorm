@@ -1,5 +1,5 @@
-import { notFound, redirect } from "next/navigation"
-import { Event, db } from "@/prisma/db"
+import {  redirect } from "next/navigation"
+import {  db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
 
@@ -25,7 +25,6 @@ export default async function IndexPage(props: {
             },
         },
         include: {
-            events: true,
             team: true,
         },
     })

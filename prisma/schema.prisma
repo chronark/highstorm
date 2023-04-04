@@ -122,7 +122,6 @@ model Team {
   // When the user deletes a team it is marked as deactivated until all billing is done
   deactivatedAt DateTime?
   channels      Channel[]
-  events        Event[]
   apikeys       ApiKey[]
 
   @@index([slug])
@@ -153,7 +152,6 @@ model Channel {
 
   teamId String
   team   Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  events Event[]
 
   //  Some custom value the user wants to track
   valueName String?
@@ -161,29 +159,6 @@ model Channel {
   @@unique([teamId, name])
 }
 
-model Event {
-  id String @id
-
-  time   DateTime @default(now())
-  teamId String
-  team   Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-
-  // emoji I guess
-  icon      String?
-  // title
-  event     String
-  // optional content
-  content   String? @db.Text
-  metadata  Json?
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  channelId String
-
-  // Some custom value the user wants to track
-  value Float?
-
-  @@index([teamId])
-  @@index([channelId])
-}
 
 model ApiKey {
   id        String   @id

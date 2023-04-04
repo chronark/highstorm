@@ -1,5 +1,5 @@
-import { notFound, redirect } from "next/navigation"
-import { Event, db } from "@/prisma/db"
+import {  redirect } from "next/navigation"
+import {  db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
 import {
@@ -56,7 +56,6 @@ export default async function Layout(props: {
             },
         },
         include: {
-            events: true,
             team: true,
         },
     })

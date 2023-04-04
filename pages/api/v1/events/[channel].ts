@@ -14,13 +14,12 @@ const bodyValidation = z.object({
   event: z.string(),
   icon: z.string().optional(),
   content: z.string().optional(),
-  metadata: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
+  metadata: z.record(z.string(), z.union([z.string(), z.number(), z.boolean(), z.null()])).optional(),
   time: z.number().optional(),
   value: z.number().optional()
 })
 
 const queryValidation = z.object({
-  create: z.string().optional().transform(s => s === "auto"),
   channel: z.string().regex(/^[a-zA-Z0-9._-]{3,}$/),
 })
 
@@ -50,14 +49,28 @@ export default async function handler(
     }
 
 
+
+
     const apikey = await db.apiKey.findUnique({
       where: {
         keyHash: headers.data.authorization.replace("Bearer ", ""),
+      },
+      include: {
+        team: {
+          include: {
+            channels: {
+              where: {
+                name: query.data.channel
+              }
+            }
+          }
+        }
       }
     })
     if (!apikey) {
       return res.status(403).json({ error: "Unauthorized" })
     }
+
 
 
 
@@ -68,17 +81,10 @@ export default async function handler(
         .json({ error: `Invalid body: ${body.error.message}` })
     }
 
-
-    if (query.data.create) {
-      await db.channel.upsert({
-        where: {
-          teamId_name: {
-            teamId: apikey.teamId,
-            name: query.data.channel
-          }
-        },
-        update: {},
-        create: {
+    let channel = apikey.team.channels.find(c => c.name === query.data.channel)
+    if (!channel) {
+      channel = await db.channel.create({
+        data: {
           id: newId("channel"),
           name: query.data.channel,
           team: {
@@ -90,36 +96,16 @@ export default async function handler(
       })
     }
 
-    const event = await db.event.create({
-      data: {
-        id: newId("event"),
-        event: body.data.event,
-        content: body.data.content,
-        metadata: body.data.metadata,
-        icon: body.data.icon,
-        time: body.data.time ? new Date(body.data.time) : new Date(),
-        team: {
-          connect: {
-            id: apikey.teamId,
-          },
-        },
-        channel: {
-          connect: {
-            teamId_name: {
-              teamId: apikey.teamId,
-              name: query.data.channel,
-            },
 
-          },
-        },
-      },
-    })
 
     await publishEvent({
-      id: event.id,
-      teamId: event.teamId,
-      channelId: event.channelId,
-      time: event.time,
+      id: newId("event"),
+      teamId: apikey.teamId,
+      channelId: channel!.id,
+      time: new Date(body.data.time ?? Date.now()),
+      event: body.data.event,
+      content: body.data.content ?? "",
+      metadata: JSON.stringify(body.data.metadata ?? {})
     })
 
     return res.status(200)

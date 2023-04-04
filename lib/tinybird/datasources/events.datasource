@@ -4,7 +4,15 @@ SCHEMA >
     `id` String `json:$.id`,
     `teamId` String `json:$.teamId`,
     `channelId` String `json:$.channelId`,
-    `time` DateTime `json:$.time`
+    `time` DateTime `json:$.time`,
+    # The name of the event
+    `event` String `json:$.event`,
+    # content of the event, possibly markdown in the future
+    `content` String `json:$.content`,
+    # Arbitrary user metadata, for example an invoice link or userId
+    # Missing metadata is represented as empty string
+    `metadata` String `json:$.metadata`
+
     
 
 ENGINE "MergeTree"
