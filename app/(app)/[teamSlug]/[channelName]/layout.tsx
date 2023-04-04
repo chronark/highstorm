@@ -80,7 +80,7 @@ export default async function Layout(props: {
   }
 
   return (
-    <div className="h-full  py-6">
+    <div className="">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">

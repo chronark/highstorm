@@ -1,32 +1,27 @@
-import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-
-interface DocsPageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  heading: string
-  text?: string
+type Props = {
+  title: string
+  description?: string
+  actions?: React.ReactNode[]
 }
 
-export function DocsPageHeader({
-  heading,
-  text,
-  className,
-  children,
-  ...props
-}: DocsPageHeaderProps) {
+export const PageHeader: React.FC<Props> = ({
+  title,
+  description,
+  actions,
+}) => {
   return (
-    <>
-      <div className={cn("space-y-4", className)} {...props}>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {heading}
-        </h1>
-        {text && (
-          <p className="max-w-[95%] text-xl text-neutral-700 dark:text-neutral-400">
-            {text}
-          </p>
-        )}
+    <div className="flex items-center justify-between">
+      <div className="space-y-1">
+        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          {description}
+        </p>
       </div>
-      {children}
-      <Separator className="my-4 md:my-6" />
-    </>
+      <ul className="flex items-center justify-between gap-4">
+        {(actions ?? []).map((action, i) => (
+          <li key={i}>{action}</li>
+        ))}
+      </ul>
+    </div>
   )
 }

@@ -19,7 +19,10 @@ async function main() {
         event: `${faker.name.fullName()} has payed ${amount}`,
         time: Math.random() * (end - start) + start,
         content: `${faker.internet.domainName()}`,
-        metadata: { userId: newId("user"), type: faker.finance.transactionType() },
+        metadata: {
+          userId: newId("user"),
+          type: faker.finance.transactionType(),
+        },
       }),
     })
   }

@@ -1,10 +1,11 @@
+import crypto from "node:crypto"
 import { NextApiRequest, NextApiResponse } from "next"
 import { db } from "@/prisma/db"
 import { z } from "zod"
 
+import { InMemoryCache } from "@/lib/cache"
 import { newId } from "@/lib/id"
 import { publishEvent } from "@/lib/tinybird"
-import { InMemoryCache } from "@/lib/cache"
 
 const headerValidation = z.object({
   "content-type": z.literal("application/json"),
@@ -33,7 +34,7 @@ const queryValidation = z.object({
  * Cache api keys
  */
 const cache = new InMemoryCache<{
-  teamId: string,
+  teamId: string
   channelId: string
 }>({ ttl: 60_000 })
 
@@ -56,11 +57,12 @@ export default async function handler(
       return res.json({ error: `Bad request: ${query.error.message}` })
     }
     const key = headers.data.authorization.replace("Bearer ", "")
-    let cached = cache.get(key)
+    const hash = crypto.createHash("SHA-256").update(key).digest("base64")
+    let cached = cache.get(hash)
     if (!cached) {
       const apiKey = await db.apiKey.findUnique({
         where: {
-          keyHash: key, // TODO: hash first, will do this shortly
+          keyHash: hash,
         },
         include: {
           team: {
@@ -99,9 +101,6 @@ export default async function handler(
       cache.set(key, cached)
     }
 
-
-
-
     const body = bodyValidation.safeParse(req.body)
     if (!body.success) {
       return res
@@ -109,10 +108,9 @@ export default async function handler(
         .json({ error: `Invalid body: ${body.error.message}` })
     }
 
-
-
+    const id = newId("event")
     await publishEvent({
-      id: newId("event"),
+      id,
       teamId: cached.teamId,
       channelId: cached.channelId,
       time: new Date(body.data.time ?? Date.now()),
@@ -121,7 +119,7 @@ export default async function handler(
       metadata: JSON.stringify(body.data.metadata ?? {}),
     })
 
-    return res.status(200)
+    return res.status(200).json({ id })
   } catch (e) {
     const error = e as Error
     console.error(error)

@@ -1,9 +1,12 @@
+import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 import { db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
-import { NavLink } from "./[channelName]/nav-link"
 import { Navbar } from "@/components/navbar"
+import { PageHeader } from "@/components/page-header"
+import { Button } from "@/components/ui/button"
+import { NavLink } from "./[channelName]/nav-link"
 
 export default async function Teampage(props: {
   params: { teamSlug: string }
@@ -32,43 +35,26 @@ export default async function Teampage(props: {
     return notFound()
   }
 
-
-  return (<div>
-    <div className="flex items-center justify-between gap-4">
-      <div className="space-y-1">
-        <h2 className="text-2xl font-semibold tracking-tight">
-          {team.name}
-        </h2>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400">
-          {team.id}
-        </p>
-      </div>
-      <NavLink
-        href={`/${props.params.teamSlug}/apikeys`}
-        segment="apikeys"
-      >
-        API Keys
-      </NavLink>
-      <NavLink
-        href={`/${props.params.teamSlug}`}
-        segment={null}
-      >
-        Team
-      </NavLink>
-
-
-    </div>
-
-
-    <div className="py-6 h-full mt-8 flex items-center justify-between">
-
-
-    </div>
-
+  return (
     <div>
+      <PageHeader
+        title={team.name}
+        description="API Keys"
+        actions={[
+          <Link href={`/${props.params.teamSlug}/apikeys`}>
+            <Button variant="ghost">API Keys</Button>
+          </Link>,
+          <Link href={`/${props.params.teamSlug}/`}>
+            <Button variant="default">Home</Button>
+          </Link>,
+        ]}
+      />
 
-      <pre className="font-mono whitespace-pre mt-20 border border-neutral-300 rounded-md p-4">
-        {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup' \\
+      <div className="py-6 h-full mt-8 flex items-center justify-between"></div>
+
+      <div>
+        <pre className="font-mono whitespace-pre mt-20 border border-neutral-300 rounded-md p-4">
+          {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup' \\
 -H 'Authorization: Bearer ${team.apikeys.at(0)?.keyHash}' \\
 -H 'Content-Type: application/json' \\
 -d '{
@@ -77,9 +63,8 @@ export default async function Teampage(props: {
 "metadata": {"userId": "${user?.id}"}
 }'
 `}
-      </pre>
+        </pre>
+      </div>
     </div>
-  </div >
-
   )
 }

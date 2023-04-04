@@ -23,6 +23,7 @@ import {
 } from "lucide-react"
 
 import { getSession } from "@/lib/auth"
+import { Navbar } from "@/components/navbar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -44,7 +45,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChannelLink } from "./channelLink"
-import { Navbar } from "@/components/navbar"
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -208,18 +208,23 @@ export default async function RootLayout({
             </aside>
             <main className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
               <div className="h-full px-8 py-6 space-y-8">
-                <Navbar user={{
-                  id: user.id,
-                  name: user.name,
-                  image: user.image,
-                }} />
+                <Navbar
+                  team={{
+                    slug: params.teamSlug,
+                  }}
+                  user={{
+                    id: user.id,
+                    name: user.name,
+                    image: user.image,
+                  }}
+                />
 
                 {children}
               </div>
             </main>
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
