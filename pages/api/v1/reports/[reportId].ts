@@ -52,13 +52,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             },
             body: JSON.stringify(
                 {
+                    "text":`${report.channel.name} - ${Intl.NumberFormat("en-US", { notation: "compact" }).format(current)} events in the last ${report.timeframe}h`,
                     "blocks": [
                         {
                             "type": "header",
                             "text": {
                                 "type": "plain_text",
-                                "text": `${report.channel.name} - Summary`,
-                                "emoji": false
+                                "text": `${report.channel.name} - Summary (${report.timeframe}h)`,
+                                "emoji": true
                             }
                         },
                         {
@@ -77,10 +78,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                         {
                             "type": "section",
                             "fields": [
-                                {
-                                    "type": "mrkdwn",
-                                    "text": `*Covered:*\n${report.timeframe}h`
-                                },
                                 {
                                     "type": "mrkdwn",
                                     "text": `<https://highstorm.vercel.app/${report.channel.team.slug}/${report.channel.name}/reports|Settings>`
