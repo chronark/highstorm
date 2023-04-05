@@ -123,7 +123,7 @@ export const CreateReportButton = React.forwardRef<any, Props>(({ channelId, cha
               {formState.errors.slackUrl ? <p className="text-red-500">{formState.errors.slackUrl.message}</p> : null}
             </div>
             <div className="py-2">
-              <Label htmlFor="timeframe">Include data from the last {watch("cron")} hours</Label>
+              <Label htmlFor="timeframe">Include data from the last {watch("timeframe")} hours</Label>
 
               <Input type="number" {...register("timeframe")} />
               {formState.errors.timeframe ? <p className="text-red-500">{formState.errors.timeframe.message}</p> : null}
