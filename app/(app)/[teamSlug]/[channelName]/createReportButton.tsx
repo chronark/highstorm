@@ -38,7 +38,7 @@ type Props = {
 const formValidation = z.object({
   cron: z.string(),
   slackUrl: z.string().url(),
-  timeframe: z.number().positive()
+  timeframe: z.string().transform(v => parseInt(v)).refine(v => !Number.isNaN(v))
 
 })
 
