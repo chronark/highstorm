@@ -71,6 +71,10 @@ export const reportRouter = t.router({
           }
         }
       })
+      // Trigger it once, just to demo
+      await qstash.publish({
+        url: `https://highstorm.vercel.app/api/v1/reports/${reportId}`,
+      })
     }),
   delete: t.procedure
     .input(

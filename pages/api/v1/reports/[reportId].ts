@@ -40,9 +40,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         ])
 
 
+
         const current = currentWindow.data.at(0)?.count ?? 0
         const previous = previousWindow.data.at(0)?.count ?? 0
         const change = current - previous
+
 
 
         await Promise.all(report.slackDestinations.map(({ url }) => fetch(url, {
@@ -52,7 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             },
             body: JSON.stringify(
                 {
-                    "text":`${report.channel.name} - ${Intl.NumberFormat("en-US", { notation: "compact" }).format(current)} events in the last ${report.timeframe}h`,
+                    "text": `${report.channel.name} - ${Intl.NumberFormat("en-US", { notation: "compact" }).format(current)} events in the last ${report.timeframe}h`,
                     "blocks": [
                         {
                             "type": "header",
@@ -88,9 +90,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                     ]
                 }
             )
+
         })
         ))
-
+        await db.report.update({
+            where: {
+                id: report.id
+            },
+            data: {
+                lastRunAt: new Date()
+            }
+        })
 
         return res.json({ report })
 
