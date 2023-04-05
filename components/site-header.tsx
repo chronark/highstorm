@@ -10,12 +10,12 @@ import { buttonVariants } from "@/components/ui/button"
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-b-neutral-200 bg-white dark:border-b-neutral-700 dark:bg-neutral-900">
-      <div className="container flex h-16 items-center">
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-b-neutral-200 dark:border-b-neutral-700 dark:bg-neutral-900">
+      <div className="container flex items-center h-16">
         <MainNav />
         <MobileNav />
-        <div className="flex flex-1 items-center justify-between space-x-2 sm:space-x-4 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">
+        <div className="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+          <div className="flex-1 w-full md:w-auto md:flex-none">
             <CommandMenu />
           </div>
           <nav className="flex items-center space-x-1">
@@ -31,7 +31,7 @@ export function SiteHeader() {
                   className: "text-neutral-700 dark:text-neutral-400",
                 })}
               >
-                <Icons.gitHub className="h-5 w-5" />
+                <Icons.gitHub className="w-5 h-5" />
                 <span className="sr-only">GitHub</span>
               </div>
             </Link>
@@ -47,7 +47,7 @@ export function SiteHeader() {
                   className: "text-neutral-700 dark:text-neutral-400",
                 })}
               >
-                <Icons.twitter className="h-5 w-5 fill-current" />
+                <Icons.twitter className="w-5 h-5 fill-current" />
                 <span className="sr-only">Twitter</span>
               </div>
             </Link>

@@ -50,6 +50,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { DeleteChannelButton } from "./deleteChannelButton"
+import { CreateReportButton } from "./createReportButton"
 
 export default async function Layout(props: {
   params: { teamSlug: string; channelName: string }
@@ -91,6 +92,12 @@ export default async function Layout(props: {
           </p>
         </div>
         <div className="flex items-center justify-between gap-4">
+        <NavLink
+            href={`/${props.params.teamSlug}/${props.params.channelName}/reports`}
+            segment="reports"
+          >
+            Reports
+          </NavLink>
           <NavLink
             href={`/${props.params.teamSlug}/${props.params.channelName}`}
             segment={null}
@@ -115,12 +122,12 @@ export default async function Layout(props: {
                 <DropdownMenuLabel>Channel Settings</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DialogTrigger className="w-full">
-                    <DropdownMenuItem>
-                      <Trash className="mr-2 h-4 w-4" />
-                      <span>Delete</span>
-                    </DropdownMenuItem>
-                  </DialogTrigger>
+
+                  <CreateReportButton channelId={channel.id} channelName={channel.name} teamSlug={channel.team.slug} />
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DeleteChannelButton channelId={channel.id} />
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>

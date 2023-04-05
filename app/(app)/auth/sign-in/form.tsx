@@ -13,7 +13,7 @@ export const Form: React.FC = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center px-12 py-24 space-y-3 text-center">
+      <div className="flex flex-col items-center justify-center px-12 py-24 text-center space-y-3">
         {/* <Link href="https://planetfall.io">XX</Link> */}
         <h3 className="text-xl font-semibold">Sign In</h3>
         <div className="flex flex-col w-full gap-4">

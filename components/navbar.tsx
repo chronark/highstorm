@@ -54,7 +54,7 @@ type Props = {
 export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
   const segments = useSelectedLayoutSegments()
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center justify-between">
       <ul role="list" className="flex items-center">
         {/* 
 
@@ -76,7 +76,7 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+            <Button variant="ghost" className="relative w-10 h-10 rounded-full">
               <Avatar>
                 {user.image ? (
                   <AvatarImage src={user.image} alt={user.name} />
@@ -90,23 +90,23 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               {/* <DropdownMenuItem>
-                                <User className="mr-2 h-4 w-4" />
+                                <User className="w-4 h-4 mr-2" />
                                 <span>Profile</span>
                                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <CreditCard className="mr-2 h-4 w-4" />
+                                <CreditCard className="w-4 h-4 mr-2" />
                                 <span>Billing</span>
                                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <Settings className="mr-2 h-4 w-4" />
+                                <Settings className="w-4 h-4 mr-2" />
                                 <span>Settings</span>
                                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                             </DropdownMenuItem> */}
               <Link href={`/${team.slug}/keys`}>
                 <DropdownMenuItem>
-                  <Key className="mr-2 h-4 w-4" />
+                  <Key className="w-4 h-4 mr-2" />
                   <span>API Keys</span>
                 </DropdownMenuItem>
               </Link>
@@ -114,27 +114,27 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
             {/* <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
-                                <Users className="mr-2 h-4 w-4" />
+                                <Users className="w-4 h-4 mr-2" />
                                 <span>Team</span>
                             </DropdownMenuItem>
                             <DropdownMenuSub>
                                 <DropdownMenuSubTrigger>
-                                    <UserPlus className="mr-2 h-4 w-4" />
+                                    <UserPlus className="w-4 h-4 mr-2" />
                                     <span>Invite users</span>
                                 </DropdownMenuSubTrigger>
                                 <DropdownMenuPortal>
                                     <DropdownMenuSubContent forceMount>
                                         <DropdownMenuItem>
-                                            <Mail className="mr-2 h-4 w-4" />
+                                            <Mail className="w-4 h-4 mr-2" />
                                             <span>Email</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
-                                            <MessageSquare className="mr-2 h-4 w-4" />
+                                            <MessageSquare className="w-4 h-4 mr-2" />
                                             <span>Message</span>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
-                                            <PlusCircle className="mr-2 h-4 w-4" />
+                                            <PlusCircle className="w-4 h-4 mr-2" />
                                             <span>More...</span>
                                         </DropdownMenuItem>
                                     </DropdownMenuSubContent>
@@ -144,7 +144,7 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <button onClick={() => signOut()}>
-                <LogOut className="mr-2 h-4 w-4" />
+                <LogOut className="w-4 h-4 mr-2" />
                 <span>Sign out</span>
               </button>
             </DropdownMenuItem>

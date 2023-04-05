@@ -19,9 +19,9 @@ export const ChannelLink: React.FC<Props> = ({ href, channelName }) => {
       <Button
         variant={isActive ? "subtle" : "ghost"}
         size="sm"
-        className="w-full justify-start font-normal"
+        className="justify-start w-full font-normal"
       >
-        <Hash className="mr-2 h-4 w-4" />
+        <Hash className="w-4 h-4 mr-2" />
         {channelName}
       </Button>
     </Link>

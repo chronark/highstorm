@@ -180,8 +180,8 @@ const madeForYouAlbums: Album[] = [
 
 export function AppleMusicDemo() {
   return (
-    <div className="overflow-hidden rounded-md border border-neutral-200 bg-gradient-to-b from-rose-500 to-indigo-700 shadow-2xl dark:border-neutral-800">
-      <Menubar className="rounded-none border-b border-none dark:bg-neutral-900">
+    <div className="overflow-hidden border shadow-2xl rounded-md border-neutral-200 bg-gradient-to-b from-rose-500 to-indigo-700 dark:border-neutral-800">
+      <Menubar className="border-b border-none rounded-none dark:bg-neutral-900">
         <MenubarMenu>
           <MenubarTrigger className="font-bold">Music</MenubarTrigger>
           <MenubarContent>
@@ -295,13 +295,13 @@ export function AppleMusicDemo() {
             <MenubarItem>
               Smart Dictation...{" "}
               <MenubarShortcut>
-                <Mic className="h-4 w-4" />
+                <Mic className="w-4 h-4" />
               </MenubarShortcut>
             </MenubarItem>
             <MenubarItem>
               Emoji & Symbols{" "}
               <MenubarShortcut>
-                <Globe className="h-4 w-4" />
+                <Globe className="w-4 h-4" />
               </MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
@@ -340,7 +340,7 @@ export function AppleMusicDemo() {
         </MenubarMenu>
       </Menubar>
       <div className="p-8">
-        <div className="rounded-md bg-white shadow-2xl transition-all dark:bg-neutral-900">
+        <div className="bg-white shadow-2xl rounded-md transition-all dark:bg-neutral-900">
           <div className="grid grid-cols-4 xl:grid-cols-5">
             <aside className="pb-12">
               <div className="px-8 py-6">
@@ -351,79 +351,79 @@ export function AppleMusicDemo() {
               </div>
               <div className="space-y-4">
                 <div className="px-6 py-2">
-                  <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                  <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">
                     Discover
                   </h2>
                   <div className="space-y-1">
                     <Button
                       variant="subtle"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <PlayCircle className="mr-2 h-4 w-4" />
+                      <PlayCircle className="w-4 h-4 mr-2" />
                       Listen Now
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <LayoutGrid className="mr-2 h-4 w-4" />
+                      <LayoutGrid className="w-4 h-4 mr-2" />
                       Browse
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <Radio className="mr-2 h-4 w-4" />
+                      <Radio className="w-4 h-4 mr-2" />
                       Radio
                     </Button>
                   </div>
                 </div>
                 <div className="px-6 py-2">
-                  <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                  <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">
                     Library
                   </h2>
                   <div className="space-y-1">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <ListMusic className="mr-2 h-4 w-4" />
+                      <ListMusic className="w-4 h-4 mr-2" />
                       Playlists
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <Music2 className="mr-2 h-4 w-4" />
+                      <Music2 className="w-4 h-4 mr-2" />
                       Songs
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <User className="mr-2 h-4 w-4" />
+                      <User className="w-4 h-4 mr-2" />
                       Made for You
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <Mic2 className="mr-2 h-4 w-4" />
+                      <Mic2 className="w-4 h-4 mr-2" />
                       Artists
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <Library className="mr-2 h-4 w-4" />
+                      <Library className="w-4 h-4 mr-2" />
                       Albums
                     </Button>
                   </div>
@@ -433,14 +433,14 @@ export function AppleMusicDemo() {
                     Playlists <DemoIndicator className="right-28" />
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
-                    <div className="space-y-1 p-2">
+                    <div className="p-2 space-y-1">
                       {playlists.map((playlist) => (
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="w-full justify-start font-normal"
+                          className="justify-start w-full font-normal"
                         >
-                          <ListMusic className="mr-2 h-4 w-4" />
+                          <ListMusic className="w-4 h-4 mr-2" />
                           {playlist}
                         </Button>
                       ))}
@@ -449,10 +449,10 @@ export function AppleMusicDemo() {
                 </div>
               </div>
             </aside>
-            <div className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
+            <div className="border-l col-span-3 border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
               <div className="h-full px-8 py-6">
                 <Tabs defaultValue="music" className="h-full space-y-6">
-                  <div className="space-between flex items-center">
+                  <div className="flex items-center space-between">
                     <TabsList>
                       <TabsTrigger value="music" className="relative">
                         Music <DemoIndicator className="right-2" />
@@ -469,7 +469,7 @@ export function AppleMusicDemo() {
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
-                          className="relative h-10 w-10 rounded-full"
+                          className="relative w-10 h-10 rounded-full"
                         >
                           <Avatar>
                             <AvatarImage
@@ -478,7 +478,7 @@ export function AppleMusicDemo() {
                             />
                             <AvatarFallback>SC</AvatarFallback>
                           </Avatar>
-                          <DemoIndicator className="right-0 top-0" />
+                          <DemoIndicator className="top-0 right-0" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
@@ -490,22 +490,22 @@ export function AppleMusicDemo() {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                           <DropdownMenuItem>
-                            <User className="mr-2 h-4 w-4" />
+                            <User className="w-4 h-4 mr-2" />
                             <span>Profile</span>
                             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <CreditCard className="mr-2 h-4 w-4" />
+                            <CreditCard className="w-4 h-4 mr-2" />
                             <span>Billing</span>
                             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Settings className="mr-2 h-4 w-4" />
+                            <Settings className="w-4 h-4 mr-2" />
                             <span>Settings</span>
                             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Keyboard className="mr-2 h-4 w-4" />
+                            <Keyboard className="w-4 h-4 mr-2" />
                             <span>Keyboard shortcuts</span>
                             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                           </DropdownMenuItem>
@@ -513,27 +513,27 @@ export function AppleMusicDemo() {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                           <DropdownMenuItem>
-                            <Users className="mr-2 h-4 w-4" />
+                            <Users className="w-4 h-4 mr-2" />
                             <span>Team</span>
                           </DropdownMenuItem>
                           <DropdownMenuSub>
                             <DropdownMenuSubTrigger>
-                              <UserPlus className="mr-2 h-4 w-4" />
+                              <UserPlus className="w-4 h-4 mr-2" />
                               <span>Invite users</span>
                             </DropdownMenuSubTrigger>
                             <DropdownMenuPortal>
                               <DropdownMenuSubContent forceMount>
                                 <DropdownMenuItem>
-                                  <Mail className="mr-2 h-4 w-4" />
+                                  <Mail className="w-4 h-4 mr-2" />
                                   <span>Email</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                  <MessageSquare className="mr-2 h-4 w-4" />
+                                  <MessageSquare className="w-4 h-4 mr-2" />
                                   <span>Message</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>
-                                  <PlusCircle className="mr-2 h-4 w-4" />
+                                  <PlusCircle className="w-4 h-4 mr-2" />
                                   <span>More...</span>
                                 </DropdownMenuItem>
                               </DropdownMenuSubContent>
@@ -542,14 +542,14 @@ export function AppleMusicDemo() {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                          <LogOut className="mr-2 h-4 w-4" />
+                          <LogOut className="w-4 h-4 mr-2" />
                           <span>Log out</span>
                           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                  <TabsContent value="music" className="border-none p-0">
+                  <TabsContent value="music" className="p-0 border-none">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <h2 className="text-2xl font-semibold tracking-tight">
@@ -562,7 +562,7 @@ export function AppleMusicDemo() {
                     </div>
                     <Separator className="my-4" />
                     <div className="relative">
-                      <DemoIndicator className="right-auto left-24 top-32 z-30" />
+                      <DemoIndicator className="right-auto z-30 left-24 top-32" />
                       <div className="relative flex space-x-4">
                         {listenNowAlbums.map((album) => (
                           <AlbumArtwork
@@ -583,9 +583,9 @@ export function AppleMusicDemo() {
                     </div>
                     <Separator className="my-4" />
                     <div className="relative">
-                      <DemoIndicator className="top-32 right-auto left-16 z-30" />
+                      <DemoIndicator className="right-auto z-30 top-32 left-16" />
                       <ScrollArea>
-                        <div className="flex space-x-4 pb-4">
+                        <div className="flex pb-4 space-x-4">
                           {madeForYouAlbums.map((album) => (
                             <AlbumArtwork
                               key={album.name}
@@ -616,7 +616,7 @@ export function AppleMusicDemo() {
                     <Separator className="my-4" />
                     <div className="flex h-[450px] shrink-0 items-center justify-center rounded-md border border-dashed border-neutral-200 dark:border-neutral-700">
                       <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-                        <Podcast className="h-10 w-10 text-neutral-400" />
+                        <Podcast className="w-10 h-10 text-neutral-400" />
                         <h3 className="mt-4 text-lg font-semibold text-neutral-900 dark:text-neutral-50">
                           No episodes added
                         </h3>
@@ -626,9 +626,9 @@ export function AppleMusicDemo() {
                         <Dialog>
                           <DialogTrigger>
                             <Button size="sm" className="relative">
-                              <Plus className="mr-2 h-4 w-4" />
+                              <Plus className="w-4 h-4 mr-2" />
                               Add Podcast
-                              <DemoIndicator className="-top-1 -right-1 z-30" />
+                              <DemoIndicator className="z-30 -top-1 -right-1" />
                             </Button>
                           </DialogTrigger>
                           <DialogContent>
@@ -638,7 +638,7 @@ export function AppleMusicDemo() {
                                 Copy and paste the podcast feed URL to import.
                               </DialogDescription>
                             </DialogHeader>
-                            <div className="grid gap-4 py-4">
+                            <div className="py-4 grid gap-4">
                               <div className="grid gap-2">
                                 <Label htmlFor="url">Podcast URL</Label>
                                 <Input
@@ -698,13 +698,13 @@ function AlbumArtwork({
             <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
               <ContextMenuItem>
-                <PlusCircle className="mr-2 h-4 w-4" />
+                <PlusCircle className="w-4 h-4 mr-2" />
                 New Playlist
               </ContextMenuItem>
               <ContextMenuSeparator />
               {playlists.map((playlist) => (
                 <ContextMenuItem key={playlist}>
-                  <ListMusic className="mr-2 h-4 w-4" /> {playlist}
+                  <ListMusic className="w-4 h-4 mr-2" /> {playlist}
                 </ContextMenuItem>
               ))}
             </ContextMenuSubContent>
@@ -718,7 +718,7 @@ function AlbumArtwork({
           <ContextMenuItem>Share</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
-      <div className="space-y-1 text-sm">
+      <div className="text-sm space-y-1">
         <h3 className="font-medium leading-none">{album.name}</h3>
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
           {album.artist}
@@ -738,8 +738,8 @@ export function DemoIndicator({ className }: DemoIndicatorProps) {
         className
       )}
     >
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-      <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
+      <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping bg-emerald-400" />
+      <span className="relative inline-flex w-3 h-3 rounded-full bg-emerald-500" />
     </span>
   )
 }

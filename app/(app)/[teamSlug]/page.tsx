@@ -3,10 +3,7 @@ import { notFound, redirect } from "next/navigation"
 import { db } from "@/prisma/db"
 
 import { getSession } from "@/lib/auth"
-import { Navbar } from "@/components/navbar"
 import { PageHeader } from "@/components/page-header"
-import { Button } from "@/components/ui/button"
-import { NavLink } from "./[channelName]/nav-link"
 
 export default async function Teampage(props: {
   params: { teamSlug: string }
@@ -40,20 +37,12 @@ export default async function Teampage(props: {
       <PageHeader
         title={team.name}
         description="API Keys"
-        actions={[
-          <Link href={`/${props.params.teamSlug}/apikeys`}>
-            <Button variant="ghost">API Keys</Button>
-          </Link>,
-          <Link href={`/${props.params.teamSlug}/`}>
-            <Button variant="default">Home</Button>
-          </Link>,
-        ]}
       />
 
-      <div className="py-6 h-full mt-8 flex items-center justify-between"></div>
+      {/* <div className="flex items-center justify-between h-full py-6 mt-8"></div>
 
       <div>
-        <pre className="font-mono whitespace-pre mt-20 border border-neutral-300 rounded-md p-4">
+        <pre className="p-4 mt-20 font-mono whitespace-pre border border-neutral-300 rounded-md">
           {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup' \\
 -H 'Authorization: Bearer ${team.apikeys.at(0)?.keyHash}' \\
 -H 'Content-Type: application/json' \\
@@ -64,7 +53,7 @@ export default async function Teampage(props: {
 }'
 `}
         </pre>
-      </div>
+      </div> */}
     </div>
   )
 }

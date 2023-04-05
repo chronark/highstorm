@@ -27,7 +27,7 @@ export function MobileNav() {
           variant="ghost"
           className="-ml-4 text-base hover:bg-transparent focus:ring-0  focus:ring-offset-0 md:hidden"
         >
-          <Icons.logo className="mr-2 h-4 w-4" />{" "}
+          <Icons.logo className="w-4 h-4 mr-2" />{" "}
           <span className="font-bold">Menu</span>
         </Button>
       </DropdownMenuTrigger>
@@ -39,7 +39,7 @@ export function MobileNav() {
       >
         <DropdownMenuItem asChild>
           <Link href="/" className="flex items-center">
-            <Icons.logo className="mr-2 h-4 w-4" /> {siteConfig.name}
+            <Icons.logo className="w-4 h-4 mr-2" /> {siteConfig.name}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

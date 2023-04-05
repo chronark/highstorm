@@ -72,7 +72,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                     runCommand(() => router.push(navItem.href as string))
                   }}
                 >
-                  <File className="mr-2 h-4 w-4" />
+                  <File className="w-4 h-4 mr-2" />
                   {navItem.title}
                 </CommandItem>
               ))}
@@ -87,8 +87,8 @@ export function CommandMenu({ ...props }: DialogProps) {
                     runCommand(() => router.push(doc.slug))
                   }}
                 >
-                  <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                    <Circle className="h-3 w-3" />
+                  <div className="flex items-center justify-center w-4 h-4 mr-2">
+                    <Circle className="w-3 h-3" />
                   </div>
                   {doc.title}
                 </CommandItem>
@@ -97,15 +97,15 @@ export function CommandMenu({ ...props }: DialogProps) {
           <CommandSeparator />
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <SunMedium className="mr-2 h-4 w-4" />
+              <SunMedium className="w-4 h-4 mr-2" />
               Light
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <Moon className="mr-2 h-4 w-4" />
+              <Moon className="w-4 h-4 mr-2" />
               Dark
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <Laptop className="mr-2 h-4 w-4" />
+              <Laptop className="w-4 h-4 mr-2" />
               System
             </CommandItem>
           </CommandGroup>

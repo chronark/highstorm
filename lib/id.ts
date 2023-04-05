@@ -34,7 +34,9 @@ export class IdGenerator<TPrefixes extends string> {
 }
 
 export const newId = new IdGenerator({
+  destination: "dest",
   channel: "chan",
+  report: "rep",
   session: "sess",
   event: "evt",
   user: "user",

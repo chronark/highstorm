@@ -5,6 +5,7 @@ specifiers:
   '@chronark/prefixed-id': ^0.4.1
   '@faker-js/faker': ^7.6.0
   '@headlessui/react': ^1.7.13
+  '@hookform/resolvers': ^3.0.1
   '@ianvs/prettier-plugin-sort-imports': ^3.7.2
   '@next/font': ^13.1.6
   '@prisma/client': ^4.12.0
@@ -42,6 +43,7 @@ specifiers:
   '@types/node': ^18.15.11
   '@types/react': ^18.0.32
   '@types/react-dom': ^18.0.11
+  '@upstash/qstash': ^0.3.6
   '@vercel/analytics': ^0.1.11
   autoprefixer: ^10.4.14
   base-x: ^4.0.0
@@ -78,6 +80,7 @@ dependencies:
   '@ant-design/plots': 1.2.5_biqbaboplfbrettd7655fr4n2y
   '@chronark/prefixed-id': 0.4.1
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
+  '@hookform/resolvers': 3.0.1_react-hook-form@7.43.9
   '@next/font': 13.2.4
   '@prisma/client': 4.12.0
   '@radix-ui/react-accessible-icon': 1.0.2_biqbaboplfbrettd7655fr4n2y
@@ -111,6 +114,7 @@ dependencies:
   '@trpc/client': 10.18.0_@trpc+server@10.18.0
   '@trpc/next': 10.18.0_fk7ybuwqrs7skzzxcj6wjc5c3i
   '@trpc/server': 10.18.0
+  '@upstash/qstash': 0.3.6
   '@vercel/analytics': 0.1.11_react@18.2.0
   base-x: 4.0.0
   class-variance-authority: 0.5.1_typescript@5.0.3
@@ -542,6 +546,10 @@ packages:
     resolution: {integrity: sha512-YnGtWu3SrYV0iiln3HFVFg7Ei15mUt1zsBXcYQ1K3IL2IinG+hJL/5UAncLgwIcsOKf9HXnguIgG1W6mWQwbrg==}
     dev: false
 
+  /@deno/shim-crypto/0.3.1:
+    resolution: {integrity: sha512-ed4pNnfur6UbASEgF34gVxR9p7Mc3qF+Ygbmjiil8ws5IhNFhPDFy5vE5hQAUA9JmVsSxXPcVLM5Rf8LOZqQ5Q==}
+    dev: false
+
   /@eslint-community/eslint-utils/4.4.0_eslint@8.37.0:
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -618,6 +626,14 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@hookform/resolvers/3.0.1_react-hook-form@7.43.9:
+    resolution: {integrity: sha512-n5oOt0cLw9mQNW3/k9zWaPsNWQcc0k6Jpc7XUrg2Q/AqqsHp3IVa1juqHCxczXI6uXHBa69ILc4pdtsRGyuzsw==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.43.9_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -2002,6 +2018,12 @@ packages:
       '@typescript-eslint/types': 5.57.1
       eslint-visitor-keys: 3.4.0
     dev: true
+
+  /@upstash/qstash/0.3.6:
+    resolution: {integrity: sha512-NKN4jbPhB5lfHoSIaU7AuQ3F+yGS20e/FBRiUuPetcKoi354wHhKj9AJFfkFT5SSeLq0XEsXRNynm8gqCS4HjQ==}
+    dependencies:
+      '@deno/shim-crypto': 0.3.1
+    dev: false
 
   /@vercel/analytics/0.1.11_react@18.2.0:
     resolution: {integrity: sha512-mj5CPR02y0BRs1tN3oZcBNAX9a8NxsIUl9vElDPcqxnMfP0RbRc9fI9Ud7+QDg/1Izvt5uMumsr+6YsmVHcyuw==}

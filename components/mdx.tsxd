@@ -129,7 +129,7 @@ const components = {
     />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-y-auto">
+    <div className="w-full my-6 overflow-y-auto">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
@@ -225,7 +225,7 @@ const components = {
   ComponentSource,
   CodeBlockWrapper: ({ ...props }) => (
     <CodeBlockWrapper
-      className="rounded-md border border-neutral-100"
+      className="border rounded-md border-neutral-100"
       {...props}
     />
   ),

@@ -36,13 +36,6 @@ export const authOptions: NextAuthOptions = {
                   name,
                   slug,
                   plan: "FREE",
-                  apikeys: {
-                    create: {
-                      id: newId("apiKey"),
-                      name: "default",
-                      keyHash: newId("apiKey"),
-                    },
-                  },
                 },
               },
             },

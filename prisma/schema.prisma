@@ -151,14 +151,49 @@ model Channel {
   updatedAt DateTime @updatedAt
 
   teamId String
-  team   Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
   //  Some custom value the user wants to track
   valueName String?
 
+  reports          Report[]
+
   @@unique([teamId, name])
 }
 
+model Report {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lastRunAt DateTime?
+
+  cron String
+  // The schedule id from QStash
+  scheduleId String @unique
+  // How much data to look at in hours
+  timeframe Int
+
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+
+  slackDestinations SlackSubscription[]
+
+  @@index([channelId])
+}
+
+// A slack channel where reports are posted
+model SlackSubscription {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  url       String
+  report   Report? @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId String?
+
+  @@index([reportId])
+}
 
 model ApiKey {
   id        String   @id
@@ -168,9 +203,9 @@ model ApiKey {
   teamId String
   team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
 
-  name    String
-  keyHash String @unique
-  lastCharacters   String?
+  name           String
+  keyHash        String  @unique
+  lastCharacters String?
 
   @@index([teamId])
 }

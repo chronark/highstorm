@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         className={[inter.variable, calSans.variable].join(" ")}
       >
         <head />
-        <body className="min-h-screen bg-white  text-neutral-900 antialiased dark:bg-neutral-900 dark:text-neutral-50">
+        <body className="min-h-screen antialiased bg-white  text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ToastProvider>{children}</ToastProvider>
             <TailwindIndicator />

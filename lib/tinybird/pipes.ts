@@ -22,6 +22,24 @@ export const getChannelActivity = tb.buildPipe({
   }),
 })
 
+
+export const getEventCount = tb.buildPipe({
+  pipe: "get_event_count__v1",
+  parameters: z.object({
+    channelId: z.string().optional(),
+    start: z.number(),
+    end: z.number()
+  }),
+  data: z.object({
+    count: z
+      .number()
+      .nullable()
+      .optional()
+      .transform((v) => (typeof v === "number" ? v : 0)),
+  }),
+})
+
+
 export const getEvents = tb.buildPipe({
   pipe: "get_events__v1",
   parameters: z.object({

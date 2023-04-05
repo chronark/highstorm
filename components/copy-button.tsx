@@ -56,9 +56,9 @@ export function CopyButton({
     >
       <span className="sr-only">Copy</span>
       {hasCopied ? (
-        <Icons.check className="h-4 w-4" />
+        <Icons.check className="w-4 h-4" />
       ) : (
-        <Icons.copy className="h-4 w-4" />
+        <Icons.copy className="w-4 h-4" />
       )}
     </button>
   )
@@ -99,19 +99,19 @@ export function CopyWithClassNames({
         {...props}
       >
         {hasCopied ? (
-          <Icons.check className="h-4 w-4" />
+          <Icons.check className="w-4 h-4" />
         ) : (
-          <Icons.copy className="h-4 w-4" />
+          <Icons.copy className="w-4 h-4" />
         )}
         <span className="sr-only">Copy</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => copyToClipboard(value)}>
-          <Icons.react className="mr-2 h-4 w-4" />
+          <Icons.react className="w-4 h-4 mr-2" />
           <span>Component</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => copyToClipboard(classNames)}>
-          <Icons.tailwind className="mr-2 h-4 w-4" />
+          <Icons.tailwind className="w-4 h-4 mr-2" />
           <span>Classname</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -36,20 +36,20 @@ export default function AnalyticsPage(props: {
   }, [activity.error])
 
   return (
-    <div className="flex flex-col gap-8 mt-8">
-      <div className="border border-neutral-300 rounded-md bg-white p-2">
-        <span className="text-neutral-600 text-sm font-medium p-2">
+    <div className="flex flex-col mt-8 gap-8">
+      <div className="p-2 bg-white border border-neutral-300 rounded-md">
+        <span className="p-2 text-sm font-medium text-neutral-600">
           Events per Day
         </span>
         <div className="h-32">
           <EventsPerDay data={activity.data?.data ?? []} />
         </div>
       </div>
-      <div className="border border-neutral-300 rounded-md bg-white p-2">
-        <span className="text-neutral-600 text-sm font-medium p-2">
+      <div className="p-2 bg-white border border-neutral-300 rounded-md">
+        <span className="p-2 text-sm font-medium text-neutral-600">
           Total Events
         </span>
-        <div className="h-32 inset-x-0">
+        <div className="inset-x-0 h-32">
           <CumulativeEventsPerday data={activity.data?.data ?? []} />
         </div>
       </div>

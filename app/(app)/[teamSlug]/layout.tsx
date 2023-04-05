@@ -84,7 +84,7 @@ export default async function RootLayout({
     user.teams.find((team) => team.team.slug === params.teamSlug)?.team
       .channels ?? []
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex flex-col min-h-screen ">
       <div className="container">
         <div className="transition-all dark:bg-neutral-900">
           <div className="grid grid-cols-4 xl:grid-cols-5">
@@ -97,38 +97,38 @@ export default async function RootLayout({
               </div>
               <div className="space-y-4">
                 {/* <div className="px-6 py-2">
-                            <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                            <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">
                                 Discover
                             </h2>
                             <div className="space-y-1">
                                 <Button
                                     variant="subtle"
                                     size="sm"
-                                    className="w-full justify-start"
+                                    className="justify-start w-full"
                                 >
-                                    <PlayCircle className="mr-2 h-4 w-4" />
+                                    <PlayCircle className="w-4 h-4 mr-2" />
                                     Listen Now
                                 </Button>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="w-full justify-start"
+                                    className="justify-start w-full"
                                 >
-                                    <LayoutGrid className="mr-2 h-4 w-4" />
+                                    <LayoutGrid className="w-4 h-4 mr-2" />
                                     Browse
                                 </Button>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="w-full justify-start"
+                                    className="justify-start w-full"
                                 >
-                                    <Radio className="mr-2 h-4 w-4" />
+                                    <Radio className="w-4 h-4 mr-2" />
                                     Radio
                                 </Button>
                             </div>
                         </div> */}
                 <div className="px-6 py-2">
-                  <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                  <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">
                     {/* Events */}
                   </h2>
                   <div className="space-y-1">
@@ -136,9 +136,9 @@ export default async function RootLayout({
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="w-full justify-start"
+                        className="justify-start w-full"
                       >
-                        <FormInput className="mr-2 h-4 w-4" />
+                        <FormInput className="w-4 h-4 mr-2" />
                         Stream
                       </Button>
                     </Link>
@@ -146,18 +146,18 @@ export default async function RootLayout({
                       variant="ghost"
                       disabled
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <Filter className="mr-2 h-4 w-4" />
+                      <Filter className="w-4 h-4 mr-2" />
                       Filter
                     </Button>
                     <Button
                       variant="ghost"
                       disabled
                       size="sm"
-                      className="w-full justify-start"
+                      className="justify-start w-full"
                     >
-                      <BarChart className="mr-2 h-4 w-4" />
+                      <BarChart className="w-4 h-4 mr-2" />
                       Analytics
                     </Button>
                   </div>
@@ -167,7 +167,7 @@ export default async function RootLayout({
                     Events
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
-                    <div className="space-y-1 p-2">
+                    <div className="p-2 space-y-1">
                       {channels.map((channel) => (
                         <ChannelLink
                           key={channel.name}
@@ -183,7 +183,7 @@ export default async function RootLayout({
                     Teams
                   </h2>
                   <ScrollArea className="h-[230px] px-4">
-                    <div className="space-y-1 p-2">
+                    <div className="p-2 space-y-1">
                       {user.teams
                         .map((t) => t.team)
                         .map((team) => (
@@ -195,7 +195,7 @@ export default async function RootLayout({
                                   : "ghost"
                               }
                               size="sm"
-                              className="w-full justify-start font-normal"
+                              className="justify-start w-full font-normal"
                             >
                               {team.name}
                             </Button>
@@ -206,7 +206,7 @@ export default async function RootLayout({
                 </div>
               </div>
             </aside>
-            <main className="col-span-3 border-l border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
+            <main className="border-l col-span-3 border-l-neutral-200 dark:border-l-neutral-700 xl:col-span-4">
               <div className="h-full px-8 py-6 space-y-8">
                 <Navbar
                   team={{

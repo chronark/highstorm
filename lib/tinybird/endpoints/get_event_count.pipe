@@ -1,0 +1,11 @@
+VERSION 1
+
+NODE endpoint
+SQL >
+%
+SELECT count() AS count
+FROM events__v1
+WHERE
+    channelId = {{ String(channelId, required=True) }}
+    AND time >= fromUnixTimestamp64Milli({{ Int64(start, required=True) }})
+    AND time <= fromUnixTimestamp64Milli({{ Int64(end, required=True) }})

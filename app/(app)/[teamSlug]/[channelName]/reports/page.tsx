@@ -4,49 +4,60 @@ import { db } from "@/prisma/db"
 
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
-import { DeleteChannelButton } from "../[channelName]/deleteChannelButton"
-import { NavLink } from "../[channelName]/nav-link"
-import { CreateKeyButton } from "./create-key"
-import { DeleteKeyButton } from "./delete-key"
+import { DeleteReportButton } from "./deleteReportButton"
+import { getSession } from "@/lib/auth"
 
-export default async function Page(props: { params: { teamSlug: string } }) {
-  const team = await db.team.findUnique({
+export default async function Page(props: { params: { teamSlug: string, channelName: string } }) {
+  const { session } = await getSession()
+  if (!session) {
+    return notFound()
+  }
+  const channel = await db.channel.findFirst({
     where: {
-      slug: props.params.teamSlug,
+      AND: {
+        name: props.params.channelName,
+        team: {
+          slug: props.params.teamSlug,
+          members: {
+            some: {
+              userId: session.user.id
+            }
+          }
+        }
+      }
+
     },
     include: {
-      apikeys: true,
-    },
+      reports: true,
+      team: {
+        include: {
+          members: true,
+        }
+      }
+    }
   })
-  if (!team) {
+  if (!channel) {
     return notFound()
   }
 
   return (
-    <div className="">
-      <PageHeader
-        title={team.name}
-        description="API Keys"
-        actions={[<CreateKeyButton teamId={team.id} />]}
-      />
+    <div className="mt-8">
+     
       <ul role="list" className="space-y-4">
-        {team.apikeys.map((key) => (
+        {channel.reports.map((report) => (
           <li
-            key={key.id}
+            key={report.id}
             className="flex items-center justify-between p-4 border rounded border-neutral-200"
           >
             <div>
-              <span className="px-2 py-1 font-mono text-sm border rounded  bg-neutral-50 border-neutral-200 min-w-max">
-                api_XXXXXXXXXXXX{key.lastCharacters}
+              <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max">
+                {report.cron}
               </span>
               <p className="mx-1 mt-2 text-xs text-neutral-500">
-                Created on{" "}
-                <time dateTime={key.createdAt.toISOString()}>
-                  {key.createdAt.toUTCString()}
-                </time>
+               Covering the last {report.timeframe} hours
               </p>
             </div>
-            <DeleteKeyButton keyId={key.id} />
+            <DeleteReportButton reportId={report.id} />
 
             {/* ">
                             <div className="px-4 py-4 sm:px-6">
