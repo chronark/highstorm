@@ -6,6 +6,9 @@ import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { DeleteReportButton } from "./deleteReportButton"
 import { getSession } from "@/lib/auth"
+import { EmptyState } from "@/components/empty-state"
+import { CreateReportButton } from "../createReportButton"
+import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu"
 
 export default async function Page(props: { params: { teamSlug: string, channelName: string } }) {
   const { session } = await getSession()
@@ -40,26 +43,31 @@ export default async function Page(props: { params: { teamSlug: string, channelN
     return notFound()
   }
 
+
   return (
     <div className="mt-8">
-     
-      <ul role="list" className="space-y-4">
-        {channel.reports.map((report) => (
-          <li
-            key={report.id}
-            className="flex items-center justify-between p-4 border rounded border-neutral-200"
-          >
-            <div>
-              <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max">
-                {report.cron}
-              </span>
-              <p className="mx-1 mt-2 text-xs text-neutral-500">
-               Covering the last {report.timeframe} hours
-              </p>
-            </div>
-            <DeleteReportButton reportId={report.id} />
+      {channel.reports.length === 0 ? <EmptyState
+        title="No reports yet"
+        description="Create your first report by clicking the menu button above"
+      /> :
 
-            {/* ">
+        <ul role="list" className="space-y-4">
+          {channel.reports.map((report) => (
+            <li
+              key={report.id}
+              className="flex items-center justify-between p-4 border rounded border-neutral-200"
+            >
+              <div>
+                <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max">
+                  {report.cron}
+                </span>
+                <p className="mx-1 mt-2 text-xs text-neutral-500">
+                  Covering the last {report.timeframe} hours
+                </p>
+              </div>
+              <DeleteReportButton reportId={report.id} />
+
+              {/* ">
                             <div className="px-4 py-4 sm:px-6">
                                 <div className="flex items-center justify-between">
                                     <p className="text-sm font-medium truncate text-emerald-600">{key.name}</p>
@@ -80,9 +88,11 @@ export default async function Page(props: { params: { teamSlug: string, channelN
                                 </div>
                             </div>
                         </div> */}
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      }
+
     </div>
   )
 }

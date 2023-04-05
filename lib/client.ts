@@ -48,7 +48,7 @@ export async function highstorm(
     }
     try {
 
-        const baseUrl = opts?.url ?? "https://highstorm.vercel.app/api"
+        const baseUrl = opts?.url ?? process.env.HIGHSTORM_URL ?? "https://highstorm.vercel.app/api"
         const res = await fetch(
             `${baseUrl}/v1/events/${channel}`,
             {

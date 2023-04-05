@@ -49,12 +49,14 @@ export const eventRouter = t.router({
         since: input.since,
       })
     }),
-  dailyActivity: t.procedure
+  channelActivity: t.procedure
     .input(
       z.object({
         teamSlug: z.string(),
         channelName: z.string().optional(),
-        since: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        start: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        end: z.number().optional(),
+        granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]).default("1h")
       })
     )
     .query(async ({ input, ctx }) => {
@@ -89,8 +91,9 @@ export const eventRouter = t.router({
       return getChannelActivity({
         teamId: team.id,
         channelId: channel?.id,
-        since: input.since,
-        granularity: "1d",
+        start: input.start,
+        end: input.end,
+        granularity: input.granularity
       })
     }),
 })

@@ -35,25 +35,24 @@ export default async function Teampage(props: {
   return (
     <div>
       <PageHeader
-        title={team.name}
-        description="API Keys"
+        title="Welcome to Highstorm"
+         description="You can create a new API key by clicking on the profile picture in the top right corner. Afterwards, you can use the API key to send events to Highstorm."
       />
 
-      {/* <div className="flex items-center justify-between h-full py-6 mt-8"></div>
 
       <div>
-        <pre className="p-4 mt-20 font-mono whitespace-pre border border-neutral-300 rounded-md">
+        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300">
           {`curl 'https://highstorm.vercel.app/api/v1/events/users.signup' \\
--H 'Authorization: Bearer ${team.apikeys.at(0)?.keyHash}' \\
--H 'Content-Type: application/json' \\
--d '{
-"event": "${user?.name} has signed up",
-"content": "A new user has signed up",
-"metadata": {"userId": "${user?.id}"}
-}'
+  -H 'Authorization: Bearer <HIGHSTORM_TOKEN>' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "event": "${user?.name} has signed up",
+    "content": "A new user has signed up",
+    "metadata": {"userId": "${user?.id}"}
+  }'
 `}
         </pre>
-      </div> */}
+      </div>
     </div>
   )
 }

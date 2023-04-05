@@ -6,21 +6,21 @@ import useSWR from "swr"
 
 import { trpc } from "@/lib/trpc"
 import { CumulativeEventsPerday, EventsPerDay } from "./charts"
+import { Loading } from "@/components/loading"
 
 export default function AnalyticsPage(props: {
   params: { teamSlug: string; channelName: string }
 }) {
   const d = new Date()
-  d.setUTCDate(1)
+  d.setUTCDate(d.getUTCDate() - 30)
   d.setUTCHours(0, 0, 0, 0)
-
   const activity = useSWR(
     {
       teamSlug: props.params.teamSlug,
       channelName: props.params.channelName,
-      since: d.getTime(),
+      start: d.getTime(),
     },
-    trpc.event.dailyActivity.query,
+    trpc.event.channelActivity.query,
     { refreshInterval: 15000 }
   )
   const { toast } = useToast()
@@ -36,21 +36,25 @@ export default function AnalyticsPage(props: {
   }, [activity.error])
 
   return (
-    <div className="flex flex-col mt-8 gap-8">
-      <div className="p-2 bg-white border border-neutral-300 rounded-md">
+    <div className="flex flex-col gap-8 mt-8">
+      <div className="p-2 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">
           Events per Day
         </span>
         <div className="h-32">
-          <EventsPerDay data={activity.data?.data ?? []} />
+          {activity.isLoading ? <Loading /> :
+            <EventsPerDay data={activity.data?.data ?? []} />
+          }
         </div>
       </div>
-      <div className="p-2 bg-white border border-neutral-300 rounded-md">
+      <div className="p-2 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">
           Total Events
         </span>
         <div className="inset-x-0 h-32">
-          <CumulativeEventsPerday data={activity.data?.data ?? []} />
+          {activity.isLoading ? <Loading /> :
+            <CumulativeEventsPerday data={activity.data?.data ?? []} />
+          }
         </div>
       </div>
     </div>

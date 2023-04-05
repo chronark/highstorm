@@ -5,12 +5,13 @@ import { Tinybird } from "./client"
 const tb = new Tinybird()
 
 export const getChannelActivity = tb.buildPipe({
-  pipe: "get_channel_activity__v1",
+  pipe: "get_channel_activity__v2",
   parameters: z.object({
     teamId: z.string(),
     channelId: z.string().optional(),
-    since: z.number(),
-    granularity: z.enum(["1d", "1h"]),
+    start: z.number(),
+    end: z.number().optional(),
+    granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]),
   }),
   data: z.object({
     time: z.string().transform((s) => new Date(s).getTime()),

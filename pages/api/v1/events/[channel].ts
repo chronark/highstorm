@@ -6,6 +6,7 @@ import { z } from "zod"
 import { InMemoryCache } from "@/lib/cache"
 import { newId } from "@/lib/id"
 import { publishEvent } from "@/lib/tinybird"
+import { highstorm } from "@/lib/client"
 
 const headerValidation = z.object({
   "content-type": z.literal("application/json"),
@@ -94,6 +95,15 @@ export default async function handler(
               },
             },
           },
+        })
+        await highstorm("channel.created", {
+          event: "A new channel has been created",
+          content: `${apiKey.team.name} has created ${channel.name}`,
+          metadata: {
+            teamId: apiKey.team.id,
+            channelId: channel.id,
+            channelName: channel.name
+          }
         })
       }
 

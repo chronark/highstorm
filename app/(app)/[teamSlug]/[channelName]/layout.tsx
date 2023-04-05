@@ -51,6 +51,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { DeleteChannelButton } from "./deleteChannelButton"
 import { CreateReportButton } from "./createReportButton"
+import { Navbar } from "./navbar"
 
 export default async function Layout(props: {
   params: { teamSlug: string; channelName: string }
@@ -91,26 +92,10 @@ export default async function Layout(props: {
             {channel.description}
           </p>
         </div>
-        <div className="flex items-center justify-between gap-4">
-        <NavLink
-            href={`/${props.params.teamSlug}/${props.params.channelName}/reports`}
-            segment="reports"
-          >
-            Reports
-          </NavLink>
-          <NavLink
-            href={`/${props.params.teamSlug}/${props.params.channelName}`}
-            segment={null}
-          >
-            Analytics
-          </NavLink>
-          <NavLink
-            href={`/${props.params.teamSlug}/${props.params.channelName}/logs`}
-            segment="logs"
-          >
-            Logs
-          </NavLink>
 
+        <div className="flex items-center justify-between gap-4">
+       <Navbar channelName={channel.name} teamSlug={channel.team.slug}/>
+         
           <Dialog>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

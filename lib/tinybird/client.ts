@@ -47,8 +47,9 @@ export class Tinybird {
       }
       url.searchParams.set(key, value.toString())
     }
-    // url.searchParams.set("cache_buster", Math.random().toString());
-    url.searchParams.set("token", this.token)
+    // url.searchParams.set("token", this.token)
+
+    // console.log(url.toString())
     const res = await fetch(url, {
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -90,6 +91,7 @@ export class Tinybird {
         }
         validatedParams = v.data
       }
+
 
       const res = await this.fetch(req.pipe, validatedParams, req.opts)
       const validatedResponse = outputSchema.safeParse(res)

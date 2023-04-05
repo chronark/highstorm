@@ -1,20 +1,30 @@
-VERSION 1
+VERSION 2
 
 NODE endpoint
 SQL >
 %
 SELECT
     count() AS count,
-    {% if defined(granularity) and granularity == "1h" %}
+    {% if defined(granularity) and granularity == "1m" %}
+        toStartOfMonth(time) as time
+    {% elif defined(granularity) and granularity == "1w" %}
+        toStartOfWeek(time) as time
+    {% elif defined(granularity) and granularity == "1d" %}
+        toStartOfDay(time) as time
+    {% elif defined(granularity) and granularity == "1h" %}
         toStartOfHour(time) as time
-    {% else %} toStartOfDay(time) as time
+    {% else %} 
+        toStartOfMinute(time) as time
     {% end %}
 FROM events__v1
 
 WHERE
-    teamId = {{ String(teamId, required=True)}} AND
+    teamId = {{ String(teamId, required=True) }}
     {% if defined(channelId) %}
-        channelId = {{ String(channelId, required=True) }} AND
+       AND channelId = {{ String(channelId, required=True) }}
     {% end %}
-    time >= fromUnixTimestamp64Milli({{ Int64(since, required=True) }})
+    AND time >= fromUnixTimestamp64Milli({{ Int64(start, required=True) }})
+    {% if defined(end) %}
+        AND time <= fromUnixTimestamp64Milli({{ Int64(end) }})
+    {% end %}
 GROUP BY time

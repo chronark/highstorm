@@ -14,8 +14,8 @@ export default function StreamsPage(props: { params: { teamSlug: string } }) {
   d.setUTCHours(0, 0, 0, 0)
 
   const activity = useSWR(
-    { teamSlug: props.params.teamSlug, since: d.getTime() },
-    trpc.event.dailyActivity.query,
+    { teamSlug: props.params.teamSlug, start: d.getTime() },
+    trpc.event.channelActivity.query,
     { refreshInterval: 15000 }
   )
   const { toast } = useToast()
@@ -42,7 +42,7 @@ export default function StreamsPage(props: { params: { teamSlug: string } }) {
           </p>
         </div>
       </div>
-      <div className="p-2 mt-8 bg-white border border-neutral-300 rounded-md">
+      <div className="p-2 mt-8 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">
           Total Events
         </span>
