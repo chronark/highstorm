@@ -43,12 +43,12 @@ import {
 type Props = {
   team: {
     slug: string
-  }
+  } 
   user: {
     id: string
     name: string
     image: string | null
-  }
+  } 
 }
 
 export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {

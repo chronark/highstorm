@@ -7,12 +7,12 @@ export interface NavItem {
   external?: boolean
   icon?: keyof typeof Icons
   label?: string
+
 }
 
 export interface NavItemWithChildren extends NavItem {
-  items: NavItemWithChildren[]
+  items?: NavItemWithChildren[]
 }
 
-export interface MainNavItem extends NavItem {}
-
-export interface SidebarNavItem extends NavItemWithChildren {}
+export type MainNavItem = NavItem
+export type SidebarNavItem = NavItemWithChildren

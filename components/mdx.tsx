@@ -1,22 +1,22 @@
 import * as React from "react"
 import Image from "next/image"
 import { useMDXComponent } from "next-contentlayer/hooks"
-import { NpmCommands } from "types/unist"
 
 import { cn } from "@/lib/utils"
 import { Callout } from "@/components/callout"
 import { Card } from "@/components/card"
 import { CodeBlockWrapper } from "@/components/code-block-wrapper"
-import { ComponentExample } from "@/components/component-example"
-import { ComponentSource } from "@/components/component-source"
-import { CopyButton, CopyNpmCommandButton } from "@/components/copy-button"
-import { examples } from "@/components/examples"
+import { CopyButton } from "@/components/copy-button"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Properties,Property } from "./docs/mdx"
+import { Code,CodeGroup } from "./docs/code"
+import { Col,Row } from "./docs/mdx"
+
 
 const components = {
   Accordion,
@@ -163,9 +163,6 @@ const components = {
   pre: ({
     className,
     __rawString__,
-    __npmCommand__,
-    __pnpmCommand__,
-    __yarnCommand__,
     __withMeta__,
     __src__,
     ...props
@@ -173,7 +170,7 @@ const components = {
     __rawString__?: string
     __withMeta__?: boolean
     __src__?: string
-  } & NpmCommands) => {
+  }) => {
     return (
       <>
         <pre
@@ -183,7 +180,7 @@ const components = {
           )}
           {...props}
         />
-        {__rawString__ && !__npmCommand__ && (
+        {__rawString__ && (
           <CopyButton
             value={__rawString__}
             src={__src__}
@@ -193,19 +190,7 @@ const components = {
             )}
           />
         )}
-        {__npmCommand__ && __yarnCommand__ && __pnpmCommand__ && (
-          <CopyNpmCommandButton
-            commands={{
-              __npmCommand__,
-              __pnpmCommand__,
-              __yarnCommand__,
-            }}
-            className={cn(
-              "absolute top-4 right-4 border-none text-neutral-300 opacity-50 hover:bg-transparent hover:opacity-100",
-              __withMeta__ && "top-20"
-            )}
-          />
-        )}
+
       </>
     )
   },
@@ -221,15 +206,17 @@ const components = {
   Image,
   Callout,
   Card,
-  ComponentExample,
-  ComponentSource,
   CodeBlockWrapper: ({ ...props }) => (
     <CodeBlockWrapper
       className="border rounded-md border-neutral-100"
       {...props}
     />
   ),
-  ...examples,
+  Properties,
+  Property,
+  Code,CodeGroup,
+  Col
+,Row
 }
 
 interface MdxProps {

@@ -1,10 +1,15 @@
 import { allDocuments } from "contentlayer/generated"
-import * as z from "zod"
 
 import { siteConfig } from "@/config/site"
-import { absoluteUrl } from "@/lib/utils"
-import { ogImageSchema } from "@/lib/validations/og"
 
+import {z} from "zod"
+
+
+const ogImageSchema = z.object({
+  heading: z.string(),
+  type: z.string(),
+  mode: z.enum(["light", "dark"]).default("dark"),
+})
 interface MdxHeadProps {
   params: {
     slug?: string[]
@@ -21,7 +26,7 @@ export default function MdxHead({ params, og }: MdxHeadProps) {
   }
 
   const title = `${mdxDoc.title} - ${siteConfig.name}`
-  const url = process.env.NEXT_PUBLIC_APP_URL
+  const url = process.env.NEXT_PUBLIC_APP_URL ?? "localhost:3000"
   const ogUrl = new URL(`${url}/og.jpg`)
 
   const ogTitle = og?.heading || mdxDoc.title
@@ -30,7 +35,7 @@ export default function MdxHead({ params, og }: MdxHeadProps) {
   return (
     <>
       <title>{title}</title>
-      <link rel="canonical" href={absoluteUrl(mdxDoc.slug)} />
+      <link rel="canonical" href={`${process.env.NEXT_PUBLIC_APP_URL}/${mdxDoc.slug}`} />
       <meta name="description" content={ogDescription} />
       <meta charSet="utf-8" />
       <link

@@ -56,9 +56,12 @@
     "class-variance-authority": "^0.5.1",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
+    "contentlayer": "^0.3.1",
+    "framer-motion": "^10.11.2",
     "lucide-react": "0.130.0",
     "next": "^13.1.6",
     "next-auth": "^4.21.0",
+    "next-contentlayer": "^0.3.1",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -71,7 +74,8 @@
     "tailwind-merge": "^1.11.0",
     "tailwindcss-animate": "^1.0.5",
     "y": "^0.3.2",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -80,14 +84,26 @@
     "@types/react": "^18.0.32",
     "@types/react-dom": "^18.0.11",
     "autoprefixer": "^10.4.14",
+    "esbuild": "^0.17.15",
     "eslint": "^8.37.0",
     "eslint-config-next": "13.2.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.10.3",
+    "mdast-util-toc": "^6.1.1",
     "postcss": "^8.4.14",
     "prettier": "^2.8.7",
+    "rehype": "^12.0.1",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-pretty-code": "^0.9.4",
+    "rehype-slug": "^5.1.0",
+    "remark": "^14.0.2",
+    "remark-code-import": "^1.1.1",
+    "remark-gfm": "^3.0.1",
+    "shiki": "^0.14.1",
     "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "unist-builder": "^3.0.1",
+    "unist-util-visit": "^4.1.2"
   }
 }

@@ -1,8 +1,10 @@
+import { withContentlayer } from 'next-contentlayer'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["images.unsplash.com", "avatars.githubusercontent.com",],
+    domains: ["avatars.githubusercontent.com",],
   },
   experimental: {
     esmExternals: "loose",
@@ -16,4 +18,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withContentlayer(nextConfig)

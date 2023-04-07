@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { SidebarNavItem } from "types/nav"
+import { NavItem, SidebarNavItem } from "types/nav"
 
 import { cn } from "@/lib/utils"
 
@@ -15,62 +15,94 @@ export function DocsSidebarNav({ items }: DocsSidebarNavProps) {
 
   return items.length ? (
     <div className="w-full">
-      {items.map((item, index) => (
-        <div key={index} className={cn("pb-6")}>
-          <h4 className="px-2 py-1 mb-1 text-sm font-semibold rounded-md">
+      {items.map((item) => (
+        <div key={item.title} className={cn("pb-6")}>
+          <h4 className="px-2 py-1 mb-1 text-xs font-semibold rounded-md text-neutral-900 dark:text-white">
             {item.title}
           </h4>
-          {item?.items?.length && (
-            <DocsSidebarNavItems items={item.items} pathname={pathname} />
-          )}
+
+          <DocsSidebarNavItems items={item.items ?? []} />
         </div>
       ))}
     </div>
   ) : null
 }
 
-interface DocsSidebarNavItemsProps {
+type DocsSidebarNavItemsProps = {
   items: SidebarNavItem[]
-  pathname: string | null
 }
 
-export function DocsSidebarNavItems({
-  items,
-  pathname,
-}: DocsSidebarNavItemsProps) {
-  return items?.length ? (
-    <div className="text-sm grid grid-flow-row auto-rows-max">
-      {items.map((item, index) =>
-        item.href ? (
+export const DocsSidebarNavItems: React.FC<DocsSidebarNavItemsProps> = ({ items }) => {
+
+  return <div className="grid grid-flow-row text-sm auto-rows-max">
+    {items.map((item) => (
+      <div>
+        {item.href ? (
           <Link
-            key={index}
+            key={item.href}
             href={item.href}
-            className={cn(
-              "group flex w-full items-center rounded-md py-1.5 px-2 hover:bg-neutral-50 dark:hover:bg-neutral-800",
-              item.disabled && "cursor-not-allowed opacity-60",
-              {
-                "bg-neutral-100 dark:bg-neutral-800": pathname === item.href,
-              }
-            )}
+
             target={item.external ? "_blank" : ""}
             rel={item.external ? "noreferrer" : ""}
           >
-            {item.title}
-            {item.label && (
-              <span className="ml-2 rounded-md bg-teal-100 px-1.5 py-0.5 text-xs no-underline group-hover:no-underline dark:text-neutral-900">
-                {item.label}
-              </span>
-            )}
+            <Item item={item} />
           </Link>
+
+
         ) : (
-          <span
-            key={index}
-            className="flex items-center w-full p-2 cursor-not-allowed rounded-md opacity-60 hover:underline"
-          >
-            {item.title}
-          </span>
-        )
+          <Item key={item.title} item={item} />
+        )}
+        {item.items?.map((subitem) =>
+          item.href ? (
+            <Link
+              key={subitem.href}
+              href={subitem.href!}
+            >
+              <SubItem item={subitem} />
+            </Link>
+          ) : (
+            <SubItem key={subitem.href} item={subitem} />
+          )
+
+        )}
+      </div>
+    ))}
+
+  </div >
+
+}
+
+
+const Item: React.FC<{ item: NavItem }> = ({ item }) => {
+  const pathname = usePathname()
+
+  return (
+    <span className={cn("flex justify-between gap-2 py-1 ml-2 px-3 text-sm transition border-l border-neutral-200 text-zinc-900 dark:text-white", {
+      "cursor-not-allowed opacity-60": item.disabled,
+      "bg-neutral-100 dark:bg-neutral-800 border-emerald-400": pathname === item.href,
+    }
+    )}> <span className="truncate">{item.title}</span></ span>
+  )
+
+
+}
+
+
+const SubItem: React.FC<{ item: NavItem }> = ({ item }) => {
+  const pathname = usePathname()
+
+  return (
+    <div
+      className={cn(
+        "border-l border-neutral-200 flex justify-between gap-2 py-1 pl-5 pr-3 text-sm transition ml-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white",
+        item.disabled && "cursor-not-allowed opacity-60",
+        {
+          "bg-neutral-100 dark:bg-neutral-800 border-emerald-400": pathname === item.href,
+        }
       )}
-    </div>
-  ) : null
+    >
+      <span className="truncate">{item.title}</span>
+      <span className="font-mono text-[0.625rem] font-semibold leading-6 text-zinc-400 dark:text-zinc-500">{item.label}</span>
+    </div>)
+
 }
