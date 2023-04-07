@@ -5,6 +5,7 @@ import Link from "next/link";
 import { redirect, useSelectedLayoutSegments } from "next/navigation";
 import { db } from "@/prisma/db";
 import {
+  Book,
   CreditCard,
   Key,
   Keyboard,
@@ -106,6 +107,12 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
                 <DropdownMenuItem>
                   <Key className="w-4 h-4 mr-2" />
                   <span>API Keys</span>
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/docs">
+                <DropdownMenuItem>
+                  <Book className="w-4 h-4 mr-2" />
+                  <span>Docs</span>
                 </DropdownMenuItem>
               </Link>
             </DropdownMenuGroup>
