@@ -171,15 +171,15 @@ export const navigation = [
   {
     title: "Guides",
     links: [
-      { title: "Introduction", href: "/docs" },
-      { title: "Authentication", href: "/docs/authentication" },
-      // { title: "Errors", href: "/docs/errors" },
-      { title: "Integrations", href: "/docs/integrations" },
+      { title: "Introduction", href: "/" },
+      { title: "Authentication", href: "/authentication" },
+      // { title: "Errors", href: "/errors" },
+      { title: "Integrations", href: "/integrations" },
     ],
   },
   {
     title: "Resources",
-    links: [{ title: "Events", href: "/docs/events" }],
+    links: [{ title: "Events", href: "/events" }],
   },
 ];
 

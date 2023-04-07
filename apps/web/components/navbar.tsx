@@ -109,7 +109,7 @@ export const Navbar: React.FC<PropsWithChildren<Props>> = ({ user, team }) => {
                   <span>API Keys</span>
                 </DropdownMenuItem>
               </Link>
-              <Link href="/docs">
+              <Link href="https://highstorm-docs.vercel.app/" target="_blank">
                 <DropdownMenuItem>
                   <Book className="w-4 h-4 mr-2" />
                   <span>Docs</span>

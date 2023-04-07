@@ -6,11 +6,6 @@ const nextConfig = {
   },
   rewrites: () => [
     {
-      source: "/docs/:path*",
-      destination: "https://highstorm-docs.vercel.app/docs/:path*",
-      basePath: false,
-    },
-    {
       source: "/:path*",
       has: [
         {
