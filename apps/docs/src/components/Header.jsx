@@ -65,8 +65,8 @@ export const Header = forwardRef(function Header({ className }, ref) {
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/home">Dashboard</TopLevelNavItem>
-            <TopLevelNavItem href="/support">Support</TopLevelNavItem>
+            <TopLevelNavItem href="https://highstorm.vercel.app/home">Dashboard</TopLevelNavItem>
+            <TopLevelNavItem href="https://highstorm.vercel.app/support">Support</TopLevelNavItem>
           </ul>
         </nav>
         <div className="hidden md:block md:h-5 md:w-px md:bg-neutral-900/10 md:dark:bg-white/15" />
