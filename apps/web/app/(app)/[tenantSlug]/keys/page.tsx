@@ -4,11 +4,17 @@ import { db } from "@/prisma/db";
 import { PageHeader } from "@/components/page-header";
 import { CreateKeyButton } from "./create-key";
 import { DeleteKeyButton } from "./delete-key";
+import { auth } from "@clerk/nextjs/app-beta";
 
 export default async function Page(props: { params: { tenantSlug: string } }) {
+  const { userId, orgId } = auth();
+  const tenantId = props.params.tenantSlug === "personal" ? userId : orgId;
+  if (!tenantId) {
+    return notFound();
+  }
   const tenant = await db.tenant.findUnique({
     where: {
-      slug: props.params.tenantSlug,
+      id: tenantId,
     },
     include: {
       apikeys: true,
