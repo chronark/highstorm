@@ -14,7 +14,7 @@ export const getChannelActivity = tb.buildPipe({
     granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]),
   }),
   data: z.object({
-    time: z.number(),
+    time: z.string().transform((t) => new Date(t).getTime()),
     count: z
       .number()
       .nullable()
@@ -45,6 +45,7 @@ export const getEvents = tb.buildPipe({
     tenantId: z.string(),
     channelId: z.string().optional(),
     since: z.number(),
+    limit: z.number().optional(),
   }),
   data: z.object({
     id: z.string(),

@@ -99,23 +99,37 @@ export class Tinybird {
     };
   }
 
-  public async publish<TEvent extends Record<string, unknown>>(
-    datasource: string,
-    payload: TEvent | TEvent[],
-  ): Promise<void> {
-    const url = new URL("/v0/events", this.baseUrl);
-    url.searchParams.set("name", datasource);
+  public buildIngestEndpoint<
+    TEvent extends Record<string, string | number | boolean | string[]>,
+  >(req: {
+    datasource: string;
+    event?: z.ZodSchema<TEvent>;
+  }): (event: TEvent) => Promise<void> {
+    return async (event: TEvent) => {
+      let validatedParams: TEvent | undefined = undefined;
+      if (req.event) {
+        const v = req.event.safeParse(event);
+        if (!v.success) {
+          throw new Error(v.error.message);
+        }
+        validatedParams = v.data;
+      }
 
-    const body = (Array.isArray(payload) ? payload : [payload])
-      .map((p) => JSON.stringify(p))
-      .join("\n");
-    const res = await fetch(url.toString(), {
-      method: "POST",
-      body,
-      headers: { Authorization: `Bearer ${this.token}` },
-    });
-    if (!res.ok) {
-      throw new Error(await res.text());
-    }
+      const url = new URL("/v0/events", this.baseUrl);
+      url.searchParams.set("name", req.datasource);
+
+      const body = (Array.isArray(event) ? event : [event])
+        .map((p) => JSON.stringify(p))
+        .join("\n");
+      const res = await fetch(url, {
+        method: "POST",
+        body,
+        headers: { Authorization: `Bearer ${this.token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Unable to ingest to ${req.datasource}: ${await res.text()}`);
+      }
+    };
   }
 }

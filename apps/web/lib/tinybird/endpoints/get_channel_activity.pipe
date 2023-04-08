@@ -17,14 +17,13 @@ SELECT
         toStartOfMinute(fromUnixTimestamp64Milli(time)) as time
     {% end %}
 FROM events__v1
-
 WHERE
     tenantId = {{ String(tenantId, required=True) }}
     {% if defined(channelId) %}
        AND channelId = {{ String(channelId, required=True) }}
     {% end %}
-    AND time >= {{ Int64(start, required=True) }}
+    AND time >= fromUnixTimestamp64Milli({{ Int64(start, required=True) }})
     {% if defined(end) %}
-        AND time <= {{ Int64(end) }}
+        AND time <= fromUnixTimestamp64Milli({{ Int64(end) }})
     {% end %}
 GROUP BY time

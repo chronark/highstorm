@@ -14,9 +14,9 @@ export default function AnalyticsPage(props: {
   const d = new Date();
   d.setUTCDate(d.getUTCDate() - 30);
   d.setUTCHours(0, 0, 0, 0);
+  console.log(d.getTime());
   const activity = useSWR(
     {
-      tenantSlug: props.params.tenantSlug,
       channelName: props.params.channelName,
       start: d.getTime(),
     },

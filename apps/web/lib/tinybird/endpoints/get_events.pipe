@@ -18,4 +18,7 @@ WHERE
         channelId = {{ String(channelId) }} AND
     {% end %}
     time >= {{ Int64(since, required=True) }}
-ORDER BY time DESC
+    ORDER BY time DESC
+    {% if defined(limit) %}
+        LIMIT {{ Int64(limit) }}
+    {% end %}

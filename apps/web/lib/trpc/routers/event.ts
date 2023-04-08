@@ -40,13 +40,13 @@ export const eventRouter = t.router({
         tenantId: tenant.id,
         channelId: channel.id,
         since: input.since,
+        limit: 1000,
       });
     }),
   channelActivity: t.procedure
     .use(auth)
     .input(
       z.object({
-        tenantSlug: z.string(),
         channelName: z.string().optional(),
         start: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
         end: z.number().optional(),
