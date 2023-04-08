@@ -8,7 +8,7 @@ const eventValidation = z.object({
   id: z.string(),
   tenantId: z.string(),
   channelId: z.string(),
-  time: z.date(),
+  time: z.number(),
   event: z.string(),
   content: z.string().optional().default(""),
   // Stringified json

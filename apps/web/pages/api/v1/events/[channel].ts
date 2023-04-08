@@ -113,7 +113,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       id,
       tenantId: cached.tenantId,
       channelId: cached.channelId,
-      time: new Date(body.data.time ?? Date.now()),
+      time: body.data.time ?? Date.now(),
       event: body.data.event,
       content: body.data.content ?? "",
       metadata: JSON.stringify(body.data.metadata ?? {}),

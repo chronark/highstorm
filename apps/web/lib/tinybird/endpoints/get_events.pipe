@@ -17,5 +17,5 @@ WHERE
     {% if defined(channelId) %}
         channelId = {{ String(channelId) }} AND
     {% end %}
-    time >= fromUnixTimestamp64Milli({{ Int64(since, required=True) }})
+    time >= {{ Int64(since, required=True) }}
 ORDER BY time DESC

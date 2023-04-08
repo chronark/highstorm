@@ -5,7 +5,7 @@ import { Tinybird } from "./client";
 const tb = new Tinybird();
 
 export const getChannelActivity = tb.buildPipe({
-  pipe: "get_channel_activity__v2",
+  pipe: "get_channel_activity__v1",
   parameters: z.object({
     tenantId: z.string(),
     channelId: z.string().optional(),
@@ -14,7 +14,7 @@ export const getChannelActivity = tb.buildPipe({
     granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]),
   }),
   data: z.object({
-    time: z.string().transform((s) => new Date(s).getTime()),
+    time: z.number(),
     count: z
       .number()
       .nullable()
@@ -50,7 +50,7 @@ export const getEvents = tb.buildPipe({
     id: z.string(),
     channelId: z.string(),
     event: z.string(),
-    time: z.string().transform((d) => new Date(d).getTime()),
+    time: z.number(),
     content: z.string(),
     metadata: z.string().transform((m) => JSON.parse(m)),
   }),

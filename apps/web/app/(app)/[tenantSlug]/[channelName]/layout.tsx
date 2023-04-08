@@ -56,7 +56,7 @@ export default async function Layout(props: {
   params: { tenantSlug: string; channelName: string };
   children: React.ReactNode;
 }) {
-  const { userId,orgId } = auth();
+  const { userId, orgId } = auth();
 
   if (!userId) {
     return redirect("/auth/sign-in");
@@ -66,7 +66,7 @@ export default async function Layout(props: {
     where: {
       AND: {
         tenant: {
-          id: orgId??userId!,
+          id: orgId ?? userId!,
         },
         name: props.params.channelName,
       },

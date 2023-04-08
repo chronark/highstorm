@@ -4,7 +4,7 @@ SCHEMA >
     `id` String `json:$.id`,
     `tenantId` String `json:$.tenantId`,
     `channelId` String `json:$.channelId`,
-    `time` DateTime `json:$.time`,
+    `time` Int64 `json:$.time`,
     # The name of the event
     `event` String `json:$.event`,
     # content of the event, possibly markdown in the future

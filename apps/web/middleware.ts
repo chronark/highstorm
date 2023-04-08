@@ -10,6 +10,3 @@ export default withClerkMiddleware((_req: NextRequest) => {
 export const config = {
   matcher: ["/((?!_next|_static|_vercel|[\\w-]+\\.\\w+).*)"],
 };
-
-
-

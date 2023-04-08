@@ -8,7 +8,7 @@ import { Feed } from "@/components/feed";
 export default async function IndexPage(props: {
   params: { tenantSlug: string; channelName: string };
 }) {
-  const { userId } = auth();
+  const { userId, orgId } = auth();
 
   if (!userId) {
     return redirect("/auth/sign-in");
@@ -18,7 +18,7 @@ export default async function IndexPage(props: {
     where: {
       AND: {
         tenant: {
-          slug: props.params.tenantSlug,
+          id: orgId ?? userId!,
         },
         name: props.params.channelName,
       },
