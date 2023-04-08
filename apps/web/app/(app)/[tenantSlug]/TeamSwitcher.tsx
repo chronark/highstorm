@@ -79,7 +79,7 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
       setLoading(false);
     }
   }, [organizationList, isLoaded, slug]);
-
+const router = useRouter()
   const {
     register,
     formState: { errors },
@@ -195,7 +195,10 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <button onClick={() => signOut()} className="w-full">
+            <button onClick={async () => {
+             await signOut()
+             router.refresh()
+            }} className="w-full">
               <LogOut className="w-4 h-4 mr-2" />
               <span>Sign out</span>
             </button>
