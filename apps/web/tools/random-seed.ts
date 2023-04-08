@@ -12,11 +12,11 @@ async function main() {
     await Promise.all(
       new Array(100).fill(0).map(async () => {
         const amount = faker.finance.amount(5, 100, 2, "$", true);
-        const res = await fetch("http://localhost:3000/api/v1/events/invoices.paid", {
+        const res = await fetch("https://highstorm.app/api/v1/events/invoices.paid", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer api_VvdMTFMjTuZ9VuntUYkJGA",
+            Authorization: "Bearer api_85JXAyANVeiBwuGKP5iRYp",
           },
           body: JSON.stringify({
             event: `${faker.name.fullName()} has payed ${amount}`,

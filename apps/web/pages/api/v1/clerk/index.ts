@@ -5,6 +5,7 @@ import { buffer } from "micro";
 import { env } from "@/lib/env";
 
 import { z } from "zod";
+import { flatten, highstorm } from "@/lib/client";
 
 export const config = {
   api: {
@@ -17,6 +18,7 @@ const body = z.discriminatedUnion("type", [
     type: z.literal("user.created"),
     data: z.object({
       id: z.string(),
+      username: z.string(),
     }),
   }),
   z.object({
@@ -30,6 +32,29 @@ const body = z.discriminatedUnion("type", [
     data: z.object({
       id: z.string(),
       slug: z.string(),
+      name: z.string(),
+    }),
+  }),
+  z.object({
+    type: z.literal("session.created"),
+    data: z.object({
+      id: z.string(),
+      user_id: z.string(),
+      created_at: z.number(),
+      expire_at: z.number(),
+    }),
+  }),
+  z.object({
+    type: z.literal("organizationMembership.created"),
+    data: z.object({
+      organization: z.object({
+        id: z.string(),
+        slug: z.string(),
+        name: z.string(),
+      }),
+      public_user_data: z.object({
+        user_id: z.string(),
+      }),
     }),
   }),
 ]);
@@ -53,6 +78,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             plan: "FREE",
           },
         });
+        await highstorm("auth.user.created", {
+          event: `${r.data.data.username} has signed up`,
+          metadata: r.data.data,
+        });
 
         break;
       case "user.updated":
@@ -75,6 +104,23 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             slug: r.data.data.slug,
             plan: "PRO",
           },
+        });
+        await highstorm("auth.team.created", {
+          event: `${r.data.data.name} was created`,
+          metadata: r.data.data,
+        });
+        break;
+      case "session.created":
+        await highstorm("auth.session.created", {
+          event: "A session started",
+          content: `User ${r.data.data.user_id} has started a session`,
+          metadata: r.data.data,
+        });
+        break;
+      case "organizationMembership.created":
+        await highstorm("auth.organizationMembership.created", {
+          event: `${r.data.data.public_user_data.user_id} joined ${r.data.data.organization.name}`,
+          metadata: flatten(r.data.data),
         });
         break;
       default:
