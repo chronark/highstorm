@@ -19,7 +19,7 @@ export async function createContext({ req, res }: trpcNext.CreateNextContextOpti
         : userId
         ? {
             id: userId,
-            slug: "personal",
+            slug: "home",
             role: "owner",
           }
         : null,

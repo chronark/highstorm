@@ -50,7 +50,6 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
   const { setActive, organizationList, isLoaded } = useOrganizationList();
   const { signOut } = useAuth();
   const { user } = useUser();
-  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
@@ -61,9 +60,8 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
     try {
       setLoading(true);
 
-      if (slug === "personal") {
+      if (slug === "home") {
         setActive({ organization: null });
-        router.refresh();
         return;
       }
 
@@ -74,7 +72,7 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
       const o = organizationList.find((org) => org.organization.slug === slug);
       if (o) {
         setActive({ organization: o.organization.id });
-        router.refresh();
+
         return;
       }
     } finally {
@@ -117,7 +115,7 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
               </AvatarFallback>
             </Avatar>
             <span>
-              {slug === "personal"
+              {slug === "home"
                 ? "Personal"
                 : organizationList?.find((o) => o.organization.slug === slug)?.organization.name}
             </span>
@@ -163,14 +161,14 @@ export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
         <DropdownMenuGroup>
           <DropdownMenuLabel>Switch Teams</DropdownMenuLabel>
 
-          <Link href={"/personal"}>
+          <Link href={"/home"}>
             <DropdownMenuItem
               className={cn("flex items-center justify-between", {
-                "bg-zinc-100": slug === "personal",
+                "bg-zinc-100": slug === "home",
               })}
             >
               <span>Personal</span>
-              {slug === "personal" ? <Check className="w-4 h-4" /> : null}
+              {slug === "home" ? <Check className="w-4 h-4" /> : null}
             </DropdownMenuItem>
           </Link>
 

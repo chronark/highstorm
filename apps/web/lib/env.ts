@@ -8,9 +8,6 @@ const schema = z.object({
   QSTASH_TOKEN: z.string(),
   QSTASH_CURRENT_SIGNING_KEY: z.string(),
   QSTASH_NEXT_SIGNING_KEY: z.string(),
-  GITHUB_OAUTH_ID: z.string(),
-  GITHUB_OAUTH_SECRET: z.string(),
-  NEXTAUTH_SECRET: z.string(),
 });
 
 export const env = schema.parse(process.env);

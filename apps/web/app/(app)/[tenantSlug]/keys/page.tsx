@@ -8,7 +8,7 @@ import { auth } from "@clerk/nextjs/app-beta";
 
 export default async function Page(props: { params: { tenantSlug: string } }) {
   const { userId, orgId } = auth();
-  const tenantId = props.params.tenantSlug === "personal" ? userId : orgId;
+  const tenantId = props.params.tenantSlug === "home" ? userId : orgId;
   if (!tenantId) {
     return notFound();
   }

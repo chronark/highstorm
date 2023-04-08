@@ -7,7 +7,7 @@ export default function SignInPage() {
         path="/auth/sign-up"
         signInUrl="/sign-in"
         afterSignInUrl="/home"
-        afterSignUpUrl="/onboarding"
+        afterSignUpUrl="/home"
         routing="hash"
       />
       ;

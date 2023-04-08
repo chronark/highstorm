@@ -56,7 +56,7 @@ export default async function Layout(props: {
   params: { tenantSlug: string; channelName: string };
   children: React.ReactNode;
 }) {
-  const { userId } = auth();
+  const { userId,orgId } = auth();
 
   if (!userId) {
     return redirect("/auth/sign-in");
@@ -66,7 +66,7 @@ export default async function Layout(props: {
     where: {
       AND: {
         tenant: {
-          slug: props.params.tenantSlug,
+          id: orgId??userId!,
         },
         name: props.params.channelName,
       },
@@ -89,7 +89,7 @@ export default async function Layout(props: {
         </div>
 
         <div className="flex items-center justify-between gap-4">
-          <Navbar channelName={channel.name} tenantSlug={channel.tenant.slug ?? "personal"} />
+          <Navbar channelName={channel.name} tenantSlug={channel.tenant.slug ?? "home"} />
 
           <Dialog>
             <DropdownMenu>
@@ -105,7 +105,7 @@ export default async function Layout(props: {
                   <CreateReportButton
                     channelId={channel.id}
                     channelName={channel.name}
-                    tenantSlug={channel.tenant.slug ?? "personal"}
+                    tenantSlug={channel.tenant.slug ?? "home"}
                   />
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

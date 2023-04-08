@@ -9,9 +9,6 @@ import { useUser } from "@clerk/clerk-react";
 export default async function Page(_props: {
   params: { tenantSlug: string };
 }) {
-  const x = auth();
-  console.log({ x });
-
   return (
     <div>
       <PageHeader
@@ -20,9 +17,6 @@ export default async function Page(_props: {
       />
 
       <div>
-        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300">
-          {JSON.stringify(x, null, 2)}
-        </pre>
         <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300">
           {`curl 'https://highstorm.app/api/v1/events/users.signup' \\
   -H 'Authorization: Bearer <HIGHSTORM_TOKEN>' \\
