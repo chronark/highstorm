@@ -1,9 +1,10 @@
 "use client";
 
+import { Loading } from "@/components/loading";
 import { Area, Column } from "@ant-design/plots";
 
 type Props = {
-  data: {
+  data?: {
     time: number;
     count: number;
   }[];
@@ -14,7 +15,7 @@ export const EventsPerDay: React.FC<Props> = ({ data }) => {
   day.setUTCDate(day.getUTCDate() - 30);
   const series = [];
   while (day.getTime() <= new Date().getTime()) {
-    const usage = data.find((u) => {
+    const usage = data?.find((u) => {
       return new Date(u.time).toDateString() === day.toDateString();
     });
     series.push({
@@ -23,7 +24,13 @@ export const EventsPerDay: React.FC<Props> = ({ data }) => {
     });
     day.setUTCDate(day.getUTCDate() + 1);
   }
-
+  if (!data) {
+    return (
+      <div className="inset-0 flex items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <Column
       autoFit={true}
@@ -58,7 +65,7 @@ export const CumulativeEventsPerday: React.FC<Props> = ({ data }) => {
   let usage = 0;
   const series = [];
   while (day.getTime() <= new Date().getTime()) {
-    const d = data.find((u) => {
+    const d = data?.find((u) => {
       return new Date(u.time).toLocaleDateString() === day.toLocaleDateString();
     });
 
@@ -68,6 +75,13 @@ export const CumulativeEventsPerday: React.FC<Props> = ({ data }) => {
       usage,
     });
     day.setUTCDate(day.getUTCDate() + 1);
+  }
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <Loading />
+      </div>
+    );
   }
 
   return (

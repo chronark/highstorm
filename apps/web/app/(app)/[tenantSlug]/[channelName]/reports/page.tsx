@@ -11,17 +11,17 @@ import { CreateReportButton } from "../createReportButton";
 import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu";
 
 export default async function Page(props: { params: { tenantSlug: string; channelName: string } }) {
-  const { userId } = auth();
+  const { userId, orgId } = auth();
   if (!userId) {
     return notFound();
   }
   const channel = await db.channel.findFirst({
     where: {
       AND: {
-        name: props.params.channelName,
         tenant: {
-          slug: props.params.tenantSlug,
+          id: orgId ?? userId!,
         },
+        name: props.params.channelName,
       },
     },
     include: {

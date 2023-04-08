@@ -1,7 +1,16 @@
 import { db } from "@/prisma/db";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Webhook } from "svix";
+import { buffer } from "micro";
+import { env } from "@/lib/env";
 
 import { z } from "zod";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const body = z.discriminatedUnion("type", [
   z.object({
@@ -27,7 +36,10 @@ const body = z.discriminatedUnion("type", [
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
-    const r = body.safeParse(req.body);
+    const wh = new Webhook(env.CLERK_WEBHOOK_SECRET);
+    const msg = wh.verify((await buffer(req)).toString(), req.headers as any);
+
+    const r = body.safeParse(msg);
     if (!r.success) {
       console.error(r.error.message);
       return res.status(400).send(r.error.message);

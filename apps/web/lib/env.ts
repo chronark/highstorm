@@ -8,6 +8,7 @@ const schema = z.object({
   QSTASH_TOKEN: z.string(),
   QSTASH_CURRENT_SIGNING_KEY: z.string(),
   QSTASH_NEXT_SIGNING_KEY: z.string(),
+  CLERK_WEBHOOK_SECRET: z.string(),
 });
 
 export const env = schema.parse(process.env);

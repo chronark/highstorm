@@ -40,17 +40,13 @@ export default function AnalyticsPage(props: {
       <div className="p-2 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">Events per Day</span>
         <div className="h-32">
-          {activity.isLoading ? <Loading /> : <EventsPerDay data={activity.data?.data ?? []} />}
+          {activity.isLoading ? <Loading /> : <EventsPerDay data={activity.data?.data} />}
         </div>
       </div>
       <div className="p-2 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">Total Events</span>
         <div className="inset-x-0 h-32">
-          {activity.isLoading ? (
-            <Loading />
-          ) : (
-            <CumulativeEventsPerday data={activity.data?.data ?? []} />
-          )}
+          {activity.isLoading ? <Loading /> : <CumulativeEventsPerday data={activity.data?.data} />}
         </div>
       </div>
     </div>
