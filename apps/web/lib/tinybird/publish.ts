@@ -6,7 +6,7 @@ const tb = new Tinybird();
 
 const eventValidation = z.object({
   id: z.string(),
-  teamId: z.string(),
+  tenantId: z.string(),
   channelId: z.string(),
   time: z.date(),
   event: z.string(),

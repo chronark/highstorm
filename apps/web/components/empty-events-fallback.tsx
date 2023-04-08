@@ -1,27 +1,22 @@
 import { db } from "@/prisma/db";
-import { Ghost } from "lucide-react";
 
-import { getSession } from "@/lib/auth";
+import { auth, currentUser } from "@clerk/nextjs/app-beta";
 import { EmptyState } from "./empty-state";
 
 type Props = {
-  teamSlug: string;
+  tenantSlug: string;
   channelName: string;
 };
-export async function EmptyEventsFallback({ channelName, teamSlug }: Props) {
-  const { session } = await getSession();
-  if (!session) {
-    return <></>;
-  }
-  const user = await db.user.findUnique({ where: { id: session.user.id } });
+export async function EmptyEventsFallback({ channelName, tenantSlug }: Props) {
+  const user = await currentUser();
   if (!user) {
     return <></>;
   }
   const apiKey = await db.apiKey.findFirst({
-    where: { team: { slug: teamSlug } },
+    where: { tenant: { slug: tenantSlug } },
   });
 
-  const url = process.env.VERCEL_URL ? "https://highstorm.vercel.app" : "http://localhost:3000";
+  const url = process.env.VERCEL_URL ? "https://highstorm.app" : "http://localhost:3000";
 
   return (
     <EmptyState
@@ -33,7 +28,7 @@ export async function EmptyEventsFallback({ channelName, teamSlug }: Props) {
     -H 'Authorization: Bearer ${apiKey?.keyHash}' \\
     -H 'Content-Type: application/json' \\
     -d '{
-            "event": "${user?.name} has signed up",
+            "event": "${user?.username} has signed up",
             "content": "A new user has signed up",
             "metadata": {"userId": "${user?.id}"}
         }'

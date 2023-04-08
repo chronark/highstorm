@@ -10,7 +10,7 @@ const nextConfig = {
       has: [
         {
           type: "host",
-          value: "api.highstorm.vercel.app",
+          value: "api.highstorm.app",
         },
       ],
       destination: "/api/:path*",

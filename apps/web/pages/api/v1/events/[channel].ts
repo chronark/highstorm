@@ -32,7 +32,7 @@ const queryValidation = z.object({
  * Cache api keys
  */
 const cache = new InMemoryCache<{
-  teamId: string;
+  tenantId: string;
   channelId: string;
 }>({ ttl: 60_000 });
 
@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           keyHash: hash,
         },
         include: {
-          team: {
+          tenant: {
             include: {
               channels: {
                 where: {
@@ -75,31 +75,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(403).json({ error: "Unauthorized" });
       }
 
-      let channel = apiKey.team.channels.find((c) => c.name === query.data.channel);
+      let channel = apiKey.tenant.channels.find((c) => c.name === query.data.channel);
       if (!channel) {
         channel = await db.channel.create({
           data: {
             id: newId("channel"),
             name: query.data.channel,
-            team: {
+            tenant: {
               connect: {
-                id: apiKey.teamId,
+                id: apiKey.tenantId,
               },
             },
           },
         });
         await highstorm("channel.created", {
           event: "A new channel has been created",
-          content: `${apiKey.team.name} has created ${channel.name}`,
+          content: channel.name,
           metadata: {
-            teamId: apiKey.team.id,
+            tenantId: apiKey.tenant.id,
             channelId: channel.id,
             channelName: channel.name,
           },
         });
       }
 
-      cached = { teamId: apiKey.team.id, channelId: channel.id };
+      cached = { tenantId: apiKey.tenant.id, channelId: channel.id };
       cache.set(key, cached);
     }
 
@@ -111,7 +111,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const id = newId("event");
     await publishEvent({
       id,
-      teamId: cached.teamId,
+      tenantId: cached.tenantId,
       channelId: cached.channelId,
       time: new Date(body.data.time ?? Date.now()),
       event: body.data.event,

@@ -11,115 +11,27 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id            String       @id
-  name          String
-  email         String       @unique
-  emailVerified DateTime?
-  image         String?
-  teams         Membership[]
-  createdAt     DateTime     @default(now())
 
-  teamInvitations TeamInvitation[]
-  accounts        Account[]
-  sessions        Session[]
-}
-
-model Account {
-  id                String  @id @default(uuid())
-  userId            String
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-}
-
-model Session {
-  sessionToken String   @id
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-enum MemberRole {
-  OWNER
-  ADMIN
-  MEMBER
-}
-
-model Membership {
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId String
-
-  role MemberRole
-
-  @@id([userId, teamId])
-  @@index([teamId])
-  @@index([userId])
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Token {
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // Fetch token by a clerk session id
-  name      String
-  hash      String   @id
-
-  userId  String
-  expires DateTime?
-
-  permissions String
-}
 
 enum Plan {
-  DISABLED // non-personal teams can not be free and are therefore disabled
-  FREE // for new personal teams
+  DISABLED // non-personal tenants can not be free and are therefore disabled
+  FREE // for new personal tenants
   PRO // No flat fee, just pay as you go
   ENTERPRISE
 }
 
-model Team {
+model Tenant {
+  // This is the id from Clerk
   id        String   @id
-  name      String
-  slug      String   @unique
+  slug      String?   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  members Membership[]
 
   plan Plan
 
   stripeCustomerId String?   @unique
-  trialExpires     DateTime?
 
-  invitations TeamInvitation[]
-
-  // When the user deletes a team it is marked as deactivated until all billing is done
+  // When the user deletes a tenant it is marked as deactivated until all billing is done
   deactivatedAt DateTime?
   channels      Channel[]
   apikeys       ApiKey[]
@@ -127,19 +39,6 @@ model Team {
   @@index([slug])
 }
 
-model TeamInvitation {
-  id        String   @id
-  teamId    String
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  expires   DateTime
-
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-
-  @@unique([teamId, userId])
-  @@index([userId])
-}
 
 model Channel {
   id          String  @id
@@ -150,15 +49,15 @@ model Channel {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  teamId String
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  tenantId String
+  tenant   Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   //  Some custom value the user wants to track
   valueName String?
 
   reports          Report[]
 
-  @@unique([teamId, name])
+  @@unique([tenantId, name])
 }
 
 model Report {
@@ -200,12 +99,12 @@ model ApiKey {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  teamId String
-  team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  tenantId String
+  tenant   Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   name           String
   keyHash        String  @unique
   lastCharacters String?
 
-  @@index([teamId])
+  @@index([tenantId])
 }

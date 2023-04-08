@@ -27,7 +27,7 @@ export async function highstorm(
     /**
      * Highstorm base url
      *
-     * @default `https://highstorm.vercel.app/api`
+     * @default `https://highstorm.app/api`
      */
     url?: string;
 
@@ -44,7 +44,7 @@ export async function highstorm(
     throw new Error("Either provide a token, or set the `HIGHSTORM_TOKEN` env variable");
   }
   try {
-    const baseUrl = opts?.url ?? process.env.HIGHSTORM_URL ?? "https://highstorm.vercel.app/api";
+    const baseUrl = opts?.url ?? process.env.HIGHSTORM_URL ?? "https://highstorm.app/api";
     const res = await fetch(`${baseUrl}/v1/events/${channel}`, {
       method: "POST",
       headers: {

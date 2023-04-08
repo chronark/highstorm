@@ -9,7 +9,7 @@ async function main() {
   for (let i = 0; i < 10000; i++) {
     console.log(i);
     const amount = faker.finance.amount(5, 100, 2, "$", true);
-    await fetch("https://highstorm.vercel.app/api/v1/events/invoices.paid", {
+    await fetch("https://highstorm.app/api/v1/events/invoices.paid", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -6,7 +6,7 @@ import { db } from "@/prisma/db";
 import { Ghost } from "lucide-react";
 import useSWR from "swr";
 
-import { getSession } from "@/lib/auth";
+import { auth } from "@clerk/nextjs/app-beta";
 import { duration } from "@/lib/time";
 import { trpc } from "@/lib/trpc";
 import {
@@ -21,12 +21,12 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Loading } from "./loading";
 
 type Props = {
-  teamSlug: string;
+  tenantSlug: string;
   channelId?: string;
   fallback?: React.ReactNode;
 };
-export const Feed: React.FC<Props> = ({ teamSlug, channelId, fallback }) => {
-  const { data, error, isLoading } = useSWR({ teamSlug, channelId }, trpc.event.list.query, {
+export const Feed: React.FC<Props> = ({ tenantSlug, channelId, fallback }) => {
+  const { data, error, isLoading } = useSWR({ tenantSlug, channelId }, trpc.event.list.query, {
     refreshInterval: 15000,
   });
   const { toast } = useToast();

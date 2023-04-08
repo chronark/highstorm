@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { newId } from "@/lib/id";
-import { t } from "../trpc";
+import { auth, t } from "../trpc";
 import { Client as QStash } from "@upstash/qstash";
 import { env } from "@/lib/env";
 const qstash = new QStash({
@@ -13,6 +13,7 @@ const qstash = new QStash({
 
 export const reportRouter = t.router({
   createSlack: t.procedure
+    .use(auth)
     .input(
       z.object({
         cron: z.string(),
@@ -22,31 +23,22 @@ export const reportRouter = t.router({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session?.user.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
       const channel = await db.channel.findUnique({
         where: {
           id: input.channelId,
-        },
-        include: {
-          team: {
-            include: { members: true },
-          },
         },
       });
 
       if (!channel) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
-      if (!channel.team.members.some((m) => m.userId === ctx.session?.user.id)) {
+      if (channel.tenantId !== ctx.tenant.id) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
       const reportId = newId("report");
 
       const { scheduleId } = await qstash.publish({
-        url: `https://highstorm.vercel.app/api/v1/reports/${reportId}`,
+        url: `https://highstorm.app/api/v1/reports/${reportId}`,
         cron: input.cron,
       });
       await db.report.create({
@@ -70,41 +62,27 @@ export const reportRouter = t.router({
       });
       // Trigger it once, just to demo
       await qstash.publish({
-        url: `https://highstorm.vercel.app/api/v1/reports/${reportId}`,
+        url: `https://highstorm.app/api/v1/reports/${reportId}`,
       });
     }),
   delete: t.procedure
+    .use(auth)
     .input(
       z.object({
         reportId: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session?.user.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
       const report = await db.report.findUnique({
         where: {
           id: input.reportId,
         },
         include: {
-          channel: {
-            include: {
-              team: {
-                include: {
-                  members: true,
-                },
-              },
-            },
-          },
+          channel: true,
         },
       });
 
-      if (!report) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
-      if (!report.channel.team.members.some((m) => m.userId === ctx.session!.user.id)) {
+      if (!report || report.channel.tenantId !== ctx.tenant.id) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 

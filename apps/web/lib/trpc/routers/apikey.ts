@@ -4,32 +4,24 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { newId } from "@/lib/id";
-import { t } from "../trpc";
+import { auth, t } from "../trpc";
 
 export const apikeyRouter = t.router({
   create: t.procedure
+    .use(auth)
     .input(
       z.object({
-        teamId: z.string(),
+        name: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session?.user.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
-      const team = await db.team.findFirst({
+      const tenant = await db.tenant.findFirst({
         where: {
-          id: input.teamId,
-          members: {
-            some: {
-              userId: ctx.session.user.id,
-            },
-          },
+          id: ctx.tenant.id,
         },
       });
 
-      if (!team) {
+      if (!tenant) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
@@ -40,10 +32,10 @@ export const apikeyRouter = t.router({
           id: newId("apiKey"),
           keyHash: crypto.createHash("SHA-256").update(apiKey).digest("base64"),
           lastCharacters: apiKey.substring(apiKey.length - 4),
-          name: "default",
-          team: {
+          name: input.name,
+          tenant: {
             connect: {
-              id: team.id,
+              id: tenant.id,
             },
           },
         },
@@ -51,39 +43,29 @@ export const apikeyRouter = t.router({
       return { apiKey };
     }),
   delete: t.procedure
+    .use(auth)
     .input(
       z.object({
         keyId: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      if (!ctx.session?.user.id) {
-        throw new TRPCError({ code: "UNAUTHORIZED" });
-      }
-
       const key = await db.apiKey.findUnique({
         where: {
           id: input.keyId,
         },
         include: {
-          team: {
-            include: {
-              members: true,
-            },
-          },
+          tenant: true,
         },
       });
 
-      if (!key) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
-      if (!key.team.members.some((m) => m.userId === ctx.session!.user.id)) {
+      if (!key || key.tenantId !== ctx.tenant.id) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
       await db.apiKey.delete({
         where: {
-          id: input.keyId,
+          id: key.id,
         },
       });
     }),

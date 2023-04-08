@@ -4,7 +4,7 @@
 </div>
 
 <div align="center">
-  <a href="https://highstorm.vercel.app?ref=github">highstorm.vercel.app</a>
+  <a href="https://highstorm.app?ref=github">highstorm.app</a>
 </div>
 <br/>
 

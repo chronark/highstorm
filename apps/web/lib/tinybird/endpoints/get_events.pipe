@@ -13,7 +13,7 @@ SELECT
 FROM events__v1
 
 WHERE
-    teamId = {{ String(teamId, required=True)}} AND
+    tenantId = {{ String(tenantId, required=True)}} AND
     {% if defined(channelId) %}
         channelId = {{ String(channelId) }} AND
     {% end %}

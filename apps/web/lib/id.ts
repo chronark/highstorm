@@ -40,6 +40,6 @@ export const newId = new IdGenerator({
   session: "sess",
   event: "evt",
   user: "user",
-  team: "team",
+  tenant: "tenant",
   apiKey: "api",
 }).id;

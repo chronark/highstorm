@@ -2,7 +2,7 @@ VERSION 1
 
 SCHEMA >
     `id` String `json:$.id`,
-    `teamId` String `json:$.teamId`,
+    `tenantId` String `json:$.tenantId`,
     `channelId` String `json:$.channelId`,
     `time` DateTime `json:$.time`,
     # The name of the event
@@ -16,4 +16,4 @@ SCHEMA >
     
 
 ENGINE "MergeTree"
-ENGINE_SORTING_KEY "teamId,channelId,time"
+ENGINE_SORTING_KEY "tenantId,channelId,time"

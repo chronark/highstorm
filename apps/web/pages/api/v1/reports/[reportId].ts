@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       include: {
         channel: {
           include: {
-            team: true,
+            tenant: true,
           },
         },
         slackDestinations: true,
@@ -84,7 +84,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 fields: [
                   {
                     type: "mrkdwn",
-                    text: `<https://highstorm.vercel.app/${report.channel.team.slug}/${report.channel.name}/reports|Settings>`,
+                    text: `<https://highstorm.app/${report.channel.tenant.slug}/${report.channel.name}/reports|Settings>`,
                   },
                 ],
               },
