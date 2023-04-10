@@ -17,12 +17,29 @@ import {
 } from "@/components/ui/dialog";
 
 type Props = {};
+
+
+
+
+
 export const CreateKeyButton: React.FC<Props> = () => {
   const [loading, setLoading] = useState(false);
   const [key, setKey] = useState<string | null>(null);
 
   const { toast } = useToast();
   const router = useRouter();
+
+
+
+  const snippet = `curl 'https://highstorm.app/api/v1/events/user.signup' \\
+  -H 'Authorization: Bearer ${key}' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "event": "Chronark has signed up",
+    "content": "A new user has signed up",
+    "metadata": {"userId": "123"}
+  }'
+  `
 
   return (
     <>
@@ -65,11 +82,18 @@ export const CreateKeyButton: React.FC<Props> = () => {
             <DialogDescription>
               This key is only shown once and can not be recovered. Please store it somewhere safe.
             </DialogDescription>
-            <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-neutral-100">
+            <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-neutral-100 dark:bg-neutral-800">
               <pre className="font-mono">{key}</pre>
               <CopyButton value={key!} />
             </div>
           </DialogHeader>
+
+          <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-neutral-100 dark:bg-neutral-800">
+            <pre className="font-mono">{snippet}</pre>
+            <CopyButton value={snippet} />
+          </div>
+
+
         </DialogContent>
       </Dialog>
     </>

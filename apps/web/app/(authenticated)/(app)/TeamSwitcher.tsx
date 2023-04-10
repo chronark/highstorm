@@ -107,10 +107,9 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
           <ChevronsUpDown className="w-4 h-4" />
         </DropdownMenuTrigger>
       )}
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-full lg:w-56" align="end" forceMount>
         <DropdownMenuGroup>
-          <DropdownMenuGroup>
-            {/* <DropdownMenuItem>
+          {/* <DropdownMenuItem>
                                 <User className="w-4 h-4 mr-2" />
                                 <span>Profile</span>
                                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -126,13 +125,12 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
                                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                             </DropdownMenuItem> */}
 
-            <Link href="https://highstorm-docs.vercel.app/" target="_blank">
-              <DropdownMenuItem>
-                <Book className="w-4 h-4 mr-2" />
-                <span>Docs</span>
-              </DropdownMenuItem>
-            </Link>
-          </DropdownMenuGroup>
+          <Link href="https://highstorm-docs.vercel.app/" target="_blank">
+            <DropdownMenuItem>
+              <Book className="w-4 h-4 mr-2" />
+              <span>Docs</span>
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

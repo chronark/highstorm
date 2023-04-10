@@ -13,11 +13,11 @@ export default async function Page(_props: {
     <div>
       <PageHeader
         title="Welcome to Highstorm"
-        description="You can create a new API key by clicking on the profile picture in the top right corner. Afterwards, you can use the API key to send events to Highstorm."
+        description="You can create a new API key by clicking 'API Keys' on the left. Afterwards, you can use the API key to send events to Highstorm."
       />
 
       <div>
-        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300">
+        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300 dark:border-neutral-800">
           {`curl 'https://highstorm.app/api/v1/events/users.signup' \\
   -H 'Authorization: Bearer <HIGHSTORM_TOKEN>' \\
   -H 'Content-Type: application/json' \\
