@@ -4,14 +4,10 @@ import { db } from "@/prisma/db";
 import { PageHeader } from "@/components/page-header";
 import { CreateKeyButton } from "./create-key";
 import { DeleteKeyButton } from "./delete-key";
-import { auth } from "@clerk/nextjs/app-beta";
+import { getTenantId } from "@/lib/auth";
 
-export default async function Page(props: { params: { tenantSlug: string } }) {
-  const { userId, orgId } = auth();
-  const tenantId = props.params.tenantSlug === "home" ? userId : orgId;
-  if (!tenantId) {
-    return notFound();
-  }
+export default async function Page(_props: { params: { tenantSlug: string } }) {
+  const tenantId = getTenantId();
   const tenant = await db.tenant.findUnique({
     where: {
       id: tenantId,
@@ -27,17 +23,17 @@ export default async function Page(props: { params: { tenantSlug: string } }) {
   return (
     <div className="">
       <PageHeader title="API Keys" actions={[<CreateKeyButton />]} />
-      <ul role="list" className="space-y-4">
+      <ul role="list" className="mt-8 space-y-4">
         {tenant.apikeys.map((key) => (
           <li
             key={key.id}
-            className="flex items-center justify-between p-4 border rounded border-neutral-200"
+            className="flex items-center justify-between p-4 border rounded border-neutral-200 dark:border-neutral-800"
           >
             <div>
-              <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max">
+              <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max dark:bg-neutral-900 dark:border-neutral-700">
                 api_XXXXXXXXXXXX{key.lastCharacters}
               </span>
-              <p className="mx-1 mt-2 text-xs text-neutral-500">
+              <p className="mx-1 mt-2 text-xs text-neutral-500 dark:text-neutral-400">
                 Created on{" "}
                 <time dateTime={key.createdAt.toISOString()}>{key.createdAt.toUTCString()}</time>
               </p>
@@ -52,12 +48,12 @@ export default async function Page(props: { params: { tenantSlug: string } }) {
                                 </div>
                                 <div className="mt-2 sm:flex sm:justify-between">
                                     <div className="sm:flex">
-                                        <pre className="flex items-center text-sm text-gray-500">
+                                        <pre className="flex items-center text-sm text-neutral-500">
                                         api_XXXX{key.lastCharacters}
                                         </pre>
 
                                     </div>
-                                    <div className="flex items-center mt-2 text-sm text-gray-500 sm:mt-0">
+                                    <div className="flex items-center mt-2 text-sm text-neutral-500 sm:mt-0">
                                         <p>
                                             Created on <time dateTime={key.createdAt.toISOString()}>{key.createdAt.toUTCString()}</time>
                                         </p>

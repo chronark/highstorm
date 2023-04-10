@@ -1,23 +1,12 @@
-import { auth, clerkClient } from "@clerk/nextjs/app-beta";
+import { auth } from "@clerk/nextjs/app-beta";
+import { notFound } from "next/navigation";
 
-export async function getOrg(slug: string): Promise<{ id: string } | null> {
-  console.log({ slug });
-  const { userId } = auth();
-  if (!userId) {
-    return null;
-  }
-  const org = await clerkClient.organizations.getOrganization({ slug }).catch(() => {
-    return null;
-  });
-  if (!org) {
-    return null;
-  }
-  const members = await clerkClient.organizations.getOrganizationMembershipList({
-    organizationId: org.id,
-  });
-  const isMember = members.some((m) => m.publicUserData?.userId === userId);
-  if (!isMember) {
-    return null;
-  }
-  return org;
+/**
+ * Return the tenant id or a 404 not found page.
+ *
+ * The auth check should already be done at a higher level, and we're just returning 404 to make typescript happy.
+ */
+export function getTenantId(): string {
+  const { userId, orgId } = auth();
+  return orgId ?? userId ?? notFound();
 }

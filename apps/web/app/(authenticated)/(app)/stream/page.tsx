@@ -6,7 +6,7 @@ import useSWR from "swr";
 
 import { trpc } from "@/lib/trpc";
 import { Feed } from "@/components/feed";
-import { CumulativeEventsPerday } from "../[channelName]/charts";
+// import { CumulativeEventsPerday } from "../[channelName]/charts";
 
 export default function StreamsPage(props: { params: { tenantSlug: string } }) {
   const d = new Date();
@@ -43,7 +43,7 @@ export default function StreamsPage(props: { params: { tenantSlug: string } }) {
       <div className="p-2 mt-8 bg-white border rounded-md border-neutral-300">
         <span className="p-2 text-sm font-medium text-neutral-600">Total Events</span>
         <div className="inset-x-0 h-32">
-          <CumulativeEventsPerday data={activity.data?.data ?? []} />
+          {/* <CumulativeEventsPerday data={activity.data?.data ?? []} /> */}
         </div>
       </div>
       <div className="mt-8">

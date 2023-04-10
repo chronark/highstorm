@@ -98,10 +98,10 @@ export default function Example() {
               <h2 className="text-base font-semibold leading-7 text-emerald-400">
                 Ingest Everything
               </h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
                 <ReactWrapBalancer>Analytics At Your Fingertips</ReactWrapBalancer>
               </p>
-              <p className="mt-6 text-lg text-gray-600 leading-8">
+              <p className="mt-6 text-lg text-neutral-600 leading-8">
                 {/* Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
             dolor cupiditate blanditiis. */}
               </p>
@@ -112,7 +112,7 @@ export default function Example() {
               <Image
                 src="/analytics.png"
                 alt="App screenshot"
-                className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
+                className="mb-[-12%] rounded-xl shadow-2xl ring-1 ring-neutral-900/10"
                 width={2432}
                 height={1442}
               />
@@ -122,10 +122,10 @@ export default function Example() {
             </div>
           </div>
           <div className="px-6 mx-auto mt-16 max-w-7xl sm:mt-20 md:mt-24 lg:px-8">
-            <dl className="max-w-2xl mx-auto text-base text-gray-600 grid grid-cols-1 gap-x-6 gap-y-10 leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+            <dl className="max-w-2xl mx-auto text-base text-neutral-600 grid grid-cols-1 gap-x-6 gap-y-10 leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {features.map((feature) => (
                 <div key={feature.name} className="relative pl-9">
-                  <dt className="inline font-semibold text-gray-900">
+                  <dt className="inline font-semibold text-neutral-900">
                     <feature.icon
                       className="absolute w-5 h-5 left-1 top-1 text-emerald-500"
                       aria-hidden="true"

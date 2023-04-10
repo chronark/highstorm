@@ -1,26 +1,7 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { NavLink } from "@/app/(app)/[tenantSlug]/[channelName]/nav-link";
 import { db } from "@/prisma/db";
-import {
-  CreditCard,
-  Keyboard,
-  Mail,
-  Menu,
-  MessageSquare,
-  MoreVertical,
-  PlusCircle,
-  Settings,
-  Settings2,
-  Trash,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
+import { Menu } from "lucide-react";
 
-import { auth } from "@clerk/nextjs/app-beta";
-import { getChannelActivity } from "@/lib/tinybird";
-import { Feed } from "@/components/feed";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -29,44 +10,31 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteChannelButton } from "./deleteChannelButton";
 import { CreateReportButton } from "./createReportButton";
 import { Navbar } from "./navbar";
+import { getTenantId } from "@/lib/auth";
 
 export default async function Layout(props: {
   params: { tenantSlug: string; channelName: string };
   children: React.ReactNode;
 }) {
-  const { userId, orgId } = auth();
-
-  if (!userId) {
-    return redirect("/auth/sign-in");
-  }
+  const tenantId = getTenantId();
 
   const channel = await db.channel.findFirst({
     where: {
       AND: {
         tenant: {
-          id: orgId ?? userId!,
+          id: tenantId,
         },
         name: props.params.channelName,
       },
@@ -89,7 +57,7 @@ export default async function Layout(props: {
         </div>
 
         <div className="flex items-center justify-between gap-4">
-          <Navbar channelName={channel.name} tenantSlug={channel.tenant.slug ?? "home"} />
+          <Navbar channelName={channel.name} />
 
           <Dialog>
             <DropdownMenu>
@@ -129,8 +97,7 @@ export default async function Layout(props: {
           </Dialog>
         </div>
       </div>
-
-      {props.children}
+      <div className="my-8 lg:my-16">{props.children}</div>{" "}
     </div>
   );
 }

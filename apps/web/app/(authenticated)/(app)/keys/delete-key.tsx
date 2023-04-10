@@ -30,7 +30,7 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
   return (
     <>
       <Dialog>
-        <DialogTrigger className="flex items-center gap-1 text-neutral-600">
+        <DialogTrigger className="flex items-center gap-1 text-neutral-600 dark:text-neutral-400">
           <Trash className="w-3 h-3" />
           <span className="text-sm">Revoke</span>
         </DialogTrigger>

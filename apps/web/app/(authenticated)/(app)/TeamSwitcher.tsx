@@ -26,7 +26,6 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { trpc } from "@/lib/trpc";
 import { Check, ChevronsUpDown, Plus, Key, Book, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -42,44 +41,20 @@ import { cn } from "@/lib/utils";
 import { useAuth, useOrganization, useOrganizationList, useUser } from "@clerk/clerk-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-type Props = {
-  slug: string;
-};
 
-export const TeamSwitcher: React.FC<Props> = ({ slug }): JSX.Element => {
-  const { setActive, organizationList, isLoaded } = useOrganizationList();
+type Props = {};
+
+export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
+  const { setActive, organizationList } = useOrganizationList();
+  const { organization: currentOrg } = useOrganization();
+
   const { signOut } = useAuth();
   const { user } = useUser();
 
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
-    try {
-      setLoading(true);
-
-      if (slug === "home") {
-        setActive({ organization: null });
-        return;
-      }
-
-      if (organizationList.length === 0) {
-        return;
-      }
-
-      const o = organizationList.find((org) => org.organization.slug === slug);
-      if (o) {
-        setActive({ organization: o.organization.id });
-
-        return;
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [organizationList, isLoaded, slug]);
-const router = useRouter()
   const {
     register,
     formState: { errors },
@@ -99,26 +74,34 @@ const router = useRouter()
     }
   };
 
+  async function changeOrg(id: string | null) {
+    if (!setActive) {
+      return;
+    }
+    try {
+      setLoading(true);
+      await setActive({ organization: id });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <DropdownMenu>
       {loading ? (
         <Loading />
       ) : (
-        <DropdownMenuTrigger className="flex items-center justify-between w-full gap-4 px-2 py-1 rounded hover:bg-zinc-100">
+        <DropdownMenuTrigger className="flex items-center justify-between w-full gap-4 px-2 py-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700">
           <div className="flex items-center justify-start w-full gap-4 ">
             <Avatar>
               {user?.profileImageUrl ? (
                 <AvatarImage src={user.profileImageUrl} alt={user.username ?? "Profile picture"} />
               ) : null}
               <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-emerald-100 border-emerald-500 text-emerald-700">
-                {slug.slice(0, 2).toUpperCase()}
+                {(currentOrg?.slug ?? user?.username ?? "").slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <span>
-              {slug === "home"
-                ? "Personal"
-                : organizationList?.find((o) => o.organization.slug === slug)?.organization.name}
-            </span>
+            <span>{currentOrg?.name ?? "Personal"}</span>
           </div>
           {/* <PlanBadge plan={currentTeam?.plan ?? "DISABLED"} /> */}
           <ChevronsUpDown className="w-4 h-4" />
@@ -142,12 +125,7 @@ const router = useRouter()
                                 <span>Settings</span>
                                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                             </DropdownMenuItem> */}
-            <Link href={`/${slug}/keys`}>
-              <DropdownMenuItem>
-                <Key className="w-4 h-4 mr-2" />
-                <span>API Keys</span>
-              </DropdownMenuItem>
-            </Link>
+
             <Link href="https://highstorm-docs.vercel.app/" target="_blank">
               <DropdownMenuItem>
                 <Book className="w-4 h-4 mr-2" />
@@ -161,28 +139,27 @@ const router = useRouter()
         <DropdownMenuGroup>
           <DropdownMenuLabel>Switch Teams</DropdownMenuLabel>
 
-          <Link href={"/home"}>
-            <DropdownMenuItem
-              className={cn("flex items-center justify-between", {
-                "bg-zinc-100": slug === "home",
-              })}
-            >
-              <span>Personal</span>
-              {slug === "home" ? <Check className="w-4 h-4" /> : null}
-            </DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem
+            onClick={() => changeOrg(null)}
+            className={cn("flex items-center justify-between", {
+              "bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-100": currentOrg === null,
+            })}
+          >
+            <span>Personal</span>
+            {currentOrg === null ? <Check className="w-4 h-4" /> : null}
+          </DropdownMenuItem>
 
           {organizationList?.map((org) => (
-            <Link href={`/${org.organization.slug}`}>
-              <DropdownMenuItem
-                className={cn("flex items-center justify-between", {
-                  "bg-zinc-100": slug === org.organization.slug,
-                })}
-              >
-                <span>{org.organization.name}</span>
-                {slug === org.organization.slug ? <Check className="w-4 h-4" /> : null}
-              </DropdownMenuItem>
-            </Link>
+            <DropdownMenuItem
+              onClick={() => changeOrg(org.organization.id)}
+              className={cn("flex items-center justify-between", {
+                "bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-100":
+                  currentOrg?.slug === org.organization.slug,
+              })}
+            >
+              <span>{org.organization.name}</span>
+              {currentOrg?.slug === org.organization.slug ? <Check className="w-4 h-4" /> : null}
+            </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -195,10 +172,13 @@ const router = useRouter()
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <button onClick={async () => {
-             await signOut()
-             router.refresh()
-            }} className="w-full">
+            <button
+              onClick={async () => {
+                await signOut();
+                router.refresh();
+              }}
+              className="w-full"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               <span>Sign out</span>
             </button>

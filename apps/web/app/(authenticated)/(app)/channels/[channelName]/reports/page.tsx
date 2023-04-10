@@ -65,12 +65,12 @@ export default async function Page(props: { params: { tenantSlug: string; channe
                                 </div>
                                 <div className="mt-2 sm:flex sm:justify-between">
                                     <div className="sm:flex">
-                                        <pre className="flex items-center text-sm text-gray-500">
+                                        <pre className="flex items-center text-sm text-neutral-500">
                                         api_XXXX{key.lastCharacters}
                                         </pre>
 
                                     </div>
-                                    <div className="flex items-center mt-2 text-sm text-gray-500 sm:mt-0">
+                                    <div className="flex items-center mt-2 text-sm text-neutral-500 sm:mt-0">
                                         <p>
                                             Created on <time dateTime={key.createdAt.toISOString()}>{key.createdAt.toUTCString()}</time>
                                         </p>
