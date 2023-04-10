@@ -97,8 +97,8 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
               {user?.profileImageUrl ? (
                 <AvatarImage src={user.profileImageUrl} alt={user.username ?? "Profile picture"} />
               ) : null}
-              <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-emerald-100 border-emerald-500 text-emerald-700">
-                {(currentOrg?.slug ?? user?.username ?? "").slice(0, 2).toUpperCase()}
+              <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-neutral-100 border-neutral-500 text-neutral-700">
+                {(currentOrg?.slug ?? user?.username ?? "").slice(0, 2).toUpperCase() ?? "P"}
               </AvatarFallback>
             </Avatar>
             <span>{currentOrg?.name ?? "Personal"}</span>

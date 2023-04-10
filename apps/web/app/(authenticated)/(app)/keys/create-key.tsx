@@ -18,18 +18,12 @@ import {
 
 type Props = {};
 
-
-
-
-
 export const CreateKeyButton: React.FC<Props> = () => {
   const [loading, setLoading] = useState(false);
   const [key, setKey] = useState<string | null>(null);
 
   const { toast } = useToast();
   const router = useRouter();
-
-
 
   const snippet = `curl 'https://highstorm.app/api/v1/events/user.signup' \\
   -H 'Authorization: Bearer ${key}' \\
@@ -39,7 +33,7 @@ export const CreateKeyButton: React.FC<Props> = () => {
     "content": "A new user has signed up",
     "metadata": {"userId": "123"}
   }'
-  `
+  `;
 
   return (
     <>
@@ -92,8 +86,6 @@ export const CreateKeyButton: React.FC<Props> = () => {
             <pre className="font-mono">{snippet}</pre>
             <CopyButton value={snippet} />
           </div>
-
-
         </DialogContent>
       </Dialog>
     </>

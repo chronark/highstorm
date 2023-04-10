@@ -34,12 +34,9 @@ export default async function Layout({ children, params }: LayoutProps) {
   return (
     <>
       <div>
-        <DesktopSidebar channels={channels.map(c => ({ name: c.name }))} navigation={[]} />
-        
-          <MobileSidebar channels={channels.map(c => ({ name: c.name }))} navigation={[]} />
+        <DesktopSidebar channels={channels.map((c) => ({ name: c.name }))} navigation={[]} />
 
-
-        
+        <MobileSidebar channels={channels.map((c) => ({ name: c.name }))} navigation={[]} />
 
         <main className="py-10 lg:pl-72">
           <div className="px-4 sm:px-6 lg:px-8">{children}</div>
@@ -48,4 +45,3 @@ export default async function Layout({ children, params }: LayoutProps) {
     </>
   );
 }
-
