@@ -1,41 +1,18 @@
 "use client";
-
-import {
-  DialogContent,
-  Dialog,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuCheckboxItem,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, ChevronsUpDown, Plus, Key, Book, LogOut } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, Book, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { Loading } from "@/components/loading";
-import { Plan } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { useAuth, useOrganization, useOrganizationList, useUser } from "@clerk/clerk-react";
@@ -54,12 +31,6 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<{ name: string }>({ reValidateMode: "onSubmit" });
 
   const _submit = async (_data: { name: string }) => {
     setLoading(true);
@@ -81,6 +52,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       await setActive({ organization: id });
+      router.refresh();
     } finally {
       setLoading(false);
     }

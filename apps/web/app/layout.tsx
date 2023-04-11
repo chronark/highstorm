@@ -6,9 +6,9 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import "tailwindcss/tailwind.css";
 import { ToastProvider } from "../toastProvider";
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: {
     default: "Highstorm",
     template: "%s | Highstorm",

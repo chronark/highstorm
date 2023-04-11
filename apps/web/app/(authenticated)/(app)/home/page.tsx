@@ -1,10 +1,4 @@
-import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
-import { db } from "@/prisma/db";
-
-import { auth } from "@clerk/nextjs/app-beta";
 import { PageHeader } from "@/components/page-header";
-import { useUser } from "@clerk/clerk-react";
 
 export default async function Page(_props: {
   params: { tenantSlug: string };
