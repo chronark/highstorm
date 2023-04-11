@@ -81,10 +81,10 @@ export default function Page() {
               </Link>
             </div>
             <h1 className="mt-10 text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            Your Slack is too cluttered
+              Your Slack is too cluttered
             </h1>
             <p className="mt-6 text-lg leading-8 whitespace-normal text-neutral-300">
-            Slack isn't built for alerts
+              Slack isn't built for alerts
             </p>
             <div className="flex items-center mt-10 gap-x-6">
               <Link
