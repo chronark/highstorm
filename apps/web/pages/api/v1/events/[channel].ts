@@ -6,15 +6,11 @@ import { publishEvent } from "@/lib/tinybird";
 import { highstorm } from "@/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 import { kysely } from "@/lib/kysely";
+import { Regex } from "lucide-react";
 
 export const config = {
   runtime: "edge",
 };
-
-const headerValidation = z.object({
-  "content-type": z.literal("application/json"),
-  authorization: z.string(),
-});
 
 const bodyValidation = z.object({
   event: z.string(),
@@ -27,7 +23,7 @@ const bodyValidation = z.object({
   value: z.number().optional(),
 });
 
-const channelValidation = z.string().regex(/^[a-zA-Z0-9._-]{3,}$/);
+const _channelValidation = z.string().regex(/^[a-zA-Z0-9._-]{3,}$/);
 
 /**
  * Cache api keys
@@ -43,24 +39,32 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       return new NextResponse(null, { status: 405 });
     }
 
-    const headers = headerValidation.safeParse({
-      "content-type": req.headers.get("content-type"),
-      authorization: req.headers.get("authorization"),
-    });
-    if (!headers.success) {
-      return NextResponse.json({ error: `Bad request: ${headers.error.message}` }, { status: 400 });
+    let authorization = req.headers.get("authorization");
+    if (!authorization) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    authorization = authorization.replace("Bearer ", "");
     const url = new URL(req.url);
 
-    const channelName = channelValidation.safeParse(url.searchParams.get("channel"));
-    if (!channelName.success) {
+    console.log("search params");
+    url.searchParams.forEach((v, k) => {
+      console.log(k, v);
+    });
+    const channelName = url.searchParams.get("nextParamchannel");
+    if (!channelName) {
+      return NextResponse.json({ error: "A channel name is required" }, { status: 400 });
+    }
+    if (!new RegExp(/^[a-zA-Z0-9._-]{3,}$/).test(channelName)) {
       return NextResponse.json(
-        { error: `Bad request: ${channelName.error.message}` },
+        {
+          error:
+            "A channel name must only contain alphanumeric characters, dashes, underscores and periods",
+        },
         { status: 400 },
       );
     }
-    const key = headers.data.authorization.replace("Bearer ", "");
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(key));
+
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(authorization));
     const hash = toBase64(buf);
 
     let cached = cache.get(hash);
@@ -74,7 +78,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         kysely
           .selectFrom("Channel")
           .selectAll()
-          .where("Channel.name", "=", channelName.data)
+          .where("Channel.name", "=", channelName)
           .executeTakeFirst(),
       ]);
       if (!apiKey) {
@@ -88,23 +92,23 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
           .insertInto("Channel")
           .values({
             id: channelId,
-            name: channelName.data,
+            name: channelName,
             tenantId: apiKey.tenantId,
             updatedAt: new Date(),
           })
           .executeTakeFirstOrThrow();
         await highstorm("channel.created", {
           event: "A new channel has been created",
-          content: channelName.data,
+          content: channelName,
           metadata: {
             tenantId: apiKey.tenantId,
             channelId: channelId,
-            channelName: channelName.data,
+            channelName: channelName,
           },
         });
       }
       cached = { tenantId: apiKey.tenantId, channelId };
-      cache.set(key, cached);
+      cache.set(hash, cached);
     }
 
     const body = bodyValidation.safeParse(
