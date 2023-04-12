@@ -1,0 +1,9 @@
+{
+    "name": "@highstorm/docs",
+    "scripts": {
+        "dev": "mintlify dev"
+    },
+    "devDependencies": {
+        "mintlify": "^3.0.20"
+    }
+}
