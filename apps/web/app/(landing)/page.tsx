@@ -61,17 +61,22 @@ export default function Example() {
     <div className="bg-gradient-to-b from-amber-950 via-neutral-950 to-neutral-950 ">
       {/* Header */}
       <div className="bg-gradient-radial-top from-amber-500/90 ">
-
         <div className="px-6 pt-10 pb-24 mx-auto max-w-7xl sm:pb-32 lg:flex lg:px-8 lg:py-40">
           <div className="flex-shrink-0 max-w-2xl mx-auto lg:mx-0 lg:max-w-xl lg:pt-8">
             <div className="mt-24 sm:mt-32 lg:mt-16">
-              <Link href="https://github.com/chronark/highstorm" className="inline-flex space-x-6 group">
+              <Link
+                href="https://github.com/chronark/highstorm"
+                className="inline-flex space-x-6 group"
+              >
                 <span className="px-3 py-1 text-sm font-semibold leading-6 rounded-full text-amber-400 bg-amber-500/10 ring-1 ring-inset ring-amber-500/20">
                   Open Source
                 </span>
                 <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 duration-500 text-neutral-300 group-hover:text-white">
                   <span>Star on GitHub</span>
-                  <ChevronRight className="w-4 h-4 duration-500 text-neutral-500 group-hover:text-white" aria-hidden="true" />
+                  <ChevronRight
+                    className="w-4 h-4 duration-500 text-neutral-500 group-hover:text-white"
+                    aria-hidden="true"
+                  />
                 </span>
               </Link>
             </div>
@@ -79,7 +84,8 @@ export default function Example() {
               Event Monitoring
             </h1>
             <p className="mt-6 text-lg leading-8 whitespace-normal text-neutral-300">
-              Highstorm is an open source event monitoring platform that allows you to stay on top of your events.
+              Highstorm is an open source event monitoring platform that allows you to stay on top
+              of your events.
             </p>
             <div className="flex items-center mt-10 gap-x-6">
               <Link
@@ -88,7 +94,6 @@ export default function Example() {
               >
                 Sign In
               </Link>
-             
             </div>
           </div>
           <div className="flex max-w-2xl mx-auto mt-16 sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
