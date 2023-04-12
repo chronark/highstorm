@@ -1,12 +1,15 @@
-import crypto from "node:crypto";
-import { NextApiRequest, NextApiResponse } from "next";
-import { db } from "@/prisma/db";
 import { z } from "zod";
 
 import { InMemoryCache } from "@/lib/cache";
-import { newId } from "@/lib/id";
+import { newId } from "@/lib/id-edge";
 import { publishEvent } from "@/lib/tinybird";
 import { highstorm } from "@/lib/client";
+import { NextRequest, NextResponse } from "next/server";
+import { kysely } from "@/lib/kysely";
+
+export const config = {
+  runtime: "edge",
+};
 
 const headerValidation = z.object({
   "content-type": z.literal("application/json"),
@@ -24,9 +27,7 @@ const bodyValidation = z.object({
   value: z.number().optional(),
 });
 
-const queryValidation = z.object({
-  channel: z.string().regex(/^[a-zA-Z0-9._-]{3,}$/),
-});
+const channelValidation = z.string().regex(/^[a-zA-Z0-9._-]{3,}$/);
 
 /**
  * Cache api keys
@@ -36,76 +37,83 @@ const cache = new InMemoryCache<{
   channelId: string;
 }>({ ttl: 60_000 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextRequest): Promise<NextResponse> {
   try {
     if (req.method !== "POST") {
-      return res.status(405);
-    }
-    const headers = headerValidation.safeParse(req.headers);
-    if (!headers.success) {
-      res.status(400);
-      return res.json({ error: `Bad request: ${headers.error.message}` });
+      return new NextResponse(null, { status: 405 });
     }
 
-    const query = queryValidation.safeParse(req.query);
-    if (!query.success) {
-      return res.json({ error: `Bad request: ${query.error.message}` });
+    const headers = headerValidation.safeParse({
+      "content-type": req.headers.get("content-type"),
+      authorization: req.headers.get("authorization"),
+    });
+    if (!headers.success) {
+      return NextResponse.json({ error: `Bad request: ${headers.error.message}` }, { status: 400 });
+    }
+    const url = new URL(req.url);
+
+    const channelName = channelValidation.safeParse(url.searchParams.get("channel"));
+    if (!channelName.success) {
+      return NextResponse.json(
+        { error: `Bad request: ${channelName.error.message}` },
+        { status: 400 },
+      );
     }
     const key = headers.data.authorization.replace("Bearer ", "");
-    const hash = crypto.createHash("SHA-256").update(key).digest("base64");
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(key));
+    const hash = toBase64(buf);
+
     let cached = cache.get(hash);
     if (!cached) {
-      const apiKey = await db.apiKey.findUnique({
-        where: {
-          keyHash: hash,
-        },
-        include: {
-          tenant: {
-            include: {
-              channels: {
-                where: {
-                  name: query.data.channel,
-                },
-              },
-            },
-          },
-        },
-      });
+      const [apiKey, channel] = await Promise.all([
+        kysely
+          .selectFrom("ApiKey")
+          .selectAll()
+          .where("ApiKey.keyHash", "=", hash)
+          .executeTakeFirst(),
+        kysely
+          .selectFrom("Channel")
+          .selectAll()
+          .where("Channel.name", "=", channelName.data)
+          .executeTakeFirst(),
+      ]);
       if (!apiKey) {
-        return res.status(403).json({ error: "Unauthorized" });
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
       }
 
-      let channel = apiKey.tenant.channels.find((c) => c.name === query.data.channel);
+      const channelId = channel?.id ?? newId("channel");
+
       if (!channel) {
-        channel = await db.channel.create({
-          data: {
-            id: newId("channel"),
-            name: query.data.channel,
-            tenant: {
-              connect: {
-                id: apiKey.tenantId,
-              },
-            },
-          },
-        });
+        await kysely
+          .insertInto("Channel")
+          .values({
+            id: channelId,
+            name: channelName.data,
+            tenantId: apiKey.tenantId,
+            updatedAt: new Date(),
+          })
+          .executeTakeFirstOrThrow();
         await highstorm("channel.created", {
           event: "A new channel has been created",
-          content: channel.name,
+          content: channelName.data,
           metadata: {
-            tenantId: apiKey.tenant.id,
-            channelId: channel.id,
-            channelName: channel.name,
+            tenantId: apiKey.tenantId,
+            channelId: channelId,
+            channelName: channelName.data,
           },
         });
       }
-
-      cached = { tenantId: apiKey.tenant.id, channelId: channel.id };
+      cached = { tenantId: apiKey.tenantId, channelId };
       cache.set(key, cached);
     }
 
-    const body = bodyValidation.safeParse(req.body);
+    const body = bodyValidation.safeParse(
+      await req.json().catch((err) => {
+        throw new Error(`Invalid JSON body: ${err.message}`);
+      }),
+    );
     if (!body.success) {
-      return res.status(400).json({ error: `Invalid body: ${body.error.message}` });
+      return NextResponse.json({ error: `Invalid body: ${body.error.message}` }, { status: 400 });
     }
 
     const id = newId("event");
@@ -119,13 +127,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       metadata: JSON.stringify(body.data.metadata ?? {}),
     });
 
-    return res.status(200).json({ id });
+    return NextResponse.json({ id });
   } catch (e) {
     const error = e as Error;
     console.error(error);
-    res.status(500).json({ error });
-    return;
-  } finally {
-    res.end();
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
+}
+
+function toBase64(buffer: ArrayBuffer) {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
 }
