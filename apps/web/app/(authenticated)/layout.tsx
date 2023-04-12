@@ -13,7 +13,7 @@ export default function AppLayout({
           <SignIn
             appearance={{
               variables: {
-                colorPrimary: "#FBBE24",
+                colorPrimary: "#161616",
                 colorText: "#161616",
               },
             }}
