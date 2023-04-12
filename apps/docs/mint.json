@@ -25,12 +25,14 @@
     {
       "name": "API Reference",
       "icon": "rectangle-terminal",
-      "url": "docs/api-reference"
+      "url": "docs/api-reference",
+      "iconType": "brands"
     },
     {
       "name": "GitHub",
       "icon": "github",
-      "url": "https://github.com/chronark/highstorm"
+      "url": "https://github.com/chronark/highstorm",
+      "iconType": "brands"
     }
   ],
   "navigation": [
@@ -51,10 +53,18 @@
       "pages": [
         "docs/api-reference/event/create"
       ]
+    },
+    {
+      "group": "Endpoint Examples",
+      "pages": [
+        "docs/api-reference/user"
+      ]
     }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chronark_",
     "github": "https://github.com/chronark/highstorm"
-  }
+  },
+  "openapi": "https://highstorm.app/api/v1/openapi.json"
+
 }
