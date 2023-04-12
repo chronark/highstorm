@@ -55,24 +55,6 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<{ name: string }>({ reValidateMode: "onSubmit" });
-
-  const _submit = async (_data: { name: string }) => {
-    setLoading(true);
-
-    try {
-      // const team = await trpc.team.create.mutate({
-      //   name: data.name,
-      // });
-      // router.push(`/${team.slug}`);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   async function changeOrg(id: string | null) {
     if (!setActive) {
@@ -81,6 +63,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       await setActive({ organization: id });
+      router.refresh()
     } finally {
       setLoading(false);
     }
