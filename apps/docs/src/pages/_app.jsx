@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        {router.pathname === "/" ? (
+        {router.pathname === "/docs" ? (
           <title>Highstorm Docs</title>
         ) : (
           <title>{`${pageProps.title} - Highstorm Documentation`}</title>
