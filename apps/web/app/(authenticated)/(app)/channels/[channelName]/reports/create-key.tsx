@@ -51,8 +51,8 @@ export const CreateKeyButton: React.FC = () => {
         open={!!key}
         onOpenChange={(o) => {
           if (!o) {
-            router.refresh();
             setKey(null);
+            router.refresh();
           }
         }}
       >

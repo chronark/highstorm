@@ -89,7 +89,7 @@ export default function Example() {
             </p>
             <div className="flex items-center mt-10 gap-x-6">
               <Link
-                href="/auth/sign-in"
+                href="/home"
                 className="px-8 lg:px-16 rounded-md bg-white hover:bg-amber-500  py-2.5 text-sm font-semibold text-black duration-500  focus-visible:outline "
               >
                 Sign In

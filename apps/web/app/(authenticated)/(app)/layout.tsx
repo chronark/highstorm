@@ -11,19 +11,14 @@ import { Logo } from "@/components/logo";
 import { DesktopSidebar } from "./DesktopSidebar";
 import { MobileNav } from "@/components/mobile-nav";
 import { MobileSidebar } from "./MobileSidebar";
+import { getTenantId } from "@/lib/auth";
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: { tenantSlug: string };
 }
 
-export default async function Layout({ children, params }: LayoutProps) {
-  const { userId, orgId } = auth();
-
-  const tenantId = orgId ?? userId;
-  if (!tenantId) {
-    return notFound();
-  }
+export default async function Layout({ children }: LayoutProps) {
+  const tenantId = getTenantId();
 
   const channels = await db.channel.findMany({
     where: {
