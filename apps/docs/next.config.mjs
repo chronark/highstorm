@@ -19,6 +19,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
+  assetPrefix: process.env.NODE_ENV === "production" ? "https://highstorm.app" : undefined,
 };
 
 export default withMDX(nextConfig);
