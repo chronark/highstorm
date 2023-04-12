@@ -1,5 +1,3 @@
-const _DOCS_URL = process.env.DOCS_URL ?? "https://docs.highstorm.app";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -19,11 +17,11 @@ const nextConfig = {
     },
     {
       source: "/docs",
-      destination: "https://highstorm.mintlify.com/docs",
+      destination: "https://highstorm.mintlify.app/docs",
     },
     {
       source: "/docs/:match*",
-      destination: "https://highstorm.mintlify.com/docs/:match*",
+      destination: "https://highstorm.mintlify.app/docs/:match*",
     },
   ],
   experimental: {
