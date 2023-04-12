@@ -55,7 +55,6 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
 
   const [loading, setLoading] = useState(false);
 
-
   async function changeOrg(id: string | null) {
     if (!setActive) {
       return;
@@ -64,7 +63,6 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
       setLoading(true);
       await setActive({ organization: id });
       router.push("/home")
-      
     } finally {
       setLoading(false);
     }

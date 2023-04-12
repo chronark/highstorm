@@ -32,7 +32,7 @@ export class Tinybird {
   private readonly token: string;
 
   constructor() {
-    this.token = env.TINYBIRD_TOKEN;
+    this.token = process.env.TINYBIRD_TOKEN!;
   }
 
   private async fetch(
