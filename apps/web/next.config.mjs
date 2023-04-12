@@ -1,3 +1,6 @@
+const DOCS_URL = process.env.DOCS_URL ?? "https://docs.highstorm.app"
+
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -14,6 +17,14 @@ const nextConfig = {
         },
       ],
       destination: "/api/:path*",
+    },
+    {
+      source: '/docs',
+      destination: `${DOCS_URL}/docs`,
+    },
+    {
+      source: '/docs/:path*',
+      destination: `${DOCS_URL}/docs/:path*`,
     },
   ],
   experimental: {
