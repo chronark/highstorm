@@ -47,14 +47,14 @@ export class Tinybird {
       }
       url.searchParams.set(key, value.toString());
     }
-    // url.searchParams.set("token", this.token)
+    url.searchParams.set("token", this.token);
 
     console.log(url.toString());
     const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-      cache: opts?.cache,
+      // headers: {
+      //   Authorization: `Bearer ${this.token}`,
+      // },
+      cache: opts?.cache ?? "no-store",
     });
     if (!res.ok) {
       const error = (await res.json()) as PipeErrorResponse;

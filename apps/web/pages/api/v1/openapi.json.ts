@@ -13,11 +13,11 @@ export default function (_req: NextApiRequest, res: NextApiResponse) {
   // Register definitions here
   const registry = new OpenAPIRegistry();
 
-  const auth = registry.registerComponent("securitySchemes", "bearerAuth", {
-    type: "apiKey",
-    scheme: "bearer",
-    bearerFormat: "opaque",
-  });
+  // const auth = registry.registerComponent("securitySchemes", "bearerAuth", {
+  //   type: "apiKey",
+  //   scheme: "bearer",
+  //   bearerFormat: "opaque",
+  // });
 
   // const UserIdSchema = registry.registerParameter(
   //   "UserId",
@@ -49,8 +49,8 @@ export default function (_req: NextApiRequest, res: NextApiResponse) {
     path: "/users",
     description: "Get user data by its id",
     summary: "Get a single user",
-    security: [{ [auth.name]: [] }],
-   
+    // security: [{ [auth.name]: [] }],
+
     responses: {
       200: {
         description: "Object with user data.",

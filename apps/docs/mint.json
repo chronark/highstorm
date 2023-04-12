@@ -64,7 +64,5 @@
   "footerSocials": {
     "twitter": "https://twitter.com/chronark_",
     "github": "https://github.com/chronark/highstorm"
-  },
-  "openapi": "https://highstorm.app/api/v1/openapi.json"
-
+  }
 }

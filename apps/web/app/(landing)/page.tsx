@@ -35,7 +35,7 @@ import { FeatureSection } from "./FeatureSection";
 
 export default function Page() {
   return (
-    <div className="bg-gradient-to-b from-yellow-950 via-neutral-950 to-neutral-950">
+    <div className="w-screen overflow-x-hidden bg-gradient-to-b from-yellow-950 via-neutral-950 to-neutral-950">
       {/* Header */}
       <div className="bg-gradient-radial-top from-yellow-500/90 ">
         <div className="px-6 pt-10 pb-24 mx-auto max-w-7xl sm:pb-32 lg:flex lg:px-8 lg:py-40">

@@ -1,0 +1,63 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "Highstorm API",
+    "description": "Highstorm API"
+  },
+  "servers": [
+    {
+      "url": "v1"
+    }
+  ],
+  "openapi": "3.1.0",
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1212121"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "age": {
+            "type": "number",
+            "example": 42
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "age"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Get user data by its id",
+        "summary": "Get a single user",
+        "responses": {
+          "200": {
+            "description": "Object with user data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content - successful operation"
+          }
+        }
+      }
+    }
+  }
+}
