@@ -56,10 +56,5 @@
   "footerSocials": {
     "twitter": "https://twitter.com/chronark_",
     "github": "https://github.com/chronark/highstorm"
-  },
-  "api": {
-    "auth": {
-      "method": "bearer"
-    }
   }
 }
