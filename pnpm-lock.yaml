@@ -6,6 +6,7 @@ importers:
     specifiers:
       commitizen: ^4.3.0
       conventional-changelog-conventionalcommits: ^5.0.0
+      cz-conventional-changelog: ^3.3.0
       next: 13.3.0
       prettier: ^2.8.7
       rome: ^11.0.0
@@ -17,6 +18,7 @@ importers:
     devDependencies:
       commitizen: 4.3.0
       conventional-changelog-conventionalcommits: 5.0.0
+      cz-conventional-changelog: 3.3.0
       prettier: 2.8.7
       rome: 11.0.0
       semantic-release: 19.0.5
