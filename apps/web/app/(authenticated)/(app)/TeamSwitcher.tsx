@@ -62,7 +62,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       await setActive({ organization: id });
-      router.push("/home");
+      router.refresh();
     } finally {
       setLoading(false);
     }

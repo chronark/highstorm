@@ -10,7 +10,14 @@ export default function AppLayout({
       <SignedIn>{children}</SignedIn>
       <SignedOut>
         <div className="flex items-center justify-center w-screen h-screen">
-          <SignIn />
+          <SignIn
+            appearance={{
+              variables: {
+                colorPrimary: "#FBBE24",
+                colorText: "#161616",
+              },
+            }}
+          />
         </div>
       </SignedOut>
     </ClerkProvider>
