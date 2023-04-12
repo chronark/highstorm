@@ -1,0 +1,65 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Highstorm Documentation",
+  "logo": {
+    "dark": "/logo/logo.svg",
+    "light": "/logo/logo.svg"
+  },
+  "favicon": "/logo/logo.svg",
+  "colors": {
+    "primary": "#f59e0b",
+    "light": "#d4d4d4",
+    "dark": "#0a0a0a"
+  },
+  "topbarLinks": [
+    {
+      "name": "Documentation",
+      "url": "https://highstorm.app/docs"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://highstorm.app/home"
+  },
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "rectangle-terminal",
+      "url": "docs/api-reference"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/chronark/highstorm"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Home",
+      "pages": [
+        "docs/introduction"
+      ]
+    },
+    {
+      "group": "API Documentation",
+      "pages": [
+        "docs/api-reference/authentication"
+      ]
+    },
+    {
+      "group": "Endpoint Examples",
+      "pages": [
+        "docs/api-reference/event/create"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/chronark_",
+    "github": "https://github.com/chronark/highstorm"
+  },
+  "api": {
+    "auth": {
+      "method": "bearer"
+    }
+  }
+}

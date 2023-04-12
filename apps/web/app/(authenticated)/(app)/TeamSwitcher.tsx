@@ -62,7 +62,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
     try {
       setLoading(true);
       await setActive({ organization: id });
-      router.push("/home");
+      router.refresh();
     } finally {
       setLoading(false);
     }
@@ -76,8 +76,8 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
         <DropdownMenuTrigger className="flex items-center justify-between w-full gap-4 px-2 py-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700">
           <div className="flex items-center justify-start w-full gap-4 ">
             <Avatar>
-              {user?.profileImageUrl ? (
-                <AvatarImage src={user.profileImageUrl} alt={user.username ?? "Profile picture"} />
+              {user?.imageUrl ? (
+                <AvatarImage src={user.imageUrl} alt={user.username ?? "Profile picture"} />
               ) : null}
               <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-neutral-100 border-neutral-500 text-neutral-700">
                 {(currentOrg?.slug ?? user?.username ?? "").slice(0, 2).toUpperCase() ?? "P"}

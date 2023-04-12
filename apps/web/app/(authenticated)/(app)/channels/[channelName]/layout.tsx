@@ -44,8 +44,7 @@ export default async function Layout(props: {
     },
   });
   if (!channel) {
-    console.log("Channel not found, redirecting to tenant page");
-    return redirect(`/${props.params.tenantSlug}`);
+    return redirect("/home");
   }
 
   return (
