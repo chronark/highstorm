@@ -35,9 +35,9 @@ import { FeatureSection } from "./FeatureSection";
 
 export default function Page() {
   return (
-    <div className="bg-gradient-to-b from-amber-950 via-neutral-950 to-neutral-950">
+    <div className="bg-gradient-to-b from-yellow-950 via-neutral-950 to-neutral-950">
       {/* Header */}
-      <div className="bg-gradient-radial-top from-amber-500/90 ">
+      <div className="bg-gradient-radial-top from-yellow-500/90 ">
         <div className="px-6 pt-10 pb-24 mx-auto max-w-7xl sm:pb-32 lg:flex lg:px-8 lg:py-40">
           <div className="flex-shrink-0 max-w-2xl mx-auto lg:mx-0 lg:max-w-xl lg:pt-8">
             <div className="mt-24 sm:mt-32 lg:mt-16">
@@ -45,7 +45,7 @@ export default function Page() {
                 href="https://github.com/chronark/highstorm"
                 className="inline-flex space-x-6 group"
               >
-                <span className="px-3 py-1 text-sm font-semibold leading-6 rounded-full text-amber-400 bg-amber-500/10 ring-1 ring-inset ring-amber-500/20">
+                <span className="px-3 py-1 text-sm font-semibold leading-6 text-yellow-400 rounded-full bg-yellow-500/10 ring-1 ring-inset ring-yellow-500/20">
                   Open Source
                 </span>
                 <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 duration-500 text-neutral-300 group-hover:text-white">
@@ -66,7 +66,7 @@ export default function Page() {
             <div className="flex items-center mt-10 gap-x-6">
               <Link
                 href="/auth/sign-in"
-                className="px-8 lg:px-16 rounded-md bg-white hover:bg-amber-500  py-2.5 text-sm font-semibold text-black duration-500  focus-visible:outline "
+                className="px-8 lg:px-16 rounded-md bg-white hover:bg-yellow-500  py-2.5 text-sm font-semibold text-black duration-500  focus-visible:outline "
               >
                 Sign In
               </Link>
@@ -79,7 +79,7 @@ export default function Page() {
                 alt="App screenshot"
                 width={2432}
                 height={1442}
-                className="w-[76rem] z-10 rounded-xl bg-white/5 shadow-2xl ring-1 ring-amber-200/10"
+                className="w-[76rem] z-10 rounded-xl bg-white/5 shadow-2xl ring-1 ring-yellow-200/10"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function Page() {
         <div className="py-24 sm:py-32">
           <div className="px-6 mx-auto max-w-7xl lg:px-8">
             <div className="max-w-2xl mx-auto sm:text-center">
-              <h2 className="text-base font-semibold leading-7 text-amber-400">
+              <h2 className="text-base font-semibold leading-7 text-yellow-400">
                 Ingest Everything
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
@@ -222,7 +222,7 @@ export default function Page() {
                 <div key={feature.name} className="relative pl-9">
                   <dt className="inline font-semibold text-neutral-100">
                     <feature.icon
-                      className="absolute w-5 h-5 left-1 top-1 text-amber-500"
+                      className="absolute w-5 h-5 text-yellow-500 left-1 top-1"
                       aria-hidden="true"
                     />
                     {feature.name}

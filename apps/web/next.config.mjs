@@ -17,6 +17,14 @@ const nextConfig = {
       ],
       destination: "/api/:path*",
     },
+    {
+      source: '/docs',
+      destination: 'https://highstorm.mintlify.com/docs',
+    },
+    {
+      source: '/docs/:match*',
+      destination: 'https://highstorm.mintlify.com/docs/:match*',
+    },
   ],
   experimental: {
     esmExternals: "loose",
