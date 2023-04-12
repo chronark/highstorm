@@ -21,6 +21,7 @@
   "devDependencies": {
     "commitizen": "^4.3.0",
     "conventional-changelog-conventionalcommits": "^5.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "prettier": "^2.8.7",
     "rome": "^11.0.0",
     "semantic-release": "^19.0.2",
@@ -29,5 +30,10 @@
   },
   "dependencies": {
     "next": "13.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
