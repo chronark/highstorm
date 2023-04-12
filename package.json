@@ -9,6 +9,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cm": "cz",
+    "semantic-release": "semantic-release",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "fmt": "pnpm rome check . --apply-suggested && pnpm rome format . --write",
@@ -17,12 +19,21 @@
   "author": "Andreas Thomas",
   "license": "ISC",
   "devDependencies": {
+    "commitizen": "^4.3.0",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "prettier": "^2.8.7",
     "rome": "^11.0.0",
+    "semantic-release": "^19.0.2",
     "turbo": "^1.8.8",
     "typescript": "^5.0.2"
   },
   "dependencies": {
     "next": "13.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
