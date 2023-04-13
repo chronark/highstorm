@@ -69,11 +69,7 @@ export default async function Layout(props: {
                 <DropdownMenuLabel>Channel Settings</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <CreateReportButton
-                    channelId={channel.id}
-                    channelName={channel.name}
-                    tenantSlug={channel.tenant.slug ?? "home"}
-                  />
+                  <CreateReportButton channelId={channel.id} channelName={channel.name} />
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>

@@ -9,17 +9,14 @@ import { auth } from "@clerk/nextjs/app-beta";
 import { EmptyState } from "@/components/empty-state";
 import { CreateReportButton } from "../createReportButton";
 import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu";
+import { getTenantId } from "@/lib/auth";
 
 export default async function Page(props: { params: { tenantSlug: string; channelName: string } }) {
-  const { userId, orgId } = auth();
-  if (!userId) {
-    return notFound();
-  }
   const channel = await db.channel.findFirst({
     where: {
       AND: {
         tenant: {
-          id: orgId ?? userId!,
+          id: getTenantId(),
         },
         name: props.params.channelName,
       },
@@ -45,13 +42,13 @@ export default async function Page(props: { params: { tenantSlug: string; channe
           {channel.reports.map((report) => (
             <li
               key={report.id}
-              className="flex items-center justify-between p-4 border rounded border-neutral-200"
+              className="flex items-center justify-between p-4 border rounded border-neutral-200 dark:border-neutral-800"
             >
               <div>
-                <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max">
+                <span className="px-2 py-1 font-mono text-sm border rounded bg-neutral-50 border-neutral-200 min-w-max dark:bg-neutral-900 dark:border-neutral-700">
                   {report.cron}
                 </span>
-                <p className="mx-1 mt-2 text-xs text-neutral-500">
+                <p className="mx-1 mt-2 text-xs text-neutral-500 dark:text-neutral-400">
                   Covering the last {report.timeframe} hours
                 </p>
               </div>

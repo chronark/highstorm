@@ -27,7 +27,6 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 type Props = {
-  tenantSlug: string;
   channelName: string;
   channelId: string;
 };
@@ -42,7 +41,7 @@ const formValidation = z.object({
 });
 
 export const CreateReportButton = React.forwardRef<any, Props>(
-  ({ channelId, channelName, tenantSlug }, ref) => {
+  ({ channelId, channelName }, ref) => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const { toast } = useToast();
@@ -68,7 +67,7 @@ export const CreateReportButton = React.forwardRef<any, Props>(
         })
         .then(() => {
           setOpen(false);
-          router.push(`/${tenantSlug}/${channelName}/reports`);
+          router.push(`/channels/${channelName}/reports`);
         })
         .catch((err) => {
           console.error(err);
