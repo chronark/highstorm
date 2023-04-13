@@ -1,0 +1,30 @@
+{
+  "name": "@highstorm/client",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "highstorm",
+    "client",
+    "events"
+  ],
+  "bugs": {
+    "url": "https://github.com/chronark/highstorm/issues"
+  },
+  "homepage": "https://github.com/chronark/highstorm#readme",
+  "files": [
+    "./dist/**"
+  ],
+  "author": "Andreas Thomas <andreas@chronark.com>",
+  "scripts": {
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.2"
+  }
+}

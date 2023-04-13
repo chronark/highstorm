@@ -25,44 +25,43 @@
     {
       "name": "API Reference",
       "icon": "rectangle-terminal",
-      "url": "docs/api-reference",
-      "iconType": "brands"
+      "url": "api-reference"
     },
     {
       "name": "GitHub",
       "icon": "github",
-      "url": "https://github.com/chronark/highstorm",
-      "iconType": "brands"
+      "url": "https://github.com/chronark/highstorm"
     }
   ],
   "navigation": [
     {
       "group": "Home",
       "pages": [
-        "docs/introduction"
+        "introduction"
       ]
     },
     {
       "group": "API Documentation",
       "pages": [
-        "docs/api-reference/authentication"
+        "api-reference/authentication"
       ]
     },
     {
       "group": "Endpoint Examples",
       "pages": [
-        "docs/api-reference/event/create"
+        "api-reference/event/create"
       ]
     },
     {
       "group": "Endpoint Examples",
       "pages": [
-        "docs/api-reference/user"
+        "api-reference/user"
       ]
     }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/chronark_",
     "github": "https://github.com/chronark/highstorm"
-  }
+  },
+  "openapi": "https://raw.githubusercontent.com/chronark/highstorm/main/apps/docs/openapi.json"
 }

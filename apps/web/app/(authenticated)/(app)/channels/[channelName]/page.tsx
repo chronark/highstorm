@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import useSWR from "swr";
 
 import { trpc } from "@/lib/trpc";
-import { CumulativeEventsPerday, EventsPerDay } from "./charts";
+import { CumulativeEventsPerHour, EventsPerDay } from "./charts";
 import { Loading } from "@/components/loading";
 import { EmptyState } from "@/components/empty-state";
 
@@ -15,11 +15,11 @@ export default function AnalyticsPage(props: {
   const d = new Date();
   d.setUTCDate(d.getUTCDate() - 30);
   d.setUTCHours(0, 0, 0, 0);
-  console.log(d.getTime());
   const activity = useSWR(
     {
       channelName: props.params.channelName,
       start: d.getTime(),
+      granularity: "1h",
     },
     trpc.event.channelActivity.query,
     { refreshInterval: 15000 },
@@ -61,7 +61,7 @@ export default function AnalyticsPage(props: {
               {activity.isLoading ? (
                 <Loading />
               ) : (
-                <CumulativeEventsPerday data={activity.data?.data} />
+                <CumulativeEventsPerHour data={activity.data?.data} />
               )}
             </div>
           </div>

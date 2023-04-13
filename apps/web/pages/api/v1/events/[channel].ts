@@ -1,12 +1,10 @@
 import { z } from "zod";
 
-import { InMemoryCache } from "@/lib/cache";
 import { newId } from "@/lib/id-edge";
 import { publishEvent } from "@/lib/tinybird";
 import { highstorm } from "@/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 import { kysely } from "@/lib/kysely";
-import { Regex } from "lucide-react";
 
 export const config = {
   runtime: "edge",
@@ -23,16 +21,6 @@ const bodyValidation = z.object({
   value: z.number().optional(),
 });
 
-const _channelValidation = z.string().regex(/^[a-zA-Z0-9._-]{3,}$/);
-
-/**
- * Cache api keys
- */
-const cache = new InMemoryCache<{
-  tenantId: string;
-  channelId: string;
-}>({ ttl: 60_000 });
-
 export default async function handler(req: NextRequest): Promise<NextResponse> {
   try {
     if (req.method !== "POST") {
@@ -46,11 +34,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     authorization = authorization.replace("Bearer ", "");
     const url = new URL(req.url);
 
-    console.log("search params");
-    url.searchParams.forEach((v, k) => {
-      console.log(k, v);
-    });
-    const channelName = url.searchParams.get("nextParamchannel");
+    const channelName = url.searchParams.get("channel") ?? url.searchParams.get("nextParamchannel");
     if (!channelName) {
       return NextResponse.json({ error: "A channel name is required" }, { status: 400 });
     }
@@ -64,53 +48,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(authorization));
-    const hash = toBase64(buf);
-
-    let cached = cache.get(hash);
-    if (!cached) {
-      const [apiKey, channel] = await Promise.all([
-        kysely
-          .selectFrom("ApiKey")
-          .selectAll()
-          .where("ApiKey.keyHash", "=", hash)
-          .executeTakeFirst(),
-        kysely
-          .selectFrom("Channel")
-          .selectAll()
-          .where("Channel.name", "=", channelName)
-          .executeTakeFirst(),
-      ]);
-      if (!apiKey) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-      }
-
-      const channelId = channel?.id ?? newId("channel");
-
-      if (!channel) {
-        await kysely
-          .insertInto("Channel")
-          .values({
-            id: channelId,
-            name: channelName,
-            tenantId: apiKey.tenantId,
-            updatedAt: new Date(),
-          })
-          .executeTakeFirstOrThrow();
-        await highstorm("channel.created", {
-          event: "A new channel has been created",
-          content: channelName,
-          metadata: {
-            tenantId: apiKey.tenantId,
-            channelId: channelId,
-            channelName: channelName,
-          },
-        });
-      }
-      cached = { tenantId: apiKey.tenantId, channelId };
-      cache.set(hash, cached);
-    }
-
     const body = bodyValidation.safeParse(
       await req.json().catch((err) => {
         throw new Error(`Invalid JSON body: ${err.message}`);
@@ -120,11 +57,53 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: `Invalid body: ${body.error.message}` }, { status: 400 });
     }
 
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(authorization));
+    const hash = toBase64(buf);
+
+    const apiKey = await kysely
+      .selectFrom("ApiKey")
+      .selectAll()
+      .where("ApiKey.keyHash", "=", hash)
+      .executeTakeFirst();
+
+    if (!apiKey) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+    const channel = await kysely
+      .selectFrom("Channel")
+      .selectAll()
+      .where("Channel.name", "=", channelName)
+      .where("Channel.tenantId", "=", apiKey.tenantId)
+      .executeTakeFirst();
+
+    const channelId = channel?.id ?? newId("channel");
+
+    if (!channel) {
+      await kysely
+        .insertInto("Channel")
+        .values({
+          id: channelId,
+          name: channelName,
+          tenantId: apiKey.tenantId,
+          updatedAt: new Date(),
+        })
+        .executeTakeFirstOrThrow();
+      await highstorm("channel.created", {
+        event: "A new channel has been created",
+        content: channelName,
+        metadata: {
+          tenantId: apiKey.tenantId,
+          channelId: channelId,
+          channelName: channelName,
+        },
+      });
+    }
+
     const id = newId("event");
     await publishEvent({
       id,
-      tenantId: cached.tenantId,
-      channelId: cached.channelId,
+      tenantId: apiKey.tenantId,
+      channelId: channelId,
       time: body.data.time ?? Date.now(),
       event: body.data.event,
       content: body.data.content ?? "",

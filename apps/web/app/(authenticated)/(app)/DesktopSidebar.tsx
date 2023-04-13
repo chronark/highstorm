@@ -31,7 +31,7 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
         <div className="px-6 py-2">
           <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">{/* Events */}</h2>
           <div className="space-y-1">
-            <Link href="/home">
+            <Link href="/stream">
               <Button variant="ghost" size="sm" className="justify-start w-full">
                 <FormInput className="w-4 h-4 mr-2" />
                 Stream
