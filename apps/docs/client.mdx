@@ -1,0 +1,68 @@
+---
+title: Typescript Client
+description: "Learn how to use the npm package @highstorm/client to ingest events"
+---
+
+
+
+
+
+## Get Started
+
+### Install
+
+Install the highstorm client:
+  <CodeGroup>
+  ```bash npm
+npm install @highstorm/client
+```
+```bash yarn
+yarn add @highstorm/client
+```
+```bash pnpm
+pnpm add @highstorm/client
+```
+</CodeGroup>
+
+### Publish An Event
+
+In order to publish an event, all you need is an api token. You can find your api token in the [dashboard](https://highstorm.app/keys).
+You don't need to create the channel manually. It will be created automatically if it doesn't exist.
+
+
+#### Quick Start
+
+This requires adding an api key via the `HIGHSTORM_TOKEN=api_XXXXX` environment variable.
+
+```typescript
+import highstorm from "@highstorm/client"
+
+await highstorm("my.channel", {
+  event: "Something happened",
+  content: "This is the content of the event",
+  metadata:{
+    foo: "bar"
+  }
+})
+
+```
+
+
+#### Highstorm Class
+
+For more control, you can also use the `Highstorm` class. For example when you want to supply the api key manually, or `process.env` is not available on your platform.
+
+```typescript
+import { Highstorm } from "@highstorm/client"
+
+const highstorm = new Highstorm({token: "api_XXXXX"})
+
+await highstorm.ingest("my.channel", {
+  event: "Something happened",
+  content: "This is the content of the event",
+  metadata:{
+    foo: "bar"
+  }
+})
+
+```

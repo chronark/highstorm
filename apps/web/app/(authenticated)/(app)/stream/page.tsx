@@ -2,26 +2,21 @@
 
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import useSWR from "swr";
 
-import { trpc } from "@/lib/trpc";
+import { trpc } from "@/lib/trpc/client";
 import { Feed } from "@/components/feed";
-import { CumulativeEventsPerDay } from "../channels/[channelName]/charts";
+import { AreaChart, fillRange } from "@/components/charts";
 
-export default function StreamsPage(props: { params: { tenantSlug: string } }) {
-  const d = new Date();
-  d.setUTCDate(d.getUTCDate() - 30);
-  d.setUTCHours(0, 0, 0, 0);
+export default function StreamsPage() {
+  const now = new Date().setMinutes(0, 0, 0);
+  const start = now - 1000 * 60 * 60 * 24 * 7;
+  const granularity = "1h";
 
-  const activity = useSWR(
-    {
-      tenantSlug: props.params.tenantSlug,
-      start: d.getTime(),
-      granularity: "1h",
-    },
-    trpc.event.channelActivity.query,
-    { refreshInterval: 15000 },
-  );
+  const activity = trpc.event.channelActivity.useQuery({
+    start,
+    granularity,
+  });
+  console.log(activity);
   const { toast } = useToast();
   useEffect(() => {
     if (activity.error) {
@@ -33,6 +28,19 @@ export default function StreamsPage(props: { params: { tenantSlug: string } }) {
       });
     }
   }, [activity.error]);
+
+  const usage =
+    fillRange(
+      (activity.data?.data ?? []).map(({ time, count }) => ({ time, value: count })),
+      start,
+      now,
+      granularity,
+    ).map(({ time, value }) => ({ x: new Date(time).toUTCString(), y: value })) ?? [];
+  let sum = 0;
+  const accumulatedUsage = usage.map(({ x, y }) => {
+    sum += y;
+    return { x, y: sum };
+  });
 
   return (
     <div className="h-full px-8 py-6">
@@ -46,14 +54,14 @@ export default function StreamsPage(props: { params: { tenantSlug: string } }) {
       </div>
       <div className="mt-8 overflow-hidden bg-white border rounded-md dark:bg-transparent border-neutral-300 dark:border-neutral-700">
         <span className="p-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
-          Events per Day
+          Events per Hour
         </span>
         <div className="h-32">
-          <CumulativeEventsPerDay data={activity.data?.data ?? []} />
+          <AreaChart data={accumulatedUsage} />
         </div>
       </div>
       <div className="mt-8">
-        <Feed tenantSlug={props.params.tenantSlug} />
+        <Feed />
       </div>
     </div>
   );

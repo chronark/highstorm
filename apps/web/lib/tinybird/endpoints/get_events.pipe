@@ -21,6 +21,4 @@ WHERE
     {% end %}
     time >= {{ Int64(since, required=True) }}
     ORDER BY time DESC
-    {% if defined(limit) %}
-        LIMIT {{ Int64(limit) }}
-    {% end %}
+    LIMIT {{ Int64(limit, 100) }}

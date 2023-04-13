@@ -4,11 +4,9 @@ import React, { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { db } from "@/prisma/db";
 import { Ghost } from "lucide-react";
-import useSWR from "swr";
 
-import { auth } from "@clerk/nextjs/app-beta";
 import { duration } from "@/lib/time";
-import { trpc } from "@/lib/trpc";
+import { trpc } from "@/lib/trpc/client";
 import {
   Dialog,
   DialogContent,
@@ -21,14 +19,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loading } from "./loading";
 
 type Props = {
-  tenantSlug: string;
   channelId?: string;
   fallback?: React.ReactNode;
 };
-export const Feed: React.FC<Props> = ({ tenantSlug, channelId, fallback }) => {
-  const { data, error, isLoading } = useSWR({ tenantSlug, channelId }, trpc.event.list.query, {
-    refreshInterval: 15000,
-  });
+export const Feed: React.FC<Props> = ({ channelId, fallback }) => {
+  const { data, error, isLoading } = trpc.event.list.useQuery({ channelId });
   const { toast } = useToast();
   useEffect(() => {
     if (error) {

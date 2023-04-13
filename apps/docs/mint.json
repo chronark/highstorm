@@ -37,7 +37,8 @@
     {
       "group": "Home",
       "pages": [
-        "introduction"
+        "introduction",
+        "client"
       ]
     },
     {
@@ -62,6 +63,4 @@
   "footerSocials": {
     "twitter": "https://twitter.com/chronark_",
     "github": "https://github.com/chronark/highstorm"
-  },
-  "openapi": "https://raw.githubusercontent.com/chronark/highstorm/main/apps/docs/openapi.json"
-}
+  }}

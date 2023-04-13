@@ -11,7 +11,7 @@ export const getChannelActivity = tb.buildPipe({
     channelId: z.string().optional(),
     start: z.number(),
     end: z.number().optional(),
-    granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]),
+    granularity: z.enum(["1m", "1h", "1d", "1w", "1M"]),
   }),
   data: z.object({
     time: z.string().transform((t) => new Date(t).getTime()),

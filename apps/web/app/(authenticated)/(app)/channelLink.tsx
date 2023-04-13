@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 import { Hash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,7 @@ type Props = {
 };
 
 export const ChannelLink: React.FC<Props> = ({ href, channelName }) => {
-  const isActive = channelName === useSelectedLayoutSegment();
-
+  const isActive = channelName === useSelectedLayoutSegments().at(1)
   return (
     <Link href={href}>
       <Button
@@ -24,6 +23,6 @@ export const ChannelLink: React.FC<Props> = ({ href, channelName }) => {
         <Hash className="w-4 h-4 mr-2" />
         {channelName}
       </Button>
-    </Link>
+    </Link >
   );
 };

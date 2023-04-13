@@ -5,7 +5,8 @@ import { buffer } from "micro";
 import { env } from "@/lib/env";
 
 import { z } from "zod";
-import { flatten, highstorm } from "@/lib/client";
+import highstorm from "@highstorm/client";
+import { flatten } from "@/lib/flatten";
 
 export const config = {
   api: {

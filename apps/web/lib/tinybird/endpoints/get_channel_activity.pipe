@@ -5,7 +5,7 @@ SQL >
 %
 SELECT
     count() AS count,
-    {% if defined(granularity) and granularity == "1m" %}
+    {% if defined(granularity) and granularity == "1M" %}
         toStartOfMonth(fromUnixTimestamp64Milli(time)) as time
     {% elif defined(granularity) and granularity == "1w" %}
         toStartOfWeek(fromUnixTimestamp64Milli(time)) as time

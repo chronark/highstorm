@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { newId } from "@/lib/id-edge";
 import { publishEvent } from "@/lib/tinybird";
-import { highstorm } from "@/lib/client";
+import highstorm from "@highstorm/client";
 import { NextRequest, NextResponse } from "next/server";
 import { kysely } from "@/lib/kysely";
 

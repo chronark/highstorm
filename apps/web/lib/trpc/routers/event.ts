@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { getChannelActivity, getEvents } from "@/lib/tinybird";
 import { auth, t } from "../trpc";
+import { Input } from "@/components/ui/input";
 
 export const eventRouter = t.router({
   list: t.procedure
@@ -48,9 +49,9 @@ export const eventRouter = t.router({
     .input(
       z.object({
         channelName: z.string().optional(),
-        start: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        end: z.number().optional(),
-        granularity: z.enum(["1m", "1h", "1d", "1w", "1m"]).default("1h"),
+        start: z.number(),
+        end: z.number().default(Date.now() + 60_000), // add a 60s clock skew
+        granularity: z.enum(["1m", "1h", "1d", "1w", "1M"]).default("1h"),
       }),
     )
     .query(async ({ input, ctx }) => {

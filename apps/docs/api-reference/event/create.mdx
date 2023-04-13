@@ -86,6 +86,22 @@ fetch('https://api.highstorm.app/v1/events/user.signup', {
 
 ```
 
+```ts highstorm
+import highstorm from "@highstorm/client"
+
+// The token will be loaded from the 
+// environment variable HIGHSTORM_TOKEN
+await highstorm("user.signup", {
+    event: 'Chronark signed up',
+    metadata: {
+      user_id: '123',
+      source: 'Twitter'
+    }
+  })
+
+
+```
+
 </RequestExample>
 
 <ResponseExample>
