@@ -24,7 +24,7 @@ export default async function Page(_props: {
   -d '{
     "event": "Chronark has signed up",
     "content": "A new user has signed up",
-    "metadata": {"userId": "123}
+    "metadata": {"userId": 123}
   }'
 `}
         </pre>
