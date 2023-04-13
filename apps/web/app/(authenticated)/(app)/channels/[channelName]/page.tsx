@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/select";
 import { DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import ms from "ms";
+import { Card } from "@/components/card";
+import { Heading } from "@/components/text";
 
 const sinceOptions = {
   "1h": "Last hour",
@@ -71,7 +73,7 @@ export default function AnalyticsPage(props: {
 
   return (
     <>
-      <div className="flex items-center justify-end w-full gap-4">
+      <div className="flex items-center justify-end w-full gap-8">
         <Select onValueChange={(v: keyof typeof sinceOptions) => setSince(v)}>
           <SelectTrigger>
             <SelectValue defaultValue={"7d"} placeholder={sinceOptions["7d"]} />
@@ -123,22 +125,19 @@ export default function AnalyticsPage(props: {
           />
         ) : (
           <div className="flex flex-col gap-8">
-            <div className="overflow-hidden bg-white border rounded-md dark:bg-transparent border-neutral-300 dark:border-neutral-700">
-              <span className="p-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
-                Events per Day
-              </span>
+            <Card>
+              <Heading h4>Events per Day</Heading>
               <div className="h-32">
                 {activity.isLoading ? <Loading /> : <ColumnChart data={usage} />}
               </div>
-            </div>
-            <div className="overflow-hidden bg-white border rounded-md dark:bg-transparent border-neutral-300 dark:border-neutral-700">
-              <span className="p-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
-                Total Events
-              </span>
+            </Card>
+
+            <Card>
+              <Heading h4>Total Events</Heading>
               <div className="h-32 ">
                 {activity.isLoading ? <Loading /> : <AreaChart data={accumulatedUsage} />}
               </div>
-            </div>
+            </Card>
           </div>
         )}
       </div>

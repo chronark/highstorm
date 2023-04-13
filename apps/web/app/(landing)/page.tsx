@@ -155,8 +155,7 @@ export default function Page() {
           },
         ]}
       />
-      <main className="isolate">
-        {/* Hero section */}
+      {/* <main className="isolate">
 
         <div className="py-24 sm:py-32">
           <div className="px-6 mx-auto max-w-7xl lg:px-8">
@@ -168,8 +167,7 @@ export default function Page() {
                 <ReactWrapBalancer>Analytics At Your Fingertips</ReactWrapBalancer>
               </p>
               <p className="mt-6 text-lg leading-8 text-neutral-600">
-                {/* Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
-            dolor cupiditate blanditiis. */}
+               
               </p>
             </div>
           </div>
@@ -190,22 +188,11 @@ export default function Page() {
           </div>
           <div className="px-6 mx-auto mt-16 max-w-7xl sm:mt-20 md:mt-24 lg:px-8">
             <dl className="grid max-w-2xl grid-cols-1 mx-auto text-base leading-7 text-neutral-600 gap-x-6 gap-y-10 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
-              {/* {features.map((feature) => (
-                <div key={feature.name} className="relative pl-9">
-                  <dt className="inline font-semibold text-neutral-100">
-                    <feature.icon
-                      className="absolute w-5 h-5 text-yellow-500 left-1 top-1"
-                      aria-hidden="true"
-                    />
-                    {feature.name}
-                  </dt>{" "}
-                  <dd className="inline text-neutral-400">{feature.description}</dd>
-                </div>
-              ))} */}
+              
             </dl>
           </div>
         </div>
-      </main>
+      </main> */}
 
       <footer>
         <div className="px-6 py-20 mx-auto overflow-hidden max-w-7xl sm:py-24 lg:px-8">

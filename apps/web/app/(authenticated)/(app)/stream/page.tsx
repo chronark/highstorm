@@ -6,6 +6,9 @@ import { useToast } from "@/hooks/use-toast";
 import { trpc } from "@/lib/trpc/client";
 import { Feed } from "@/components/feed";
 import { AreaChart, fillRange } from "@/components/charts";
+import { Loading } from "@/components/loading";
+import { Card } from "@/components/card";
+import { Heading } from "@/components/text";
 
 export default function StreamsPage() {
   const now = new Date().setMinutes(0, 0, 0);
@@ -52,14 +55,12 @@ export default function StreamsPage() {
           </p>
         </div>
       </div>
-      <div className="mt-8 overflow-hidden bg-white border rounded-md dark:bg-transparent border-neutral-300 dark:border-neutral-700">
-        <span className="p-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
-          Events per Hour
-        </span>
-        <div className="h-32">
-          <AreaChart data={accumulatedUsage} />
+      <Card className="mt-8">
+        <Heading h4>Total Events</Heading>
+        <div className="h-32 ">
+          {activity.isLoading ? <Loading /> : <AreaChart data={accumulatedUsage} />}
         </div>
-      </div>
+      </Card>
       <div className="mt-8">
         <Feed />
       </div>

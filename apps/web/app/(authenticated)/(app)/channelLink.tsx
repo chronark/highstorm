@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const ChannelLink: React.FC<Props> = ({ href, channelName }) => {
-  const isActive = channelName === useSelectedLayoutSegments().at(1)
+  const isActive = channelName === useSelectedLayoutSegments().at(1);
   return (
     <Link href={href}>
       <Button
@@ -23,6 +23,6 @@ export const ChannelLink: React.FC<Props> = ({ href, channelName }) => {
         <Hash className="w-4 h-4 mr-2" />
         {channelName}
       </Button>
-    </Link >
+    </Link>
   );
 };
