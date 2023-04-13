@@ -3,31 +3,18 @@ import Link from "next/link";
 import {
   Activity,
   AlertTriangle,
-  ArrowLeft,
-  ArrowUp,
-  BellRing,
+  Bell,
   BookOpen,
-  Bug,
-  Check,
   ChevronRight,
   Code,
-  DollarSign,
   Filter,
   GitMerge,
-  Home,
   LayoutDashboard,
-  Menu,
-  MessageCircle,
-  Network,
-  Play,
+  Search,
   Send,
-  Server,
   Settings,
   Shuffle,
   Siren,
-  Speaker,
-  User,
-  X,
 } from "lucide-react";
 import ReactWrapBalancer from "react-wrap-balancer";
 import { Logo } from "@/components/logo";
@@ -152,32 +139,17 @@ export default function Page() {
         description="Prioritize high-signal events and alerts, get real-time notifications for important events, and customize your alerts to fit your team's unique needs, improving issue resolution times and keeping your team informed and aligned."
         features={[
           {
-            icon: Home,
-            name: "Prioritize High-Signal Events",
-            description: "Our tool prioritizes high-signal events and alerts",
-          },
-          {
-            icon: Home,
+            icon: Activity,
             name: "Real-Time Notifications",
             description: "Get real-time notifications for important events",
           },
           {
-            icon: Home,
+            icon: Search,
             name: "Quick Identification",
             description: "Quickly identify the most important messages in your workspace",
           },
           {
-            icon: Home,
-            name: "Team Alignment",
-            description: "Keep your team informed and aligned with important alerts",
-          },
-          {
-            icon: Home,
-            name: "Faster Issue Resolution",
-            description: "Improve issue resolution times with faster alert response",
-          },
-          {
-            icon: Home,
+            icon: Bell,
             name: "Customizable Alerts",
             description: "Customize your alerts to fit your team's unique needs",
           },
