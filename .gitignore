@@ -36,3 +36,6 @@ yarn-error.log*
 .env
 .vercel
 dist
+
+# Tinybird config for the cli is stored in this file
+.tinyb

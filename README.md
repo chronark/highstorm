@@ -8,3 +8,33 @@
 </div>
 <br/>
 
+
+
+## Contributing
+
+
+Set environment variables in `/apps/web/.env` file:
+
+```sh-session
+cp apps/web/.env.example apps/web/.env
+```
+
+
+### Install
+
+```sh-session
+pnpm install
+```
+
+### Build
+  
+
+```sh-session 
+pnpm build
+```
+
+### Run
+
+```sh-session
+pnpm turbo run dev --filter=web
+```

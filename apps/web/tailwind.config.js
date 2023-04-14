@@ -1,4 +1,4 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+const { fontFamily, colors } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -17,6 +17,7 @@ module.exports = {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         display: ["var(--font-calsans)"],
       },
+
       backgroundImage: {
         "gradient-conic": "conic-gradient(var(--conic-position), var(--tw-gradient-stops))",
         "gradient-radial-top": "radial-gradient(100% 60% at 100% 0%, var(--tw-gradient-stops))",

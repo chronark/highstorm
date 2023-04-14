@@ -1,24 +1,14 @@
 VERSION 1
 
-
-
 NODE endpoint
 SQL >
-%
-SELECT
-    id,
-    channelId,
-    time,
-    event,
-    content,
-    metadata
-FROM events__v1
-
-WHERE
-    tenantId = {{ String(tenantId, required=True)}} AND
-    {% if defined(channelId) %}
-        channelId = {{ String(channelId, required=True) }} AND
-    {% end %}
-    time >= {{ Int64(since, required=True) }}
+    %
+    SELECT id, channelId, time, event, content, metadata
+    FROM events__v1
+    WHERE
+        tenantId = {{ String(tenantId, required=True) }}
+        AND {% if defined(channelId) %} channelId = {{ String(channelId, required=True) }} AND {% end %}
+        time >= {{ Int64(since, required=True) }}
     ORDER BY time DESC
     LIMIT {{ Int64(limit, 100) }}
+
