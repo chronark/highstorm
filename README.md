@@ -37,6 +37,24 @@ cp apps/web/.env.example apps/web/.env
 pnpm install
 ```
 
+### Prepare databases
+
+#### Prisma 
+
+```sh-session
+cd apps/web
+npx prisma db push
+```
+
+#### Tinybird
+
+Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and run the following command after authenticating:
+
+```sh-session
+cd apps/web
+tb push
+```
+
 ### Build
   
 
