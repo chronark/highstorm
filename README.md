@@ -51,13 +51,12 @@ npx prisma db push
 Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and run the following command after authenticating:
 
 ```sh-session
-cd apps/web
+cd apps/web/lib/tinybird
 tb push
 ```
 
 ### Build
   
-
 ```sh-session 
 pnpm build
 ```
