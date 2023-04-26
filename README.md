@@ -13,11 +13,22 @@
 ## Contributing
 
 
-Set environment variables in `/apps/web/.env` file:
+
+### Services
+
+There are a few 3rd party services that are required to run the app:
+
+- [planetscale](https://planetscale.com?ref=highstorm): Database
+- [tinybird](https://www.tinybird.co?ref=highstorm): Time series database
+- [upstash](https://upstash.com/qstash?ref=highstorm): Optional, only required for reports
+- [clerk](https://clerk.com?ref=highstorm): Authentication
+
+ Set environment variables in `/apps/web/.env` file and populate the values from the services above.:
 
 ```sh-session
 cp apps/web/.env.example apps/web/.env
 ```
+
 
 
 ### Install
