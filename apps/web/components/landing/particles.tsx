@@ -10,6 +10,8 @@ interface ParticlesProps {
   ease?: number;
   refresh?: boolean;
   color?: string;
+  vx?: number;
+  vy?: number;
 }
 function hexToRgb(hex: string): number[] {
   // Remove the "#" character from the beginning of the hex color code
@@ -34,6 +36,8 @@ export const Particles: React.FC<ParticlesProps> = ({
   ease = 50,
   refresh = false,
   color = "#ffffff",
+  vx = 0,
+  vy = 0,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
@@ -118,7 +122,7 @@ export const Particles: React.FC<ParticlesProps> = ({
     const size = Math.floor(Math.random() * 2) + 1;
     const alpha = 0;
     const targetAlpha = parseFloat((Math.random() * 0.6 + 0.1).toFixed(1));
-    const dx = (Math.random() - 0.5) * 0.2;
+    const dx = (Math.random() - 0.5) * 0.2
     const dy = (Math.random() - 0.5) * 0.2;
     const magnetism = 0.1 + Math.random() * 4;
     return { x, y, translateX, translateY, size, alpha, targetAlpha, dx, dy, magnetism };
@@ -188,11 +192,11 @@ export const Particles: React.FC<ParticlesProps> = ({
       } else {
         circle.alpha = circle.targetAlpha * remapClosestEdge;
       }
-      circle.x += circle.dx;
-      circle.y += circle.dy;
-      circle.translateX +=
+      circle.x += circle.dx+vx
+      circle.y += circle.dy+vy
+      circle.translateX += 
         (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) / ease;
-      circle.translateY +=
+      circle.translateY += 
         (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) / ease;
       // circle gets out of the canvas
       if (

@@ -82,8 +82,9 @@ export const Pricing: React.FC = () => {
                   <div className="relative h-full bg-zinc-900 rounded-[inherit] z-20 overflow-hidden">
                     <Particles
                       className="absolute inset-0 -z-10 opacity-10 group-hover/item:opacity-100 transition-opacity duration-1000 ease-in-out"
-                      quantity={(i + 1) ** 3 * 10}
+                      quantity={(i + 1) ** 2 * 10}
                       color={["#34d399", "#fde047", "#f43f5e"][i]}
+                      vy={-0.2}
                     />
                     <div className="flex flex-col">
                       {/* Radial gradient */}
