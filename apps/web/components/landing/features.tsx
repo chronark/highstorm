@@ -58,7 +58,7 @@ export const Features: React.FC = () => {
                     Don't drown in alerts
                   </div>
                 </div>
-                <h3 className="font-semibold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60 pb-3">
+                <h3 className="font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60 pb-3">
                   Reduce Alert Noise
                 </h3>
                 <p className="text-lg text-zinc-400 mb-8">
