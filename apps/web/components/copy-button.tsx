@@ -35,7 +35,7 @@ export function CopyButton({ value, className, src, ...props }: CopyButtonProps)
   return (
     <button
       className={cn(
-        "relative z-20 inline-flex h-8 items-center justify-center rounded-md border-neutral-200 p-2 text-sm font-medium text-neutral-900 transition-all hover:bg-neutral-100 focus:outline-none dark:text-neutral-100 dark:hover:bg-neutral-800",
+        "relative z-20 inline-flex h-8 items-center justify-center rounded-md border-zinc-200 p-2 text-sm font-medium text-zinc-900 transition-all hover:bg-zinc-100 focus:outline-none dark:text-zinc-100 dark:hover:bg-zinc-800",
         className,
       )}
       onClick={() => {
@@ -81,7 +81,7 @@ export function CopyWithClassNames({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "relative z-20 inline-flex h-8 items-center justify-center rounded-md p-2 text-sm font-medium text-neutral-900 transition-all hover:bg-neutral-100 focus:outline-none dark:text-neutral-100 dark:hover:bg-neutral-800",
+          "relative z-20 inline-flex h-8 items-center justify-center rounded-md p-2 text-sm font-medium text-zinc-900 transition-all hover:bg-zinc-100 focus:outline-none dark:text-zinc-100 dark:hover:bg-zinc-800",
           className,
         )}
         {...props}

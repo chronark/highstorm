@@ -50,7 +50,7 @@ export default function StreamsPage() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">All your Events</h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
             {/* The last 1000 events from all of your channels in the current month */}
           </p>
         </div>

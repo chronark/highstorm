@@ -62,7 +62,7 @@ export const CreateKeyButton: React.FC = () => {
             <DialogDescription>
               This key is only shown once and can not be recovered. Please store it somewhere safe.
             </DialogDescription>
-            <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-neutral-100">
+            <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-zinc-100">
               <pre className="font-mono">{key}</pre>
               <CopyButton value={key!} />
             </div>

@@ -40,7 +40,7 @@ const pricing: {
       tier: "pro",
       href: "/home",
       price: { monthly: "$50", annually: "$500" },
-      description: "For large teams",
+      description: "For growing teams",
       features: ["1M Events / month"],
       mostPopular: false,
       cta: "Get Started",
@@ -53,10 +53,10 @@ export const Pricing: React.FC = () => {
 
   return (
     <div className="">
-      <div className="overflow-hidden gradient-to-r from-orange-950/10 via-rose-950/40 to-orange-950/10 isolate">
+      <div className="overflow-hidden gradient-to-r from-orange-950/10 via-primary-950/40 to-orange-950/10 isolate">
         <div className="px-6 pt-24 mx-auto text-center max-w-7xl pb-96 sm:pt-32 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-base font-semibold leading-7 text-rose-500">Pricing</h2>
+            <h2 className="text-base font-semibold leading-7 text-primary-500">Pricing</h2>
             <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl font-display">
               <ReactWrapBalancer>The right price for any team</ReactWrapBalancer>
             </p>
@@ -79,7 +79,7 @@ export const Pricing: React.FC = () => {
                     <div>
                       <h3
                         id={tier.tier}
-                        className="text-base font-semibold leading-7 text-rose-600"
+                        className="text-base font-semibold leading-7 text-primary-600"
                       >
                         {tier.name}
                       </h3>
@@ -95,7 +95,10 @@ export const Pricing: React.FC = () => {
                       <ul role="list" className="mt-10 space-y-4 text-sm leading-6 text-gray-600">
                         {tier.features.map((feature) => (
                           <li key={feature} className="flex gap-x-3">
-                            <Check className="flex-none w-5 h-6 text-rose-600" aria-hidden="true" />
+                            <Check
+                              className="flex-none w-5 h-6 text-primary-600"
+                              aria-hidden="true"
+                            />
                             {feature}
                           </li>
                         ))}
@@ -104,7 +107,7 @@ export const Pricing: React.FC = () => {
                     <Link
                       href={tier.href}
                       aria-describedby={tier.tier}
-                      className="mt-8 block rounded-md bg-black px-3.5 py-2 text-center text-sm font-semibold leading-6 ring-inset text-white shadow-sm hover:bg-white ring-1 ring-black hover:text-black duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600"
+                      className="mt-8 block rounded-md bg-black px-3.5 py-2 text-center text-sm font-semibold leading-6 ring-inset text-white shadow-sm hover:bg-white ring-1 ring-black hover:text-black duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
                     >
                       Get started today
                     </Link>
@@ -112,16 +115,16 @@ export const Pricing: React.FC = () => {
                 ))}
                 <div className="flex flex-col items-start p-8 gap-x-8 gap-y-6 rounded-xl ring-1 ring-gray-900/10 sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center">
                   <div className="lg:min-w-0 lg:flex-1">
-                    <h3 className="text-lg font-semibold leading-8 tracking-tight text-rose-600">
+                    <h3 className="text-lg font-semibold leading-8 tracking-tight text-zinc-950">
                       Free Tier
                     </h3>
                     <p className="mt-1 text-base leading-7 text-gray-600">
-                      Ingest upt to 1k events per month for free, no credit card required
+                      Ingest up to 1k events per month for free, no credit card required
                     </p>
                   </div>
                   <Link
                     href="/home"
-                    className="rounded-md px-3.5 py-2 text-sm font-semibold leading-6 text-black ring-1 ring-inset ring-black hover:bg-black hover:text-white duration-500  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600"
+                    className="rounded-md px-3.5 py-2 text-sm font-semibold leading-6 text-black ring-1 ring-inset ring-black hover:bg-black hover:text-white duration-500  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
                   >
                     Sign Up <span aria-hidden="true">&rarr;</span>
                   </Link>

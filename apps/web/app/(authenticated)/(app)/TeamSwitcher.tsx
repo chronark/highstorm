@@ -73,13 +73,13 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
       {loading ? (
         <Loading />
       ) : (
-        <DropdownMenuTrigger className="flex items-center justify-between w-full gap-4 px-2 py-1 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700">
+        <DropdownMenuTrigger className="flex items-center justify-between w-full gap-4 px-2 py-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700">
           <div className="flex items-center justify-start w-full gap-4 ">
             <Avatar>
-              {user?.imageUrl ? (
-                <AvatarImage src={user.imageUrl} alt={user.username ?? "Profile picture"} />
+              {user?.profileImageUrl ? (
+                <AvatarImage src={user.profileImageUrl} alt={user.username ?? "Profile picture"} />
               ) : null}
-              <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-neutral-100 border-neutral-500 text-neutral-700">
+              <AvatarFallback className="flex items-center justify-center w-8 h-8 overflow-hidden border rounded-md bg-zinc-100 border-zinc-500 text-zinc-700">
                 {(currentOrg?.slug ?? user?.username ?? "").slice(0, 2).toUpperCase() ?? "P"}
               </AvatarFallback>
             </Avatar>
@@ -122,7 +122,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
           <DropdownMenuItem
             onClick={() => changeOrg(null)}
             className={cn("flex items-center justify-between", {
-              "bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-100": currentOrg === null,
+              "bg-zinc-100 dark:bg-zinc-700 dark:text-zinc-100": currentOrg === null,
             })}
           >
             <span>Personal</span>
@@ -133,7 +133,7 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
             <DropdownMenuItem
               onClick={() => changeOrg(org.organization.id)}
               className={cn("flex items-center justify-between", {
-                "bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-100":
+                "bg-zinc-100 dark:bg-zinc-700 dark:text-zinc-100":
                   currentOrg?.slug === org.organization.slug,
               })}
             >

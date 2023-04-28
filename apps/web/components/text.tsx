@@ -34,7 +34,7 @@ export const Heading: React.FC<PropsWithChildren<Props>> = ({ children, h1, h2, 
   }
   if (h2) {
     return (
-      <h2 className="pb-2 mt-10 text-3xl font-semibold tracking-tight transition-colors border-b scroll-m-20 border-b-slate-200 first:mt-0 dark:border-b-slate-700">
+      <h2 className="pb-2 mt-10 text-3xl font-semibold tracking-tight transition-colors border-b scroll-m-20 border-b-zinc-200 first:mt-0 dark:border-b-zinc-700">
         {children}{" "}
       </h2>
     );

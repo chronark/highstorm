@@ -22,7 +22,7 @@ export type HighstormEvent = {
 
 export type HighstormOptions = {
   /**
-   * @default https://api.highstorm.app
+   * @default https://highstorm.app
    */
   baseUrl?: string;
 
@@ -37,7 +37,7 @@ export class Highstorm {
   private readonly token: string;
 
   constructor(opts: HighstormOptions) {
-    this.baseUrl = opts.baseUrl ?? "https://api.highstorm.app";
+    this.baseUrl = opts.baseUrl ?? "https://highstorm.app";
     /**
      * Even though typescript should prevent this, some people still pass undefined or empty strings
      */
@@ -47,9 +47,13 @@ export class Highstorm {
     this.token = opts.token;
   }
 
-  public async ingest(channel: string, event: HighstormEvent): Promise<{ id: string | null }> {
+  public async ingest(
+    channel: string,
+    event: HighstormEvent,
+    opts?: { throwOnError?: boolean },
+  ): Promise<{ id: string | null }> {
     try {
-      const res = await fetch(`${this.baseUrl}/v1/events/${channel}`, {
+      const res = await fetch(`${this.baseUrl}/api/v1/events/${channel}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,10 +67,15 @@ export class Highstorm {
       return await res.json();
     } catch (err) {
       console.error(err);
+
+      if (opts?.throwOnError) {
+        throw err;
+      }
+
       return { id: null };
     }
   }
 }
 
-export default (channel: string, event: HighstormEvent) =>
-  new Highstorm({ token: process.env.HIGHSTORM_TOKEN! }).ingest(channel, event);
+export default (channel: string, event: HighstormEvent, opts?: { throwOnError?: boolean }) =>
+  new Highstorm({ token: process.env.HIGHSTORM_TOKEN! }).ingest(channel, event, opts);

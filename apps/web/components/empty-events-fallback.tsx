@@ -17,7 +17,7 @@ export async function EmptyEventsFallback({ channelName }: Props) {
       title="No Events"
       description="To get started, you can publish an event using curl:"
     >
-      <pre className="p-4 font-mono text-left whitespace-pre bg-white border rounded-md border-neutral-300">
+      <pre className="p-4 font-mono text-left whitespace-pre bg-white border rounded-md border-zinc-300">
         {`curl '${url}/api/v1/events/${channelName ?? "users.signup"}' \\
     -H 'Authorization: Bearer <HIGHSTORM_TOKEN>' \\
     -H 'Content-Type: application/json' \\

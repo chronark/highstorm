@@ -34,7 +34,7 @@ export const MobileSidebar: React.FC<Props> = ({ navigation, channels }) => {
   return (
     <div className="lg:hidden">
       <Sheet>
-        <div className="sticky top-0 z-40 flex items-center justify-end w-full px-4 py-4 bg-neutral-950 gap-x-6 sm:px-6 lg:hidden">
+        <div className="sticky top-0 z-40 flex items-center justify-end w-full px-4 py-4 bg-zinc-950 gap-x-6 sm:px-6 lg:hidden">
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
@@ -43,7 +43,7 @@ export const MobileSidebar: React.FC<Props> = ({ navigation, channels }) => {
           <SheetHeader>
             <SheetTitle className="flex items-center justify-center gap-2">
               {" "}
-              <Logo className="w-8 h-8 stroke-neutral-300" />
+              <Logo className="w-8 h-8 stroke-zinc-300" />
               Highstorm
             </SheetTitle>
             {/* <SheetDescription>

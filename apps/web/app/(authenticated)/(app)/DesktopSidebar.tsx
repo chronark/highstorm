@@ -19,10 +19,10 @@ type Props = {
 
 export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
   return (
-    <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-neutral-800">
+    <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-zinc-800">
       <Link
         href="/home"
-        className="flex items-center gap-2 px-8 py-6 text-2xl font-semibold tracking-tight duration-200 stroke-neutral-800 dark:text-neutral-200 dark:stroke-neutral-500 dark:hover:stroke-white hover:stroke-neutral-700 hover:text-neutral-700 dark:hover:text-white"
+        className="flex items-center gap-2 px-8 py-6 text-2xl font-semibold tracking-tight duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
       >
         <Logo className="w-8 h-8 duration-200 " />
         Highstorm
@@ -54,16 +54,18 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
           </div>
         </div>
         <div className="py-2">
-          <h2 className="relative px-8 text-lg font-semibold tracking-tight">Events</h2>
+          <h2 className="relative px-8 text-lg font-semibold tracking-tight">Channels</h2>
           <ScrollArea className="h-[230px] px-4">
             <div className="p-2 space-y-1">
-              {channels.map((channel) => (
-                <ChannelLink
-                  key={channel.name}
-                  href={`/channels/${channel.name}`}
-                  channelName={channel.name}
-                />
-              ))}
+              {channels
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((channel) => (
+                  <ChannelLink
+                    key={channel.name}
+                    href={`/channels/${channel.name}`}
+                    channelName={channel.name}
+                  />
+                ))}
             </div>
           </ScrollArea>
         </div>

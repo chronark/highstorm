@@ -17,7 +17,7 @@ export default async function Page(_props: {
       />
 
       <div>
-        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-neutral-300 dark:border-neutral-800">
+        <pre className="p-4 mt-8 font-mono whitespace-pre border rounded-md border-zinc-300 dark:border-zinc-800">
           {`curl 'https://highstorm.app/api/v1/events/users.signup' \\
   -H 'Authorization: Bearer <HIGHSTORM_TOKEN>' \\
   -H 'Content-Type: application/json' \\

@@ -52,7 +52,7 @@ export default async function Layout(props: {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold tracking-tight">{channel.name}</h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">{channel.description}</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">{channel.description}</p>
         </div>
 
         <div className="flex items-center justify-between gap-4">

@@ -57,7 +57,7 @@ export const Feed: React.FC<Props> = ({ channelId, fallback }) => {
     });
 
   return (
-    <div className="overflow-hidden border rounded-md border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+    <div className="overflow-hidden border rounded-md border-zinc-700 bg-zinc-50 dark:bg-zinc-900">
       {isLoading ? (
         <div className="h-[60vh] animate-pulse flex items-center justify-center">
           <Loading />
@@ -68,31 +68,28 @@ export const Feed: React.FC<Props> = ({ channelId, fallback }) => {
         <ScrollArea className="h-[60vh]">
           {Object.keys(feed).map((day) => (
             <div key={day} className="relative">
-              <div className="sticky top-0 z-10 px-4 py-1 text-sm font-medium dark:shadow bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 text-neutral-800">
+              <div className="sticky top-0 z-10 px-4 py-1 text-sm font-medium dark:shadow bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 text-zinc-800">
                 <h3>{day}</h3>
               </div>
-              <ul
-                role="list"
-                className="relative divide-y divide-neutral-200 dark:divide-neutral-800"
-              >
+              <ul role="list" className="relative divide-y divide-zinc-200 dark:divide-zinc-800">
                 {feed[day].map((event) => (
                   <li key={event.id}>
                     <Dialog>
-                      <DialogTrigger className="relative w-full px-4 py-3 group bg-neutral-50 hover:bg-white dark:bg-neutral-900 dark:hover:bg-neutral-700">
+                      <DialogTrigger className="relative w-full px-4 py-3 group bg-zinc-50 hover:bg-white dark:bg-zinc-900 dark:hover:bg-zinc-700">
                         <div className="flex justify-between space-x-3">
                           <div className="flex-1 min-w-0 text-left">
                             <div className="block focus:outline-none">
-                              <p className="text-sm font-medium truncate text-neutral-900 dark:text-neutral-200">
+                              <p className="text-sm font-medium truncate text-zinc-900 dark:text-zinc-200">
                                 {event.event}
                               </p>
-                              <p className="text-sm truncate text-neutral-500 group-hover:text-neutral-200 ">
+                              <p className="text-sm truncate text-zinc-500 group-hover:text-zinc-200 ">
                                 {event.content}
                               </p>
                             </div>
                           </div>
                           <time
                             dateTime={new Date(event.time).toISOString()}
-                            className="flex-shrink-0 text-sm text-neutral-500 whitespace-nowrap group-hover:text-neutral-200"
+                            className="flex-shrink-0 text-sm text-zinc-500 whitespace-nowrap group-hover:text-zinc-200"
                           >
                             {duration(Date.now() - event.time)} ago
                           </time>
@@ -104,19 +101,19 @@ export const Feed: React.FC<Props> = ({ channelId, fallback }) => {
 
                           <DialogDescription>{event.content}</DialogDescription>
                         </DialogHeader>
-                        <div className="grid grid-cols-2 gap-2 text-neutral-700">
+                        <div className="grid grid-cols-2 gap-2 text-zinc-700">
                           {Object.entries(event.metadata ?? {}).map(([key, value]) => (
                             <>
-                              <span className="font-mono text-sm text-neutral-400">{key}</span>
-                              <span className="font-mono text-sm text-neutral-600">{value}</span>
+                              <span className="font-mono text-sm text-zinc-400">{key}</span>
+                              <span className="font-mono text-sm text-zinc-600">{value}</span>
                             </>
                           ))}
                         </div>
-                        <div className="flex items-center justify-between gap-4 pt-4 mt-4 border-t border-neutral-100">
-                          <span className="text-xs text-neutral-400">
+                        <div className="flex items-center justify-between gap-4 pt-4 mt-4 border-t border-zinc-100">
+                          <span className="text-xs text-zinc-400">
                             {new Date(event.time).toUTCString()}
                           </span>
-                          <span className="font-mono text-xs text-neutral-400">{event.id}</span>
+                          <span className="font-mono text-xs text-zinc-400">{event.id}</span>
                         </div>
                       </DialogContent>
                     </Dialog>
