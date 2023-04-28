@@ -122,7 +122,7 @@ export const Particles: React.FC<ParticlesProps> = ({
     const size = Math.floor(Math.random() * 2) + 1;
     const alpha = 0;
     const targetAlpha = parseFloat((Math.random() * 0.6 + 0.1).toFixed(1));
-    const dx = (Math.random() - 0.5) * 0.2
+    const dx = (Math.random() - 0.5) * 0.2;
     const dy = (Math.random() - 0.5) * 0.2;
     const magnetism = 0.1 + Math.random() * 4;
     return { x, y, translateX, translateY, size, alpha, targetAlpha, dx, dy, magnetism };
@@ -192,11 +192,11 @@ export const Particles: React.FC<ParticlesProps> = ({
       } else {
         circle.alpha = circle.targetAlpha * remapClosestEdge;
       }
-      circle.x += circle.dx+vx
-      circle.y += circle.dy+vy
-      circle.translateX += 
+      circle.x += circle.dx + vx;
+      circle.y += circle.dy + vy;
+      circle.translateX +=
         (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) / ease;
-      circle.translateY += 
+      circle.translateY +=
         (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) / ease;
       // circle gets out of the canvas
       if (

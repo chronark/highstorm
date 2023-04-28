@@ -2,9 +2,18 @@ import crypto from "node:crypto";
 import { db } from "@/prisma/db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { Policy } from "@chronark/access-policies";
 
 import { newId } from "@/lib/id";
 import { auth, t } from "../trpc";
+
+type Resources = {
+  channel: ["create", "read", "delete"];
+};
+
+type TenantId = string;
+type ResourceId = string;
+type GRID = `${TenantId}::${keyof Resources | "*"}::${ResourceId}`;
 
 export const apikeyRouter = t.router({
   create: t.procedure
@@ -25,6 +34,14 @@ export const apikeyRouter = t.router({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
+      const policy = new Policy<Resources, GRID>({
+        resources: {
+          channel: {
+            [`${tenant.id}::channel::*` satisfies GRID]: ["create", "read"],
+          },
+        },
+      });
+
       const apiKey = newId("apiKey");
 
       await db.apiKey.create({
@@ -38,6 +55,7 @@ export const apikeyRouter = t.router({
               id: tenant.id,
             },
           },
+          policy: policy.toString(),
         },
       });
       return { apiKey };

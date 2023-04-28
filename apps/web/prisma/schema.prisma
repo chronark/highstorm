@@ -115,6 +115,7 @@ model ApiKey {
   name           String
   keyHash        String  @unique
   lastCharacters String?
+  policy        String?
 
   @@index([tenantId])
 }
