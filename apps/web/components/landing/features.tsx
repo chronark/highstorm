@@ -72,13 +72,13 @@ export const Features: React.FC = () => {
                       key={feature.name}
                       className="group hover:bg-zinc-100 duration-500 rounded px-2 py-1"
                     >
-                      <div className="flex items-center mb-1 space-x-2">
+                      <div className="flex items-center mb-1 space-x-2 ">
                         <feature.icon className="shrink-0 text-zinc-300 w-4 h-4 group-hover:text-zinc-950 duration-500" />
                         <h4 className="font-medium text-zinc-50 group-hover:text-zinc-950 duration-500">
                           {feature.name}
                         </h4>
                       </div>
-                      <p className="text-sm text-zinc-400 group-hover:text-zinc-950 duration-500">
+                      <p className="text-sm text-left text-zinc-400 group-hover:text-zinc-950 duration-500">
                         {feature.description}
                       </p>
                     </div>
