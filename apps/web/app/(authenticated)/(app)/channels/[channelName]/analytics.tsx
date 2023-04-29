@@ -232,7 +232,7 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
                     <DialogTrigger className="w-full text-left px-4 py-4 sm:px-6 group lg:px-8 group-hover:bg-zinc-800 duration-1000">
                       <div className="flex w-full  justify-between items-center gap-x-3">
                         {/* <img src={event.user.imageUrl} alt="" className="h-6 w-6 flex-none rounded-full bg-zinc-800" /> */}
-                        <h3 className=" truncate text-sm font-semibold leading-6 text-white">
+                        <h3 className=" truncate text-xs font-semibold leading-6 text-white">
                           {event.event}
                         </h3>
                         <time

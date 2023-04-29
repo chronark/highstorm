@@ -2,6 +2,7 @@
 title: Typescript Client
 description: "Learn how to use the npm package @highstorm/client to ingest events"
 ---
+import { Tab, Tabs } from 'nextra-theme-docs'
 
 
 
@@ -12,17 +13,26 @@ description: "Learn how to use the npm package @highstorm/client to ingest event
 ### Install
 
 Install the highstorm client:
-  <CodeGroup>
-  ```bash npm
-npm install @highstorm/client
-```
-```bash yarn
-yarn add @highstorm/client
-```
+  <Tabs items={["pnpm", "yarn", "npm"]}>
+
+
+<Tab>
 ```bash pnpm
 pnpm add @highstorm/client
 ```
-</CodeGroup>
+</Tab>
+<Tab>
+```bash yarn
+yarn add @highstorm/client
+```
+</Tab>
+  <Tab>
+  ```bash npm
+npm install @highstorm/client
+```
+</Tab>
+
+</Tabs>
 
 ### Publish An Event
 
