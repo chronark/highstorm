@@ -17,11 +17,11 @@ const nextConfig = {
     },
     {
       source: "/docs",
-      destination: "https://highstorm.mintlify.app/docs",
+      destination: "https://highstorm-docs.vercel.app/",
     },
     {
       source: "/docs/:match*",
-      destination: "https://highstorm.mintlify.app/docs/:match*",
+      destination: "https://highstorm-docs.vercel.app/:match*",
     },
   ],
   experimental: {

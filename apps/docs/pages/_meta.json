@@ -1,6 +1,8 @@
 {
-  "index": "Introduction",
-  "api-reference": {
-    "title": "API Reference"
+  "index": {
+    "title": "Introduction",
+    "api-reference": {
+      "title": "API Reference"
+    }
   }
 }
