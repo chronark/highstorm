@@ -5,23 +5,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 generator kysely {
-    provider = "prisma-kysely"
+  provider = "prisma-kysely"
 
-    // Optionally provide a destination directory for the generated file
-    // and a filename of your choice
-    output = "../lib/kysely"
-    fileName = "types.ts"
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output   = "../lib/kysely"
+  fileName = "types.ts"
 }
-
 
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
-
 
 enum Plan {
   DISABLED // non-personal tenants can not be free and are therefore disabled
@@ -33,13 +30,13 @@ enum Plan {
 model Tenant {
   // This is the id from Clerk
   id        String   @id
-  slug      String?   @unique
+  slug      String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   plan Plan
 
-  stripeCustomerId String?   @unique
+  stripeCustomerId String? @unique
 
   // When the user deletes a tenant it is marked as deactivated until all billing is done
   deactivatedAt DateTime?
@@ -48,7 +45,6 @@ model Tenant {
 
   @@index([slug])
 }
-
 
 model Channel {
   id          String  @id
@@ -60,14 +56,41 @@ model Channel {
   updatedAt DateTime @updatedAt
 
   tenantId String
-  tenant   Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   //  Some custom value the user wants to track
   valueName String?
 
-  reports          Report[]
+  reports  Report[]
+  webhooks Webhook[]
 
   @@unique([tenantId, name])
+}
+
+enum WebhookType {
+  SLACK
+  HTTP
+}
+
+// A webhook fires immediately when a channel receives a new event
+model Webhook {
+  id String @id
+
+  name String
+  type WebhookType
+
+  url String
+  method String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId String
+
+  // Optional headers if you want to authenticate
+  header   Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([channelId])
 }
 
 model Report {
@@ -77,11 +100,11 @@ model Report {
 
   lastRunAt DateTime?
 
-  cron String
+  cron       String
   // The schedule id from QStash
   scheduleId String @unique
   // How much data to look at in hours
-  timeframe Int
+  timeframe  Int
 
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
   channelId String
@@ -97,7 +120,7 @@ model SlackSubscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  url       String
+  url      String
   report   Report? @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId String?
 
@@ -110,12 +133,12 @@ model ApiKey {
   updatedAt DateTime @updatedAt
 
   tenantId String
-  tenant   Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   name           String
   keyHash        String  @unique
   lastCharacters String?
-  policy        String?
+  policy         String?
 
   @@index([tenantId])
 }

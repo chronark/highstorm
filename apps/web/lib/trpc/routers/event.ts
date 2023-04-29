@@ -12,7 +12,7 @@ export const eventRouter = t.router({
     .input(
       z.object({
         channelId: z.string().optional(),
-        since: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        start: z.number().default(Date.now() - 7 * 24 * 60 * 60 * 1000),
       }),
     )
     .query(async ({ input, ctx }) => {
@@ -40,7 +40,7 @@ export const eventRouter = t.router({
       return getEvents({
         tenantId: tenant.id,
         channelId: channel.id,
-        since: input.since,
+        since: input.start,
         limit: 1000,
       });
     }),

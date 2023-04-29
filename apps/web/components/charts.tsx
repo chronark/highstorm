@@ -2,6 +2,8 @@
 
 import { Area, Column } from "@ant-design/plots";
 
+const GRID_COLOR = "#3F3F45";
+
 /**
  *
  */
@@ -62,7 +64,6 @@ type Props = {
 export const AreaChart: React.FC<Props> = ({ data }) => {
   return (
     <Area
-      theme="dark"
       autoFit={true}
       data={data}
       smooth={true}
@@ -77,8 +78,25 @@ export const AreaChart: React.FC<Props> = ({ data }) => {
       }}
       xAxis={{
         tickCount: 3,
+        tickLine: {
+          style: {
+            stroke: GRID_COLOR,
+          },
+        },
+        line: {
+          style: {
+            stroke: GRID_COLOR,
+          },
+        },
       }}
       yAxis={{
+        grid: {
+          line: {
+            style: {
+              stroke: GRID_COLOR,
+            },
+          },
+        },
         tickCount: 3,
         label: {
           formatter: (v: string) =>
@@ -98,7 +116,7 @@ export const AreaChart: React.FC<Props> = ({ data }) => {
 export const ColumnChart: React.FC<Props> = ({ data }) => {
   return (
     <Column
-      theme="dark"
+      // theme="dark"
       autoFit={true}
       data={data}
       padding={[40, 40, 30, 40]}
@@ -107,9 +125,26 @@ export const ColumnChart: React.FC<Props> = ({ data }) => {
       color="#e5e5e5"
       xAxis={{
         tickCount: 3,
+        tickLine: {
+          style: {
+            stroke: GRID_COLOR,
+          },
+        },
+        line: {
+          style: {
+            stroke: GRID_COLOR,
+          },
+        },
       }}
       yAxis={{
         tickCount: 3,
+        grid: {
+          line: {
+            style: {
+              stroke: GRID_COLOR,
+            },
+          },
+        },
         label: {
           formatter: (v: string) =>
             Intl.NumberFormat(undefined, { notation: "compact" }).format(Number(v)),

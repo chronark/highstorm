@@ -43,7 +43,6 @@ export const metadata: Metadata = {
   twitter: {
     title: "Highstorm",
     card: "summary_large_image",
-    
   },
   icons: {
     shortcut: "/favicon.png",

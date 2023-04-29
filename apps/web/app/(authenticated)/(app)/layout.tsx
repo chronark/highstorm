@@ -33,9 +33,7 @@ export default async function Layout({ children }: LayoutProps) {
 
       <MobileSidebar channels={channels.map((c) => ({ name: c.name }))} navigation={[]} />
 
-      <main className="py-10 lg:pl-72">
-        <div className="px-4 sm:px-6 lg:px-8">{children}</div>
-      </main>
+      <div className=" lg:pl-72">{children}</div>
     </ReactQueryProvider>
   );
 }

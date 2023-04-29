@@ -3,7 +3,7 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BarChart, FileKey, Filter, FormInput, Menu } from "lucide-react";
+import { BarChart, FileKey, Filter, FormInput, Home, Menu } from "lucide-react";
 import { ChannelLink } from "./channelLink";
 import { TeamSwitcher } from "./TeamSwitcher";
 import Link from "next/link";
@@ -54,10 +54,10 @@ export const MobileSidebar: React.FC<Props> = ({ navigation, channels }) => {
             <div className="px-6 py-2">
               <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">{/* Events */}</h2>
               <div className="space-y-1">
-                <Link href="/stream">
+                <Link href="/overview">
                   <Button variant="ghost" size="sm" className="justify-start w-full">
-                    <FormInput className="w-4 h-4 mr-2" />
-                    Stream
+                    <Home className="w-4 h-4 mr-2" />
+                    Overview
                   </Button>
                 </Link>
                 <Link href="/keys">

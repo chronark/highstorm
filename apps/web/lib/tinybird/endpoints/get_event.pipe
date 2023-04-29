@@ -1,0 +1,11 @@
+VERSION 1
+
+NODE endpoint
+SQL >
+    %
+    SELECT id, channelId, time, event, content, metadata
+    FROM events__v1
+    WHERE
+        id = {{ String(eventId, required=True) }}
+     
+
