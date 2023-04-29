@@ -56,16 +56,44 @@ export default async function Page(_props: {
       value: tenant.channels.length.toLocaleString(),
     },
     {
-      label: "Total Events",
+      label: "Total Events (7 days)",
       value: events.data.length.toLocaleString(),
     },
   ];
   return (
     <main>
-      <div className="relative isolate overflow-hidden pt-16">
+      <div className="relative isolate overflow-hidden">
         {/* Stats */}
-        <div className="border-b border-b-white/10 lg:border-t lg:border-t-white/5">
-          <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+        <div className="border-b border-b-white/10 ">
+          <div className="flex h-16   bg-primary-900 flex-col items-start justify-between gap-x-8 gap-y-4  px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8 border-b border-white/10">
+            <div>
+              <div className="flex items-center gap-x-3 ">
+                {/* <div className="flex-none rounded-full bg-green-400/10 p-1 text-green-400">
+                <div className="h-2 w-2 rounded-full bg-current" />
+              </div> */}
+                <h1 className="flex gap-x-2 text-base leading-7">
+                  <span className="font-semibold text-white">
+                    {tenant.slug ?? "Personal Account"}
+                  </span>
+                </h1>
+              </div>
+              {/* <p className="mt-2 text-xs leading-6 text-zinc-400">{channel.description}</p> */}
+            </div>
+            <div className="order-first flex-none rounded-full bg-rose-400/10 px-2 py-1 text-xs font-medium text-rose-400 ring-1 ring-inset ring-rose-400/30 sm:order-none">
+              {tenant.plan}
+            </div>
+          </div>
+          <dl
+            className={cn(
+              "grid grid-cols-1  bg-zinc-700/10 sm:grid-cols-2  border-b border-white/10 h-32",
+              {
+                "lg:grid-cols-2": stats.length === 2,
+                "lg:grid-cols-3": stats.length === 3,
+                "lg:grid-cols-4": stats.length >= 4,
+              },
+            )}
+          >
+            {" "}
             {stats.map((stat, statIdx) => (
               <div
                 key={stat.label}
@@ -97,48 +125,43 @@ export default async function Page(_props: {
         <div>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-zinc-100 lg:mx-0 lg:max-w-none">
-              Recent activity
+              Recent events
             </h2>
           </div>
-          <div className="mt-6 overflow-hidden border-t border-zinc-900">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mt-6 overflow-y-scroll border-t border-zinc-900 overflow-x-hidden">
+            <div className="mx-auto max-w-7xl ">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-                <table className="w-full text-left">
+                <table className="w-full text-left ">
                   <thead className="sr-only">
                     <tr>
-                      <th>Amount</th>
-                      <th className="hidden sm:table-cell">Client</th>
+                      <th>Event</th>
+                      <th className="hidden sm:table-cell">Content</th>
                       <th>More details</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Object.entries(days).map(([day, events]) => (
                       <Fragment key={day}>
-                        <tr className="text-sm leading-6 text-zinc-100 ">
+                        <tr className="text-sm leading-6 text-zinc-900">
                           <th
                             scope="colgroup"
                             colSpan={3}
-                            className="relative isolate py-2 font-semibold"
+                            className="relative isolate py-2 font-semibold   "
                           >
-                            <time dateTime={day}>{day}</time>
-                            <div className="absolute inset-y-0 right-full -z-10 w-screen border-b border-zinc-800 bg-zinc-950" />
-                            <div className="absolute inset-y-0 left-0 -z-10 w-screen border-b border-zinc-800 bg-zinc-950" />
+                            <div className="mx-2 sm:mx-4 lg:mx-6  rounded bg-zinc-200 px-2 py-1">
+                              <time dateTime={day}>{day}</time>
+                            </div>
                           </th>
                         </tr>
                         {events.map((event) => (
-                          <tr key={event.id} className="group">
-                            <td className="relative py-5 pr-6">
-                              <div className="flex gap-x-6">
-                                {/* <transaction.icon
-                                className="hidden h-6 w-5 flex-none text-zinc-400 sm:block"
-                                aria-hidden="true"
-                              /> */}
-                                <div className="flex-auto">
-                                  <div className="flex items-start gap-x-3">
-                                    <div className="text-sm font-medium leading-6 text-zinc-100">
-                                      {event.event}
-                                    </div>
-                                    {/* <div
+                          <tr key={event.id} className="hover:bg-zinc-800 duration-1000 ">
+                            <td className="relative py-5 pr-6  pl-4 sm:pl-6 lg:pl-8">
+                              <div className="flex-auto">
+                                <div className="flex items-start gap-x-3">
+                                  <div className="text-sm font-medium leading-6 text-zinc-100">
+                                    {event.event}
+                                  </div>
+                                  {/* <div
                                     className={classNames(
                                       statuses[transaction.status],
                                       'rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset'
@@ -146,10 +169,9 @@ export default async function Page(_props: {
                                   >
                                     {transaction.status}
                                   </div> */}
-                                  </div>
-                                  <div className="mt-1 text-xs leading-5 text-zinc-400">
-                                    {new Date(event.time).toLocaleString()}
-                                  </div>
+                                </div>
+                                <div className="mt-1 text-xs leading-5 text-zinc-400">
+                                  {new Date(event.time).toLocaleString()}
                                 </div>
                               </div>
                               <div className="absolute bottom-0 right-full h-px w-screen bg-zinc-900" />
@@ -158,19 +180,19 @@ export default async function Page(_props: {
                             <td className="hidden py-5 pr-6 sm:table-cell">
                               <div className="text-sm leading-6 text-zinc-100">{event.content}</div>
                             </td>
-                            <td className="py-5 text-right">
+                            <td className="py-5 text-right pl-4 sm:pr-6 rg:pr-8">
                               <div className="flex justify-end">
                                 <Link
-                                  href={`/${channelIdToSlug[event.channelId]}/events/${event.id}`}
-                                  className="text-sm font-medium  leading-6 text-primary-400 group-hover:text-primary-500"
+                                  href={`/channels/${channelIdToSlug[event.channelId]}/events/${
+                                    event.id
+                                  }`}
+                                  className="text-sm font-medium  leading-6 text-primary-300 duration-500 hover:text-primary-100"
                                 >
                                   View<span className="hidden sm:inline"> event</span>
                                 </Link>
                               </div>
                               <div className="mt-1 text-xs leading-5 text-zinc-500">
-                                <span className="text-zinc-400 group-hover:text-zinc-200">
-                                  {event.id}
-                                </span>
+                                <span className="text-zinc-400 ">{event.id}</span>
                               </div>
                             </td>
                           </tr>

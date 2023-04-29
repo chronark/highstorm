@@ -41,5 +41,6 @@ export const newId = new IdGenerator({
   event: "evt",
   user: "user",
   tenant: "tenant",
+  webhook: "wh",
   apiKey: "hs", // short for "highstorm"
 }).id;

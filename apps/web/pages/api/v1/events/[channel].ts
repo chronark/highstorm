@@ -3,11 +3,13 @@ import { z } from "zod";
 import { newId } from "@/lib/id-edge";
 import { publishEvent } from "@/lib/tinybird";
 import highstorm from "@highstorm/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { kysely } from "@/lib/kysely";
+import { WebhookType } from "@prisma/client";
 
 export const config = {
   runtime: "edge",
+  regions: ["fra1"],
 };
 
 const bodyValidation = z.object({
@@ -21,7 +23,10 @@ const bodyValidation = z.object({
   value: z.number().optional(),
 });
 
-export default async function handler(req: NextRequest): Promise<NextResponse> {
+export default async function handler(
+  req: NextRequest,
+  ctx: NextFetchEvent,
+): Promise<NextResponse> {
   try {
     if (req.method !== "POST") {
       return new NextResponse(null, { status: 405 });
@@ -74,10 +79,11 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       .selectAll()
       .where("Channel.name", "=", channelName)
       .where("Channel.tenantId", "=", apiKey.tenantId)
+
       .executeTakeFirst();
 
     const channelId = channel?.id ?? newId("channel");
-
+    const eventId = newId("event");
     if (!channel) {
       await kysely
         .insertInto("Channel")
@@ -87,7 +93,8 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
           tenantId: apiKey.tenantId,
           updatedAt: new Date(),
         })
-        .executeTakeFirstOrThrow();
+        .execute();
+
       await highstorm("channel.created", {
         event: "A new channel has been created",
         content: channelName,
@@ -99,18 +106,112 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       });
     }
 
-    const id = newId("event");
+    const time = body.data.time ?? Date.now();
     await publishEvent({
-      id,
+      id: eventId,
       tenantId: apiKey.tenantId,
       channelId: channelId,
-      time: body.data.time ?? Date.now(),
+      time,
       event: body.data.event,
       content: body.data.content ?? "",
       metadata: JSON.stringify(body.data.metadata ?? {}),
     });
 
-    return NextResponse.json({ id });
+    const sendWebhooks = async () => {
+      const webhooks = await kysely
+        .selectFrom("Webhook")
+        .select(["id", "type", "url", "method", "header"])
+        .where("Webhook.channelId", "=", channelId)
+        .execute();
+
+      await Promise.all(
+        webhooks.map(async (wh) => {
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            "User-Agent": "highstorm/1.0",
+            "Highstorm-Channel-Id": channelId,
+            "Highstorm-Event-Id": eventId,
+          });
+          for (const [k, v] of Object.entries(wh.header as Record<string, string>)) {
+            headers.set(k, v);
+          }
+          let webhookBody = "";
+          switch (wh.type) {
+            case WebhookType.HTTP:
+              webhookBody = JSON.stringify({
+                event: body.data.event,
+                content: body.data.content ?? "",
+                metadata: body.data.metadata ?? {},
+              });
+              break;
+            case WebhookType.SLACK:
+              webhookBody = JSON.stringify({
+                text: body.data.event,
+                blocks: [
+                  {
+                    type: "header",
+                    text: {
+                      type: "plain_text",
+                      text: body.data.event,
+                    },
+                  },
+                  {
+                    type: "section",
+                    text: {
+                      type: "plain_text",
+                      text: body.data.content,
+                    },
+                  },
+                  {
+                    type: "section",
+                    fields: [
+                      {
+                        type: "mrkdwn",
+                        text: `*Time:*\n${new Date(time).toISOString()}`,
+                      },
+                      {
+                        type: "mrkdwn",
+                        text: `*Metadata:*\n${JSON.stringify(body.data.metadata ?? {})}`,
+                      },
+                    ],
+                  },
+                  {
+                    type: "section",
+                    fields: [
+                      {
+                        type: "mrkdwn",
+                        text: `<https://highstorm.app/channels/${channelName}|Details>`,
+                      },
+                    ],
+                  },
+                ],
+              });
+              break;
+
+            default:
+              console.error(`Unknown webhook type: ${wh.type}`);
+              return;
+          }
+
+          const res = await fetch(wh.url, {
+            method: wh.method,
+            headers,
+            body: webhookBody,
+          });
+          if (!res.ok) {
+            throw new Error(`Unable to send webhook to ${wh.url}: ${await res.text()}`);
+          }
+        }),
+      );
+    };
+
+    ctx.waitUntil(
+      sendWebhooks().catch((err) => {
+        console.error(err);
+      }),
+    );
+
+    return NextResponse.json({ id: eventId });
   } catch (e) {
     const error = e as Error;
     console.error(error);

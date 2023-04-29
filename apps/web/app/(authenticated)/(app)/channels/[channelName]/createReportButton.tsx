@@ -41,7 +41,7 @@ const formValidation = z.object({
 });
 
 export const CreateReportButton = React.forwardRef<any, Props>(
-  ({ channelId, channelName }, ref) => {
+  ({ channelId, channelName }, _ref) => {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const { toast } = useToast();
@@ -79,16 +79,10 @@ export const CreateReportButton = React.forwardRef<any, Props>(
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <DropdownMenuItem
-            ref={ref}
-            onSelect={(e) => {
-              // This magically allows multiple dialogs in a dropdown menu, no idea why
-              e.preventDefault();
-            }}
-          >
+          <Button size="sm" variant="outline">
             <FileClock className="w-4 h-4 mr-2" />
             <span>Create Report</span>
-          </DropdownMenuItem>
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <form onSubmit={onSubmit}>

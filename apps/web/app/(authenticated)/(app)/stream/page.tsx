@@ -62,7 +62,7 @@ export default function StreamsPage() {
         </div>
       </Card>
       <div className="mt-8">
-        <Feed />
+        <Feed events={[]} />
       </div>
     </div>
   );

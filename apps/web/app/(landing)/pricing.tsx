@@ -28,7 +28,7 @@ const pricing: {
     {
       name: "Startup",
       tier: "startup",
-      href: "/home",
+      href: "/overview",
       price: { monthly: "$10", annually: "$100" },
       description: "For small teams and startups",
       features: ["50k Events / month"],
@@ -38,7 +38,7 @@ const pricing: {
     {
       name: "Pro",
       tier: "pro",
-      href: "/home",
+      href: "/overview",
       price: { monthly: "$50", annually: "$500" },
       description: "For growing teams",
       features: ["1M Events / month"],
@@ -49,8 +49,6 @@ const pricing: {
 };
 
 export const Pricing: React.FC = () => {
-  const [_frequency, _setFrequency] = useState(pricing.frequencies[0]);
-
   return (
     <div className="">
       <div className="overflow-hidden gradient-to-r from-orange-950/10 via-primary-950/40 to-orange-950/10 isolate">
@@ -123,7 +121,7 @@ export const Pricing: React.FC = () => {
                     </p>
                   </div>
                   <Link
-                    href="/home"
+                    href="/overview"
                     className="rounded-md px-3.5 py-2 text-sm font-semibold leading-6 text-black ring-1 ring-inset ring-black hover:bg-black hover:text-white duration-500  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
                   >
                     Sign Up <span aria-hidden="true">&rarr;</span>

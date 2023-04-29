@@ -1,7 +1,7 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BarChart, FileKey, Filter, FormInput } from "lucide-react";
+import { BarChart, FileKey, Filter, FormInput, Home } from "lucide-react";
 import { ChannelLink } from "./channelLink";
 import { TeamSwitcher } from "./TeamSwitcher";
 import Link from "next/link";
@@ -19,9 +19,9 @@ type Props = {
 
 export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
   return (
-    <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-zinc-800">
+    <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-white/10">
       <Link
-        href="/home"
+        href="/overview"
         className="flex items-center gap-2 px-8 py-6 text-2xl font-semibold tracking-tight duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
       >
         <Logo className="w-8 h-8 duration-200 " />
@@ -31,10 +31,10 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
         <div className="px-6 py-2">
           <h2 className="px-2 mb-2 text-lg font-semibold tracking-tight">{/* Events */}</h2>
           <div className="space-y-1">
-            <Link href="/stream">
+            <Link href="/overview">
               <Button variant="ghost" size="sm" className="justify-start w-full">
-                <FormInput className="w-4 h-4 mr-2" />
-                Stream
+                <Home className="w-4 h-4 mr-2" />
+                Overview
               </Button>
             </Link>
             <Link href="/keys">

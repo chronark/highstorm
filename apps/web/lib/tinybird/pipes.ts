@@ -56,3 +56,18 @@ export const getEvents = tb.buildPipe({
     metadata: z.string().transform((m) => JSON.parse(m)),
   }),
 });
+
+export const getEvent = tb.buildPipe({
+  pipe: "get_event__v1",
+  parameters: z.object({
+    eventId: z.string(),
+  }),
+  data: z.object({
+    id: z.string(),
+    channelId: z.string(),
+    event: z.string(),
+    time: z.number(),
+    content: z.string(),
+    metadata: z.string().transform((m) => JSON.parse(m)),
+  }),
+});

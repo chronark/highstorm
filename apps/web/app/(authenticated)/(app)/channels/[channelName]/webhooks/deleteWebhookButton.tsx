@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/dialog";
 
 type Props = {
-  keyId: string;
+  webhookId: string;
 };
-export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
+export const DeleteWebhookButton: React.FC<Props> = ({ webhookId }) => {
   const [loading, setLoading] = useState(false);
 
   const { toast } = useToast();
@@ -30,15 +30,15 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
   return (
     <>
       <Dialog>
-        <DialogTrigger className="flex items-center gap-1 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-200 duration-200">
+        <DialogTrigger className="flex items-center gap-1 text-zinc-600 dark:text-zinc-400">
           <Trash className="w-3 h-3" />
-          <span className="text-sm">Revoke</span>
+          <span className="text-sm">Delete</span>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete API Key</DialogTitle>
+            <DialogTitle>Delete Webhook</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this API key? This action cannot be undone.
+              Are you sure you want to delete this Webhook? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -49,12 +49,12 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
                 try {
                   setLoading(true);
 
-                  await trpc.apikey.delete.mutate({ keyId });
+                  await trpc.webhook.delete.mutate({ webhookId });
 
                   router.refresh();
                 } catch (e) {
                   toast({
-                    title: "Error deleting key",
+                    title: "Error deleting webhoo",
                     description: (e as Error).message,
                     variant: "destructive",
                   });
@@ -63,7 +63,7 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
                 }
               }}
             >
-              {loading ? <Loading /> : "Delete Key"}
+              {loading ? <Loading /> : "Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

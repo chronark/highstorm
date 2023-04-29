@@ -21,14 +21,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteChannelButton } from "./deleteChannelButton";
 import { CreateReportButton } from "./createReportButton";
-import { Navbar } from "./navbar";
 import { getTenantId } from "@/lib/auth";
-
+import { CreateWebhookButton } from "./createWebhookButton";
+import {
+  NavigationMenuItem,
+  NavigationMenuLink,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import Link from "next/link";
+import { Navbar } from "./navbar";
+import { currentUser } from "@clerk/nextjs/app-beta";
+import { auth } from "@clerk/nextjs/app-beta";
+import { Header } from "./header";
 export default async function Layout(props: {
   params: { tenantSlug: string; channelName: string };
   children: React.ReactNode;
 }) {
   const tenantId = getTenantId();
+  const _user = auth();
 
   const channel = await db.channel.findFirst({
     where: {
@@ -44,55 +54,13 @@ export default async function Layout(props: {
     },
   });
   if (!channel) {
-    return redirect("/home");
+    return redirect("/overview");
   }
 
   return (
     <div className="">
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight">{channel.name}</h2>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">{channel.description}</p>
-        </div>
-
-        <div className="flex items-center justify-between gap-4">
-          <Navbar channelName={channel.name} />
-
-          <Dialog>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="square">
-                  <Menu className="w-5 h-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel>Channel Settings</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <CreateReportButton channelId={channel.id} channelName={channel.name} />
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DeleteChannelButton channelId={channel.id} />
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-                <DialogDescription>
-                  This action cannot be undone. This will permanently delete this channel and remove
-                  your data from our servers.
-                </DialogDescription>
-                <DialogFooter>
-                  <DeleteChannelButton channelId={channel.id} />
-                </DialogFooter>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-      <div className="my-8 lg:my-16">{props.children}</div>{" "}
+      {props.children}
+      {/* <div className="my-8 lg:my-16">{props.children}</div>{" "} */}
     </div>
   );
 }

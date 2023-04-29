@@ -10,6 +10,7 @@ import { EmptyState } from "@/components/empty-state";
 import { CreateReportButton } from "../createReportButton";
 import { DropdownMenu, DropdownMenuContent } from "@/components/ui/dropdown-menu";
 import { getTenantId } from "@/lib/auth";
+import { Header } from "../header";
 
 export default async function Page(props: { params: { tenantSlug: string; channelName: string } }) {
   const channel = await db.channel.findFirst({
@@ -31,7 +32,17 @@ export default async function Page(props: { params: { tenantSlug: string; channe
   }
 
   return (
-    <div className="mt-8">
+    <div>
+      <Header
+        channel={{ name: channel.name }}
+        actions={[
+          <CreateReportButton
+            key="create-report"
+            channelName={channel.name}
+            channelId={channel.id}
+          />,
+        ]}
+      />
       {channel.reports.length === 0 ? (
         <EmptyState
           title="No reports yet"
