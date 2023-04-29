@@ -7,10 +7,8 @@ const config: DocsThemeConfig = {
     link: "https://github.com/chronark/highstorm",
   },
 
-  darkMode: true,
-
   gitTimestamp: true,
-
+  darkMode: true,
   docsRepositoryBase: "https://github.com/chronark/highstorm/tree/main/apps/docs/",
   footer: {
     text: "Highstorm Docs",

@@ -17,11 +17,11 @@ const nextConfig = {
     },
     {
       source: "/docs",
-      destination: "https://highstorm-docs.vercel.app/",
     },
+    destination: "https://highstorm-docs.vercel.app/docs",
     {
       source: "/docs/:match*",
-      destination: "https://highstorm-docs.vercel.app/:match*",
+      destination: "https://highstorm-docs.vercel.app/docs/:match*",
     },
   ],
   experimental: {
