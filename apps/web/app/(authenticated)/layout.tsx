@@ -21,7 +21,7 @@ export default function AppLayout({
               },
             }}
             afterSignInUrl={"/overview"}
-            afterSignUpUrl={"/overview"}
+            afterSignUpUrl={"/onboarding"}
           />
         </div>
       </SignedOut>

@@ -5,6 +5,13 @@ import { z } from "zod";
 import { t, auth } from "../trpc";
 
 export const channelRouter = t.router({
+  list: t.procedure.use(auth).query(async ({ ctx }) => {
+    return await db.channel.findMany({
+      where: {
+        tenantId: ctx.tenant.id,
+      },
+    });
+  }),
   delete: t.procedure
     .use(auth)
     .input(
