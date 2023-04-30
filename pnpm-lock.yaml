@@ -100,6 +100,8 @@ importers:
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
       '@upstash/qstash': ^0.3.6
+      '@upstash/ratelimit': ^0.4.2
+      '@upstash/redis': ^1.20.4
       '@vercel/analytics': ^1.0.0
       aos: ^2.3.4
       autoprefixer: ^10.4.14
@@ -123,6 +125,7 @@ importers:
       motion: ^10.15.5
       ms: ^2.1.3
       next: ^13.3.2
+      next-axiom: ^0.17.0
       next-contentlayer: ^0.3.2
       next-themes: ^0.2.1
       postcss: ^8.4.23
@@ -202,6 +205,8 @@ importers:
       '@trpc/react-query': 10.23.0_mdwdaef527ouiyzz6v5paoweke
       '@trpc/server': 10.23.0
       '@upstash/qstash': 0.3.6
+      '@upstash/ratelimit': 0.4.2_@upstash+redis@1.20.4
+      '@upstash/redis': 1.20.4
       '@vercel/analytics': 1.0.0_react@18.2.0
       aos: 2.3.4
       base-x: 4.0.0
@@ -217,6 +222,7 @@ importers:
       motion: 10.15.5
       ms: 2.1.3
       next: 13.3.2_c37uepwxx2b7wagtsua37ea26a
+      next-axiom: 0.17.0_next@13.3.2
       next-contentlayer: 0.3.2_ulubrd5v2ppsfzz7yxujlpevca
       next-themes: 0.2.1_gcoziurebgu6zyuvqklu6y76di
       prisma-kysely: 1.2.0
@@ -3877,10 +3883,38 @@ packages:
       eslint-visitor-keys: 3.4.0
     dev: true
 
+  /@upstash/core-analytics/0.0.6:
+    resolution: {integrity: sha512-cpPSR0XJAJs4Ddz9nq3tINlPS5aLfWVCqhhtHnXt4p7qr5+/Znlt1Es736poB/9rnl1hAHrOsOvVj46NEXcVqA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      '@upstash/redis': 1.20.4
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@upstash/qstash/0.3.6:
     resolution: {integrity: sha512-NKN4jbPhB5lfHoSIaU7AuQ3F+yGS20e/FBRiUuPetcKoi354wHhKj9AJFfkFT5SSeLq0XEsXRNynm8gqCS4HjQ==}
     dependencies:
       '@deno/shim-crypto': 0.3.1
+    dev: false
+
+  /@upstash/ratelimit/0.4.2_@upstash+redis@1.20.4:
+    resolution: {integrity: sha512-nuuPK2IoPJywAK/8cosNiyM3vlcL6tFPaAwrLes0j2J5b1Hs/W7XDO72/AuC+K+dt89TP50WK9bvDFUwLRuhvw==}
+    peerDependencies:
+      '@upstash/redis': ^1.20.1
+    dependencies:
+      '@upstash/core-analytics': 0.0.6
+      '@upstash/redis': 1.20.4
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@upstash/redis/1.20.4:
+    resolution: {integrity: sha512-U7j7py+yPvafB5KS7o+F19j2CWzZCwmQ4Tvs+n2lpCWuw/8CeFtWrFWPtQa5dgrVu6tu+Ki9DmhDiAbgMS5fGA==}
+    dependencies:
+      isomorphic-fetch: 3.0.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@vercel/analytics/1.0.0_react@18.2.0:
@@ -7140,6 +7174,15 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  /isomorphic-fetch/3.0.0:
+    resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
+    dependencies:
+      node-fetch: 2.6.9
+      whatwg-fetch: 3.6.2
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /issue-parser/6.0.0:
     resolution: {integrity: sha512-zKa/Dxq2lGsBIXQ7CUZWTHfvxPC2ej0KfO7fIPqLlHB9J2hJ7rGhZ5rilhuufylr4RXYPzJUeFjKxz305OsNlA==}
     engines: {node: '>=10.13'}
@@ -8350,6 +8393,16 @@ packages:
   /new-github-issue-url/0.2.1:
     resolution: {integrity: sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /next-axiom/0.17.0_next@13.3.2:
+    resolution: {integrity: sha512-qFdnH50SvRjJUAmNjGIYLcRc4tO/U4R1h9WUuniiwaucXAH5KhL06m7TT3WWD2U1HbulwSfC0R+NlPASOx1XlQ==}
+    engines: {node: '>=15'}
+    peerDependencies:
+      next: ^12.1.4 || ^13
+    dependencies:
+      next: 13.3.2_c37uepwxx2b7wagtsua37ea26a
+      whatwg-fetch: 3.6.2
     dev: false
 
   /next-contentlayer/0.3.2_ulubrd5v2ppsfzz7yxujlpevca:

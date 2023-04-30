@@ -6,11 +6,18 @@ import highstorm from "@highstorm/client";
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { kysely } from "@/lib/kysely";
 import { WebhookType } from "@prisma/client";
-
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 export const config = {
   runtime: "edge",
   regions: ["fra1"],
 };
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  analytics: true,
+  limiter: Ratelimit.fixedWindow(10, "1s"),
+});
 
 const bodyValidation = z.object({
   event: z.string(),
@@ -37,6 +44,23 @@ export default async function handler(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     authorization = authorization.replace("Bearer ", "");
+
+    const limit = await ratelimit.limit(authorization);
+    ctx.waitUntil(limit.pending);
+    if (!limit.success) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        {
+          status: 429,
+          headers: {
+            "RateLimit-Limit": limit.limit.toString(),
+            "RateLimit-Remaining": limit.remaining.toString(),
+            "RateLimit-Reset": limit.reset.toString(),
+          },
+        },
+      );
+    }
+
     const url = new URL(req.url);
 
     const channelName = url.searchParams.get("channel") ?? url.searchParams.get("nextParamchannel");
@@ -107,15 +131,25 @@ export default async function handler(
     }
 
     const time = body.data.time ?? Date.now();
-    await publishEvent({
-      id: eventId,
-      tenantId: apiKey.tenantId,
-      channelId: channelId,
-      time,
-      event: body.data.event,
-      content: body.data.content ?? "",
-      metadata: JSON.stringify(body.data.metadata ?? {}),
-    });
+    try {
+      await publishEvent({
+        id: eventId,
+        tenantId: apiKey.tenantId,
+        channelId: channelId,
+        time,
+        event: body.data.event,
+        content: body.data.content ?? "",
+        metadata: JSON.stringify(body.data.metadata ?? {}),
+      });
+    } catch (e) {
+      const err = e as Error;
+      console.error("Unable to ingest event", {
+        error: err.message,
+        eventId,
+        tenantId: apiKey.tenantId,
+        channelId,
+      });
+    }
 
     const sendWebhooks = async () => {
       const webhooks = await kysely

@@ -1,9 +1,18 @@
+import { withAxiom } from "next-axiom";
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["avatars.githubusercontent.com"],
   },
+  redirects: () => [
+    {
+      source: "/oss",
+      destination: "https://github.com/chronark/highstorm",
+      permanent: false,
+    },
+  ],
   rewrites: () => [
     {
       source: "/:path*",
@@ -24,4 +33,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withAxiom(nextConfig);

@@ -120,14 +120,39 @@ export class Tinybird {
       const body = (Array.isArray(event) ? event : [event])
         .map((p) => JSON.stringify(p))
         .join("\n");
-      const res = await fetch(url, {
+      let res = await fetch(url, {
         method: "POST",
         body,
         headers: { Authorization: `Bearer ${this.token}` },
       });
 
+      /**
+       * Add one retry in case of 429 ratelimit response
+       */
+      if (res.status === 429) {
+        const limit = res.headers.get("X-RateLimit-Limit");
+        const remaining = res.headers.get("X-RateLimit-Remaining");
+        const reset = res.headers.get("X-RateLimit-Reset");
+        const retryAfter = res.headers.get("Retry-After");
+        console.warn(`Hit Tinybird ratelimit: ${url}`, {
+          limit,
+          remaining,
+          reset,
+          retryAfter,
+        });
+
+        await new Promise((r) => setTimeout(r, retryAfter ? parseInt(retryAfter) : 1000));
+        res = await fetch(url, {
+          method: "POST",
+          body,
+          headers: { Authorization: `Bearer ${this.token}` },
+        });
+      }
+
       if (!res.ok) {
-        throw new Error(`Unable to ingest to ${req.datasource}: ${await res.text()}`);
+        throw new Error(
+          `Unable to ingest to ${req.datasource}: [${res.status}] ${await res.text()}`,
+        );
       }
     };
   }

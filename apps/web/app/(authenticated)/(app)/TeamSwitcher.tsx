@@ -1,15 +1,6 @@
 "use client";
 
 import {
-  DialogContent,
-  Dialog,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   DropdownMenuTrigger,
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +17,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, ChevronsUpDown, Plus, Key, Book, LogOut } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, Key, Book, LogOut, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -107,7 +98,13 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
                                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                             </DropdownMenuItem> */}
 
-          <Link href="https://highstorm-docs.vercel.app/" target="_blank">
+          <Link href="https://highstorm.app/onboarding">
+            <DropdownMenuItem>
+              <Rocket className="w-4 h-4 mr-2" />
+              <span>Onboarding</span>
+            </DropdownMenuItem>
+          </Link>
+          <Link href="https://highstorm.app/docs" target="_blank">
             <DropdownMenuItem>
               <Book className="w-4 h-4 mr-2" />
               <span>Docs</span>
