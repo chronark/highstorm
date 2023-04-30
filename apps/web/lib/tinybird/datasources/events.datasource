@@ -16,4 +16,4 @@ SCHEMA >
     
 
 ENGINE "MergeTree"
-ENGINE_SORTING_KEY "tenantId,channelId,time"
+ENGINE_SORTING_KEY "tenantId,channelId,time,id"
