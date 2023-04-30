@@ -1,8 +1,7 @@
 {
-  "index": {
-    "title": "Introduction",
-    "api-reference": {
-      "title": "API Reference"
-    }
-  }
+  "index":  "Introduction",
+    "api-reference": "API Reference",
+    "client": "Typescript Client"
+      
+  
 }

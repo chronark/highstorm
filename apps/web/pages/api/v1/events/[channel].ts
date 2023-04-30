@@ -120,7 +120,7 @@ export default async function handler(
         .execute();
 
       await highstorm("channel.created", {
-        event: "A new channel has been created",
+        event: `channel created: ${channelId}`,
         content: channelName,
         metadata: {
           tenantId: apiKey.tenantId,
