@@ -27,9 +27,7 @@ export default async function Page(_props: { params: { tenantSlug: string } }) {
         {/* Recent activity table */}
         <div>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-zinc-100 lg:mx-0 lg:max-w-none">
-              Api Keys
-            </h2>
+            <PageHeader title="ApiKeys" actions={[<CreateKeyButton key="create-key" />]} />
           </div>
           <div className="mt-6 overflow-y-scroll border-t border-zinc-900">
             <div className="mx-auto max-w-7xl ">
