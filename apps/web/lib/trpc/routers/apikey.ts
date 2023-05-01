@@ -2,18 +2,10 @@ import crypto from "node:crypto";
 import { db } from "@/prisma/db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { Policy } from "@chronark/access-policies";
+import { Policy } from "@/lib/policies";
 
 import { newId } from "@/lib/id";
 import { auth, t } from "../trpc";
-
-type Resources = {
-  channel: ["create", "read", "delete"];
-};
-
-type TenantId = string;
-type ResourceId = string;
-type GRID = `${TenantId}::${keyof Resources | "*"}::${ResourceId}`;
 
 export const apikeyRouter = t.router({
   create: t.procedure
@@ -21,6 +13,20 @@ export const apikeyRouter = t.router({
     .input(
       z.object({
         name: z.string(),
+        permissions: z.object({
+          channels: z.union([
+            z.literal("*"),
+            z.record(
+              z.object({
+                create: z.boolean(),
+                read: z.boolean(),
+                update: z.boolean(),
+                ingest: z.boolean(),
+                delete: z.boolean(),
+              }),
+            ),
+          ]),
+        }),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -34,11 +40,24 @@ export const apikeyRouter = t.router({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      const policy = new Policy<Resources, GRID>({
+      const channelRules =
+        input.permissions.channels === "*"
+          ? {
+              [`${tenant.id}::channel::*`]: ["create", "read", "update", "delete", "ingest"],
+            }
+          : Object.entries(input.permissions.channels).reduce((acc, channel) => {
+              const permissions = Object.entries(channel[1])
+                .filter(([_action, allowed]) => allowed)
+                .map(([action, _allowed]) => action);
+              if (permissions.length > 0) {
+                acc[`${tenant.id}::channel::${channel[0]}`] = permissions;
+              }
+              return acc;
+            }, {} as any);
+
+      const policy = new Policy({
         resources: {
-          channel: {
-            [`${tenant.id}::channel::*` satisfies GRID]: ["create", "read"],
-          },
+          channel: channelRules,
         },
       });
 
@@ -46,9 +65,9 @@ export const apikeyRouter = t.router({
 
       await db.apiKey.create({
         data: {
-          id: newId("apiKey"),
+          id: newId("api"),
           keyHash: crypto.createHash("SHA-256").update(apiKey).digest("base64"),
-          lastCharacters: apiKey.substring(apiKey.length - 4),
+          firstCharacters: apiKey.substring(0, 7), // hs_ + 4 characters
           name: input.name,
           tenant: {
             connect: {
@@ -58,7 +77,7 @@ export const apikeyRouter = t.router({
           policy: policy.toString(),
         },
       });
-      return { apiKey };
+      return { apiKey, root: input.permissions.channels === "*" };
     }),
   delete: t.procedure
     .use(auth)

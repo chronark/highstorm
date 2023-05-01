@@ -18,7 +18,6 @@ export const webhookRouter = t.router({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      console.log({ input });
       const channel = await db.channel.findUnique({
         where: {
           id: input.channelId,

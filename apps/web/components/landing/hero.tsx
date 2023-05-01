@@ -38,7 +38,7 @@ export const Hero: React.FC = () => {
               Don't drown in notifications and keep your workspace focused
             </p>
             <div
-              className="max-w-xs mx-auto space-y-4 sm:max-w-none sm:inline-flex sm:justify-center sm:space-y-0 sm:space-x-4 flex items-center"
+              className="max-w-xs mx-auto gap-4 sm:max-w-none  sm:justify-center flex-col sm:flex-row flex sm:inline-flex items-center"
               data-aos="fade-down"
               data-aos-delay="400"
             >
@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
               </Link>
 
               <Link
-                className="w-full transition duration-150 ease-in-out bg-opacity-25 btn text-zinc-200 hover:text-white bg-zinc-900 hover:bg-opacity-30"
+                className="w-full transition duration-150 ease-in-out bg-opacity-25 text-zinc-200 hover:text-white bg-zinc-900 hover:bg-opacity-30"
                 href="https://github.com/chronark/highstorm"
               >
                 Star on GitHub

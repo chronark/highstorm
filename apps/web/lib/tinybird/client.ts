@@ -48,7 +48,6 @@ export class Tinybird {
       url.searchParams.set(key, value.toString());
     }
     // url.searchParams.set("token", this.token);
-    console.log(url.toString());
     const res = await fetch(url, {
       headers: {
         Authorization: `Bearer ${this.token}`,
