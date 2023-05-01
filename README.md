@@ -8,11 +8,7 @@
 </div>
 <br/>
 
-
-
 ## Contributing
-
-
 
 ### Services
 
@@ -23,13 +19,11 @@ There are a few 3rd party services that are required to run the app:
 - [upstash](https://upstash.com/qstash?ref=highstorm): Optional, only required for reports
 - [clerk](https://clerk.com?ref=highstorm): Authentication
 
- Set environment variables in `/apps/web/.env` file and populate the values from the services above.:
+Set environment variables in `/apps/web/.env` file and populate the values from the services above.:
 
 ```sh-session
 cp apps/web/.env.example apps/web/.env
 ```
-
-
 
 ### Install
 
@@ -39,7 +33,7 @@ pnpm install
 
 ### Prepare databases
 
-#### Prisma 
+#### Prisma
 
 ```sh-session
 cd apps/web
@@ -52,12 +46,13 @@ Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and
 
 ```sh-session
 cd apps/web/lib/tinybird
+tb push datasources/
 tb push
 ```
 
 ### Build
-  
-```sh-session 
+
+```sh-session
 pnpm build
 ```
 
