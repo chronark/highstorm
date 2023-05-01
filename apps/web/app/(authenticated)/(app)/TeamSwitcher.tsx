@@ -24,7 +24,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
 import { Loading } from "@/components/loading";
 import { Plan } from "@prisma/client";
 
@@ -82,29 +81,13 @@ export const TeamSwitcher: React.FC<Props> = (): JSX.Element => {
       )}
       <DropdownMenuContent className="w-full lg:w-56" align="end" forceMount>
         <DropdownMenuGroup>
-          {/* <DropdownMenuItem>
-                                <User className="w-4 h-4 mr-2" />
-                                <span>Profile</span>
-                                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <CreditCard className="w-4 h-4 mr-2" />
-                                <span>Billing</span>
-                                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Settings className="w-4 h-4 mr-2" />
-                                <span>Settings</span>
-                                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                            </DropdownMenuItem> */}
-
-          <Link href="https://highstorm.app/onboarding">
+          <Link href="/onboarding">
             <DropdownMenuItem>
               <Rocket className="w-4 h-4 mr-2" />
               <span>Onboarding</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="https://highstorm.app/docs" target="_blank">
+          <Link href="/docs" target="_blank">
             <DropdownMenuItem>
               <Book className="w-4 h-4 mr-2" />
               <span>Docs</span>

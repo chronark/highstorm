@@ -19,7 +19,6 @@ export default function StreamsPage() {
     start,
     granularity,
   });
-  console.log(activity);
   const { toast } = useToast();
   useEffect(() => {
     if (activity.error) {

@@ -13,6 +13,7 @@ export type ApiKey = {
   name: string;
   keyHash: string;
   lastCharacters: string | null;
+  firstCharacters: string | null;
   policy: string | null;
 };
 export type Channel = {

@@ -119,15 +119,21 @@ export default async function handler(
         })
         .execute();
 
-      await highstorm("channel.created", {
-        event: `channel created: ${channelId}`,
-        content: channelName,
-        metadata: {
-          tenantId: apiKey.tenantId,
-          channelId: channelId,
-          channelName: channelName,
-        },
-      });
+      if (process.env.HIGHSTORM_TOKEN) {
+        /**
+         * This is completely optional but it tracks total channel creation in highstorm.app
+         * If you selfhost highstorm, you probably don't care about it
+         */
+        await highstorm("channel.created", {
+          event: `channel created: ${channelId}`,
+          content: channelName,
+          metadata: {
+            tenantId: apiKey.tenantId,
+            channelId: channelId,
+            channelName: channelName,
+          },
+        });
+      }
     }
 
     const time = body.data.time ?? Date.now();

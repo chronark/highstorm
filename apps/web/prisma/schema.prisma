@@ -138,7 +138,9 @@ model ApiKey {
   name           String
   keyHash        String  @unique
   lastCharacters String?
-  policy         String?
+  // first 4 characters of the original key
+  firstCharacters String?
+  policy         String? @db.Text
 
   @@index([tenantId])
 }

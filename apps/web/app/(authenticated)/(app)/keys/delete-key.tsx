@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { Trash } from "lucide-react";
 
 import { trpc } from "@/lib/trpc";
 import { Loading } from "@/components/loading";
@@ -21,7 +20,7 @@ import {
 type Props = {
   keyId: string;
 };
-export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
+export const DeleteKeyButton: React.FC<PropsWithChildren<Props>> = ({ keyId, children }) => {
   const [loading, setLoading] = useState(false);
 
   const { toast } = useToast();
@@ -30,10 +29,7 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
   return (
     <>
       <Dialog>
-        <DialogTrigger className="flex items-center gap-1 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-200 duration-200">
-          <Trash className="w-3 h-3" />
-          <span className="text-sm">Revoke</span>
-        </DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete API Key</DialogTitle>
@@ -52,6 +48,9 @@ export const DeleteKeyButton: React.FC<Props> = ({ keyId }) => {
                   await trpc.apikey.delete.mutate({ keyId });
 
                   router.refresh();
+                  toast({
+                    title: "Key deleted",
+                  });
                 } catch (e) {
                   toast({
                     title: "Error deleting key",
