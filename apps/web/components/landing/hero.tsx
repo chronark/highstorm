@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 export const Hero: React.FC = () => {
   return (
     <section>
-      <div className="relative max-w-6xl px-4 mx-auto sm:px-6 min-h-screen">
+      <div className="relative max-w-6xl min-h-screen px-4 mx-auto sm:px-6">
         {/* Particles animation */}
         <Particles className="absolute inset-0 -z-10 " />
 
@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
               </div>
             </div>
             <h1
-              className="pb-4 text-transparent text-7xl lg:text-8xl tracking-tight  font-extrabold bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60"
+              className="pb-4 font-extrabold tracking-tight text-transparent text-7xl lg:text-8xl  bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60"
               data-aos="fade-down"
             >
               <ReactWrapBalancer>Slack is not built for alerts</ReactWrapBalancer>
@@ -38,7 +38,7 @@ export const Hero: React.FC = () => {
               Don't drown in notifications and keep your workspace focused
             </p>
             <div
-              className="max-w-xs mx-auto gap-4 sm:max-w-none  sm:justify-center flex-col sm:flex-row flex sm:inline-flex items-center"
+              className="flex flex-col items-center max-w-xs mx-auto gap-4 sm:max-w-none  sm:justify-center sm:flex-row sm:inline-flex"
               data-aos="fade-down"
               data-aos-delay="400"
             >

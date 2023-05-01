@@ -28,7 +28,7 @@ export const Client: React.FC<Props> = ({ apiKey, channelIdToName }) => {
   const policy = apiKey.policy ? Policy.parse(apiKey.policy) : null;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+    <div className="px-4 mx-auto mt-8 max-w-7xl sm:px-6 lg:px-8">
       <PageHeader
         title={apiKey.name}
         description={`created at ${apiKey.createdAt.toLocaleString()}`}
@@ -42,7 +42,7 @@ export const Client: React.FC<Props> = ({ apiKey, channelIdToName }) => {
           </DeleteKeyButton>,
         ]}
       />
-      <div className="space-y-10 divide-y divide-zinc-900/10 mt-8">
+      <div className="mt-8 space-y-10 divide-y divide-zinc-900/10">
         {policy?.statements.map((statement, _i) => {
           return Object.entries(statement.resources).map(([_resourceType, resources]) => (
             <div className="flex flex-col md:flex-row ">
@@ -57,11 +57,11 @@ export const Client: React.FC<Props> = ({ apiKey, channelIdToName }) => {
                 <CardContent>
                   {Object.entries(resources ?? {}).map(([grid, permissions]) => {
                     return (
-                      <div className=" py-6 flex flex-col md:flex-row items-start md:items-center gap-4 justify-between w-full">
-                        <span className="text-sm font-medium leading-6 text-white">
+                      <div className="flex flex-col items-start justify-between w-full py-6  md:flex-row md:items-center gap-4">
+                        <span className="text-sm font-medium text-white leading-6">
                           {channelIdToName[grid.split("::").at(-1) ?? ""]}
                         </span>
-                        <div className="text-sm text-zinc-400 flex flex-wrap items-center justify-right gap-4">
+                        <div className="flex flex-wrap items-center text-sm text-zinc-400 justify-right gap-4">
                           {allActions.map((action) => (
                             <div key={action} className="flex items-center space-x-2">
                               <Checkbox

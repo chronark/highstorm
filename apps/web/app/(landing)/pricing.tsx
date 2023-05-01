@@ -65,10 +65,10 @@ export const Pricing: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="flow-root pb-24 bg-white sm:pb-32">
+        <div className="pb-24 bg-white flow-root sm:pb-32">
           <div className="-mt-80">
             <div className="px-6 mx-auto max-w-7xl lg:px-8">
-              <div className="grid max-w-md grid-cols-1 gap-8 mx-auto lg:max-w-4xl lg:grid-cols-2">
+              <div className="max-w-md mx-auto grid grid-cols-1 gap-8 lg:max-w-4xl lg:grid-cols-2">
                 {pricing.tiers.map((tier) => (
                   <div
                     key={tier.tier}
@@ -85,12 +85,12 @@ export const Pricing: React.FC = () => {
                         <span className="text-5xl font-bold tracking-tight text-gray-900">
                           {tier.price?.monthly}
                         </span>
-                        <span className="text-base font-semibold leading-7 text-gray-600">
+                        <span className="text-base font-semibold text-gray-600 leading-7">
                           /month
                         </span>
                       </div>
-                      <p className="mt-6 text-base leading-7 text-gray-600">{tier.description}</p>
-                      <ul role="list" className="mt-10 space-y-4 text-sm leading-6 text-gray-600">
+                      <p className="mt-6 text-base text-gray-600 leading-7">{tier.description}</p>
+                      <ul role="list" className="mt-10 text-sm text-gray-600 space-y-4 leading-6">
                         {tier.features.map((feature) => (
                           <li key={feature} className="flex gap-x-3">
                             <Check
@@ -113,10 +113,10 @@ export const Pricing: React.FC = () => {
                 ))}
                 <div className="flex flex-col items-start p-8 gap-x-8 gap-y-6 rounded-xl ring-1 ring-gray-900/10 sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center">
                   <div className="lg:min-w-0 lg:flex-1">
-                    <h3 className="text-lg font-semibold leading-8 tracking-tight text-zinc-950">
+                    <h3 className="text-lg font-semibold tracking-tight leading-8 text-zinc-950">
                       Free Tier
                     </h3>
-                    <p className="mt-1 text-base leading-7 text-gray-600">
+                    <p className="mt-1 text-base text-gray-600 leading-7">
                       Ingest up to 1k events per month for free, no credit card required
                     </p>
                   </div>

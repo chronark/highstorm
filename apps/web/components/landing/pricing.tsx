@@ -48,20 +48,20 @@ export const Pricing: React.FC = () => {
         className="absolute inset-0 overflow-hidden pointer-events-none -z-10"
         aria-hidden="true"
       >
-        <div className="absolute flex items-center justify-center top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 w-1/3 aspect-square">
+        <div className="absolute top-0 flex items-center justify-center w-1/3 -translate-y-1/2 left-1/2 -translate-x-1/2 aspect-square">
           <div className="absolute inset-0 translate-z-0 bg-primary-500 rounded-full blur-[120px] opacity-50" />
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl px-4 mx-auto sm:px-6">
         <div className="py-12 md:py-20">
           {/* Content */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+          <div className="max-w-3xl pb-12 mx-auto text-center md:pb-20">
             <div>
-              <div className="inline-flex font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-primary-200 pb-3">
+              <div className="inline-flex pb-3 font-medium text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-200">
                 Pricing plans
               </div>
             </div>
-            <h2 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60 pb-4">
+            <h2 className="pb-4 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60">
               Simple and transparent
             </h2>
             <p className="text-lg text-zinc-400">
@@ -69,13 +69,13 @@ export const Pricing: React.FC = () => {
             </p>
           </div>
           {/* Pricing tabs */}
-          <HighlightGroup className="grid gap-6 md:grid-cols-12 group h-full">
+          <HighlightGroup className="h-full grid gap-6 md:grid-cols-12 group">
             {/* Box #1 */}
 
             {tiers.map((tier, i) => (
               <div
                 key={tier.name}
-                className="md:col-span-6 h-full  lg:col-span-4  group/item"
+                className="h-full md:col-span-6  lg:col-span-4 group/item"
                 data-aos="fade-down"
               >
                 <HighlighterItem>
@@ -89,7 +89,7 @@ export const Pricing: React.FC = () => {
                     <div className="flex flex-col">
                       {/* Radial gradient */}
                       <div
-                        className="absolute bottom-0 w-1/2 -translate-x-1/2 translate-y-1/2 pointer-events-none left-1/2 -z-10 aspect-square"
+                        className="absolute bottom-0 w-1/2 pointer-events-none -translate-x-1/2 translate-y-1/2 left-1/2 -z-10 aspect-square"
                         aria-hidden="true"
                       >
                         <div className="absolute inset-0 translate-z-0 bg-zinc-800 rounded-full blur-[80px]" />
@@ -101,12 +101,12 @@ export const Pricing: React.FC = () => {
                           {tier.name}
                         </h3>
 
-                        <h3 className="mt-6 inline-flex items-baseline pb-1 font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60">
+                        <h3 className="inline-flex items-baseline pb-1 mt-6 font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-200/60 via-zinc-200 to-zinc-200/60">
                           <span className="text-4xl">${tier.price}</span>
                           <span className="text-lg">/ month</span>
                         </h3>
                         <p className="mt-4 text-sm leading-6 text-zinc-400">{tier.description}</p>
-                        <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-zinc-300">
+                        <ul role="list" className="mt-8 text-sm space-y-3 leading-6 text-zinc-300">
                           {tier.features.map((feature) => (
                             <li key={feature} className="flex gap-x-3">
                               <Check
@@ -134,7 +134,7 @@ export const Pricing: React.FC = () => {
                 </HighlighterItem>
               </div>
             ))}
-            <div className="md:col-span-6 h-full lg:col-span-12   group/item" data-aos="fade-down">
+            <div className="h-full md:col-span-6 lg:col-span-12  group/item" data-aos="fade-down">
               <HighlighterItem>
                 <div className="relative h-full bg-zinc-900 rounded-[inherit] z-20 overflow-hidden">
                   <Particles
@@ -144,7 +144,7 @@ export const Pricing: React.FC = () => {
                   <div className="flex flex-col">
                     {/* Radial gradient */}
                     <div
-                      className="absolute bottom-0 w-1/2 -translate-x-1/2 translate-y-1/2 pointer-events-none left-1/2 -z-10 aspect-square"
+                      className="absolute bottom-0 w-1/2 pointer-events-none -translate-x-1/2 translate-y-1/2 left-1/2 -z-10 aspect-square"
                       aria-hidden="true"
                     >
                       <div className="absolute inset-0 translate-z-0 bg-zinc-800 rounded-full blur-[80px]" />
@@ -157,9 +157,9 @@ export const Pricing: React.FC = () => {
                       <p className="mt-4 text-sm leading-6 text-zinc-400">
                         Self host and maintain Highstorm on your own servers
                       </p>
-                      <div className="mt-16  ">
+                      <div className="mt-16 ">
                         <Link
-                          className=" whitespace-nowrap transition duration-150 ease-in-out font-medium  text-zinc-100 hover:text-white  group"
+                          className="font-medium  whitespace-nowrap transition duration-150 ease-in-out text-zinc-100 hover:text-white group"
                           href="https://github.com/chronark/highstorm"
                         >
                           Deploy your own

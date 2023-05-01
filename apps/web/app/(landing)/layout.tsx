@@ -29,7 +29,7 @@ export default function DefaultLayout({
 
       <main className="grow">{children}</main>
 
-      <footer className="pt-24  " aria-labelledby="footer-heading">
+      <footer className="pt-24 " aria-labelledby="footer-heading">
         <h2 id="footer-heading" className="sr-only">
           Footer
         </h2>
@@ -61,7 +61,7 @@ export default function DefaultLayout({
                 </svg>
               </Link>
             </div>
-            <p className="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
+            <p className="mt-8 text-xs text-gray-400 leading-5 md:order-1 md:mt-0">
               &copy; {new Date().getUTCFullYear()} All rights reserved.
             </p>
           </div>

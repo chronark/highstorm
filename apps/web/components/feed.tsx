@@ -44,9 +44,9 @@ export const Feed: React.FC<Props> = ({ className, events }) => {
             {feed[day].map((event) => (
               <li key={event.id}>
                 <Dialog>
-                  <DialogTrigger className="relative w-full px-4 py-3 group  hover:bg-white  dark:hover:bg-zinc-800">
-                    <div className="flex justify-between space-x-3 px-2">
-                      <div className=" text-left">
+                  <DialogTrigger className="relative w-full px-4 py-3 group  hover:bg-white dark:hover:bg-zinc-800">
+                    <div className="flex justify-between px-2 space-x-3">
+                      <div className="text-left ">
                         <div className="block focus:outline-none">
                           <p className="text-sm font-medium truncate text-zinc-900 dark:text-zinc-200">
                             {event.event}
@@ -58,7 +58,7 @@ export const Feed: React.FC<Props> = ({ className, events }) => {
                       </div>
                       <time
                         dateTime={new Date(event.time).toISOString()}
-                        className=" text-sm text-zinc-500 whitespace-nowrap group-hover:text-zinc-200"
+                        className="text-sm  text-zinc-500 whitespace-nowrap group-hover:text-zinc-200"
                       >
                         {duration(Date.now() - event.time, true)} ago
                       </time>
@@ -78,7 +78,7 @@ export const Feed: React.FC<Props> = ({ className, events }) => {
                         </>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between gap-4 pt-4 mt-4 border-t border-zinc-100">
+                    <div className="flex items-center justify-between pt-4 mt-4 border-t gap-4 border-zinc-100">
                       <span className="text-xs text-zinc-400">
                         {new Date(event.time).toUTCString()}
                       </span>

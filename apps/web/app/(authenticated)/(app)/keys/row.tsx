@@ -29,11 +29,11 @@ export const Row: React.FC<Props> = ({ apiKey }) => {
   return (
     <li
       key={apiKey.id}
-      className="flex items-center justify-between gap-x-6 py-5 px-4 md:px-6 lg:px-8"
+      className="flex items-center justify-between px-4 py-5 gap-x-6 md:px-6 lg:px-8"
     >
       <div>
         <p className="text-zinc-200 whitespace-nowrap">{apiKey.name}</p>
-        <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-zinc-500">
+        <div className="flex items-center mt-1 text-xs gap-x-2 leading-5 text-zinc-500">
           <p className="whitespace-nowrap">
             Created at{" "}
             <time dateTime={apiKey.createdAt.toISOString()}>{apiKey.createdAt.toUTCString()}</time>

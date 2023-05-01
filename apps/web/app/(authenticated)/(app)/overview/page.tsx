@@ -62,16 +62,16 @@ export default async function Page(_props: {
   ];
   return (
     <main>
-      <div className="relative isolate overflow-hidden">
+      <div className="relative overflow-hidden isolate">
         {/* Stats */}
         <div className="border-b border-b-white/10 ">
-          <div className="flex h-16   bg-primary-900 flex-col items-start justify-between gap-x-8 gap-y-4  px-4 py-4 sm:flex-row sm:items-center sm:px-6 lg:px-8 border-b border-white/10">
+          <div className="flex flex-col items-start justify-between h-16 px-4 py-4 border-b  bg-primary-900 gap-x-8 gap-y-4 sm:flex-row sm:items-center sm:px-6 lg:px-8 border-white/10">
             <div>
               <div className="flex items-center gap-x-3 ">
-                {/* <div className="flex-none rounded-full bg-green-400/10 p-1 text-green-400">
-                <div className="h-2 w-2 rounded-full bg-current" />
+                {/* <div className="flex-none p-1 text-green-400 rounded-full bg-green-400/10">
+                <div className="w-2 h-2 rounded-full bg-current" />
               </div> */}
-                <h1 className="flex gap-x-2 text-base leading-7">
+                <h1 className="flex text-base gap-x-2 leading-7">
                   <span className="font-semibold text-white">
                     {tenant.slug ?? "Personal Account"}
                   </span>
@@ -79,7 +79,7 @@ export default async function Page(_props: {
               </div>
               {/* <p className="mt-2 text-xs leading-6 text-zinc-400">{channel.description}</p> */}
             </div>
-            <div className="order-first flex-none rounded-full bg-rose-400/10 px-2 py-1 text-xs font-medium text-rose-400 ring-1 ring-inset ring-rose-400/30 sm:order-none">
+            <div className="flex-none order-first px-2 py-1 text-xs font-medium rounded-full bg-rose-400/10 text-rose-400 ring-1 ring-inset ring-rose-400/30 sm:order-none">
               {tenant.plan}
             </div>
           </div>
@@ -111,7 +111,7 @@ export default async function Page(_props: {
                 >
                   {stat.change}
                 </dd> */}
-                <dd className="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-zinc-100">
+                <dd className="flex-none w-full text-3xl font-medium tracking-tight leading-10 text-zinc-100">
                   {stat.value}
                 </dd>
               </div>
@@ -120,17 +120,17 @@ export default async function Page(_props: {
         </div>
       </div>
 
-      <div className="space-y-16 py-16 xl:space-y-20">
+      <div className="py-16 space-y-16 xl:space-y-20">
         {/* Recent activity table */}
         <div>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-zinc-100 lg:mx-0 lg:max-w-none">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <h2 className="max-w-2xl mx-auto text-base font-semibold leading-6 text-zinc-100 lg:mx-0 lg:max-w-none">
               Recent events
             </h2>
           </div>
-          <div className="mt-6 overflow-y-scroll border-t border-zinc-900 overflow-x-hidden">
+          <div className="mt-6 overflow-x-hidden overflow-y-scroll border-t border-zinc-900">
             <div className="mx-auto max-w-7xl ">
-              <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+              <div className="max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
                 <table className="w-full text-left ">
                   <thead className="sr-only">
                     <tr>
@@ -146,16 +146,16 @@ export default async function Page(_props: {
                           <th
                             scope="colgroup"
                             colSpan={3}
-                            className="relative isolate py-2 font-semibold   "
+                            className="relative py-2 font-semibold isolate "
                           >
-                            <div className="mx-2 sm:mx-4 lg:mx-6  rounded bg-zinc-200 px-2 py-1">
+                            <div className="px-2 py-1 mx-2 rounded sm:mx-4 lg:mx-6  bg-zinc-200">
                               <time dateTime={day}>{day}</time>
                             </div>
                           </th>
                         </tr>
                         {events.map((event) => (
                           <tr key={event.id} className="hover:bg-zinc-800 duration-1000 ">
-                            <td className="relative py-5 pr-6  pl-4 sm:pl-6 lg:pl-8">
+                            <td className="relative py-5 pl-4 pr-6  sm:pl-6 lg:pl-8">
                               <div className="flex-auto">
                                 <div className="flex items-start gap-x-3">
                                   <div className="text-sm font-medium leading-6 text-zinc-100">
@@ -174,13 +174,13 @@ export default async function Page(_props: {
                                   {new Date(event.time).toLocaleString()}
                                 </div>
                               </div>
-                              <div className="absolute bottom-0 right-full h-px w-screen bg-zinc-900" />
-                              <div className="absolute bottom-0 left-0 h-px w-screen bg-zinc-900" />
+                              <div className="absolute bottom-0 w-screen h-px right-full bg-zinc-900" />
+                              <div className="absolute bottom-0 left-0 w-screen h-px bg-zinc-900" />
                             </td>
                             <td className="hidden py-5 pr-6 sm:table-cell">
                               <div className="text-sm leading-6 text-zinc-100">{event.content}</div>
                             </td>
-                            <td className="py-5 text-right pl-4 sm:pr-6 rg:pr-8">
+                            <td className="py-5 pl-4 text-right sm:pr-6 rg:pr-8">
                               <div className="flex justify-end">
                                 <Link
                                   href={`/channels/${channelIdToSlug[event.channelId]}/events/${

@@ -129,16 +129,16 @@ export const CreateKeyButton: React.FC<Props> = ({ channels }) => {
                 ) : null}
               </div>
 
-              <div className=" flex items-center justify-between gap-4 px-2 py-1 lg:p-4 border border-white/10  mt-4  rounded bg-zinc-100 dark:bg-zinc-900">
+              <div className="flex items-center justify-between px-2 py-1 mt-4 border rounded  gap-4 lg:p-4 border-white/10 bg-zinc-100 dark:bg-zinc-900">
                 <pre className="font-mono">{key.data.apiKey}</pre>
                 <CopyButton value={key.data.apiKey} />
               </div>
             </DialogHeader>
 
-            <p className="mt-2 text-zinc-100 text-center font-medium text-sm ">
+            <p className="mt-2 text-sm font-medium text-center text-zinc-100 ">
               Try it out with curl
             </p>
-            <div className="flex items-start justify-between gap-4 px-2 py-1 lg:p-4 border border-white/10  rounded bg-zinc-100 dark:bg-zinc-900">
+            <div className="flex items-start justify-between px-2 py-1 border rounded gap-4 lg:p-4 border-white/10  bg-zinc-100 dark:bg-zinc-900">
               <pre className="font-mono">{snippet}</pre>
               <CopyButton value={snippet} />
             </div>
@@ -154,34 +154,34 @@ export const CreateKeyButton: React.FC<Props> = ({ channels }) => {
                 <HoverCardTrigger className="flex items-center mt-2 gap-2">
                   <Info className="w-4 h-4" /> What do these permissions mean?
                 </HoverCardTrigger>
-                <HoverCardContent className="w-full flex flex-col gap-2 lg:gap-8">
+                <HoverCardContent className="flex flex-col w-full gap-2 lg:gap-8">
                   <div>
                     <p className="font-semibold text-zinc-200">Create</p>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-sm text-zinc-400">
                       Tokens with this permission can create new channels.
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-zinc-200">Read</p>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-sm text-zinc-400">
                       Tokens with this permission can read a channel's configuration and events.
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-zinc-200">Update</p>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-sm text-zinc-400">
                       Tokens with this permission can update the configuration of existing channels.
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-zinc-200">Delete</p>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-sm text-zinc-400">
                       Tokens with this permission can delete existing channels.
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-zinc-200">Ingest</p>
-                    <p className="text-zinc-400 text-sm">
+                    <p className="text-sm text-zinc-400">
                       Tokens with this permission can create events to a channel.
                     </p>
                   </div>
@@ -189,7 +189,7 @@ export const CreateKeyButton: React.FC<Props> = ({ channels }) => {
               </HoverCard>
             </DialogDescription>
 
-            <div className="flex flex-col space-y-2 mt-4">
+            <div className="flex flex-col mt-4 space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
@@ -201,9 +201,9 @@ export const CreateKeyButton: React.FC<Props> = ({ channels }) => {
 
             <ul className="divide-y divide-white/10">
               {channels.map((channel) => (
-                <div key={channel.id} className=" py-6 flex items-center justify-between w-full">
-                  <span className="text-sm font-medium leading-6 text-white">{channel.name}</span>
-                  <div className="text-sm text-zinc-400 flex items-center justify-right gap-4">
+                <div key={channel.id} className="flex items-center justify-between w-full py-6 ">
+                  <span className="text-sm font-medium text-white leading-6">{channel.name}</span>
+                  <div className="flex items-center text-sm text-zinc-400 justify-right gap-4">
                     {actions.map((action) => (
                       <div key={action} className="flex items-center space-x-2">
                         <Checkbox

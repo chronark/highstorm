@@ -97,7 +97,7 @@ export const CreateWebhookButton = React.forwardRef<any, Props>(
               <DialogDescription>
                 Whenever a new event is created, we will forward it to the webhook URL you provide.
               </DialogDescription>
-              <div className="py-2 flex flex-col gap-2">
+              <div className="flex flex-col py-2 gap-2">
                 <Label htmlFor="type">Type</Label>
                 <Select>
                   <SelectTrigger>
@@ -115,7 +115,7 @@ export const CreateWebhookButton = React.forwardRef<any, Props>(
                   <p className="text-red-500">{formState.errors.type.message}</p>
                 ) : null}
               </div>
-              <div className="py-2 flex flex-col gap-2">
+              <div className="flex flex-col py-2 gap-2">
                 <Label htmlFor="slackUrl">Slack Webhook URL</Label>
 
                 <Input type="url" {...register("url")} />
@@ -123,7 +123,7 @@ export const CreateWebhookButton = React.forwardRef<any, Props>(
                   <p className="text-red-500">{formState.errors.url.message}</p>
                 ) : null}
               </div>
-              <div className="py-2 flex flex-col gap-2">
+              <div className="flex flex-col py-2 gap-2">
                 <Label htmlFor="timeframe">Add optional http headers (Must be valid JSON)</Label>
 
                 <Textarea {...register("headers")} />

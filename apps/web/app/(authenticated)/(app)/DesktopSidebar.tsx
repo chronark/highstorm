@@ -22,7 +22,7 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
     <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-white/10">
       <Link
         href="/overview"
-        className="flex items-center gap-2 px-8 py-6 text-2xl font-semibold tracking-tight duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
+        className="flex items-center px-8 py-6 text-2xl font-semibold tracking-tight gap-2 duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
       >
         <Logo className="w-8 h-8 duration-200 " />
         Highstorm

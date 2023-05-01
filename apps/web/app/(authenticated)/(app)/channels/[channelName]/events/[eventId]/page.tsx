@@ -11,10 +11,10 @@ export default async function Page(props: { params: { channelName: string; event
 
   return (
     <div className="p-4 md:p-6 lg:p-8">
-      <div className="flex items-start justify-between flex-col md:flex-row">
+      <div className="flex flex-col items-start justify-between md:flex-row">
         <div className="px-4 sm:px-0">
-          <h3 className="text-base font-semibold leading-7 text-white">{event.event}</h3>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-zinc-400">{event.content}</p>
+          <h3 className="text-base font-semibold text-white leading-7">{event.event}</h3>
+          <p className="max-w-2xl mt-1 text-sm leading-6 text-zinc-400">{event.content}</p>
         </div>
         <div className="px-4 sm:px-0">
           <span className="text-sm  leading-7 text-zinc-300">
@@ -26,7 +26,7 @@ export default async function Page(props: { params: { channelName: string; event
         <dl className="divide-y divide-white/10">
           {Object.entries(event.metadata ?? {}).map(([key, value]) => (
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-white">{key}</dt>
+              <dt className="text-sm font-medium text-white leading-6">{key}</dt>
               <dd className="mt-1 text-sm leading-6 text-zinc-400 sm:col-span-2 sm:mt-0">
                 {value as string}
               </dd>

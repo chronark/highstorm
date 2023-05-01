@@ -21,7 +21,7 @@ export const Navbar: React.FC<Props> = ({ channelName }) => {
   ];
 
   return (
-    <NavigationMenu className="border-b border-white/10 px-4 h-16 flex justify-start">
+    <NavigationMenu className="flex justify-start h-16 px-4 border-b border-white/10">
       <NavigationMenuList>
         {items.map((item) => (
           <NavigationMenuItem>

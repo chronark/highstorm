@@ -21,7 +21,7 @@ export const EmptyState: React.FC<PropsWithChildren<Props>> = ({
       <h3 className="mt-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100">{title}</h3>
       <p className="mt-1 text-sm text-zinc-500">{description}</p>
       <div className="mt-8">{children}</div>
-      <Particles className="absolute inset-0 -z-10 opacity-50" quantity={10} />
+      <Particles className="absolute inset-0 opacity-50 -z-10" quantity={10} />
     </div>
   );
 };

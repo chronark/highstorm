@@ -5,7 +5,7 @@ import { Cta } from "@/components/landing/cta";
 
 export default function Page() {
   return (
-    <div className="max-w-screen overflow-x-hidden">
+    <div className="overflow-x-hidden max-w-screen">
       <Hero />
       <Features />
       <Pricing />

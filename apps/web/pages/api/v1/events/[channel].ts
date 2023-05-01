@@ -8,6 +8,8 @@ import { kysely } from "@/lib/kysely";
 import { WebhookType } from "@prisma/client";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { Policy } from "@chronark/access-policies";
+import type { Resources, GRID } from "@/lib/policies";
 export const config = {
   runtime: "edge",
   regions: ["fra1"],
@@ -98,6 +100,9 @@ export default async function handler(
     if (!apiKey) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
+
+    const policy = apiKey.policy ? Policy.parse<Resources>(apiKey.policy) : null
+
     const channel = await kysely
       .selectFrom("Channel")
       .selectAll()
@@ -106,7 +111,32 @@ export default async function handler(
 
       .executeTakeFirst();
 
+    /**
+     * Check if we have ingest permissions
+     */
+    if (policy && channel) {
+      const grid: GRID = `${apiKey.tenantId}::channel::${channel.id}`
+      const { error } = policy.validate("channel:ingest", grid)
+      if (error) {
+        console.log(`Policy denied: ${error}`)
+        return NextResponse.json({ error: "Unauthorized, policy denied" }, { status: 403 });
+      }
+    }
     const channelId = channel?.id ?? newId("channel");
+
+    /**
+     * If the channel does not exist, we need permission to create and ingest
+     */
+    if (policy && !channel) {
+      const grid: GRID = `${apiKey.tenantId}::channel::${channelId}`
+      const { error } = policy.validate(["channel:create", "channel:ingest"], grid)
+      if (error) {
+        console.log(`Policy denied: ${error}`)
+        return NextResponse.json({ error: "Unauthorized, policy denied" }, { status: 403 });
+      }
+    }
+
+
     const eventId = newId("event");
     if (!channel) {
       await kysely

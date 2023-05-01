@@ -41,7 +41,7 @@ export default async function Page(_props: { params: { tenantSlug: string } }) {
 
   return (
     <div className="">
-      <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="px-4 mx-auto mt-8  max-w-7xl sm:px-6 lg:px-8">
         <PageHeader
           title="ApiKeys"
           actions={[
@@ -60,7 +60,7 @@ export default async function Page(_props: { params: { tenantSlug: string } }) {
           description="Let's create your first API key."
         />
       ) : (
-        <ul role="list" className="divide-y divide-white/10 mt-8">
+        <ul role="list" className="mt-8 divide-y divide-white/10">
           {tenant.apikeys
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .map((apiKey) => (

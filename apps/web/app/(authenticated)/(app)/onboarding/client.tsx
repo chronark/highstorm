@@ -102,7 +102,7 @@ export const Onboarding: React.FC = () => {
       </Dialog>
       <ol
         role="list"
-        className="overflow-hidden rounded-md lg:flex lg:rounded-none  divide-x divide-white/10  border-b border-white/10 bg-primary-900  "
+        className="overflow-hidden border-b rounded-md lg:flex lg:rounded-none  divide-x divide-white/10 border-white/10 bg-primary-900"
       >
         {steps.map((step, stepIdx) => (
           <li key={step.id} className="relative overflow-hidden lg:flex-1">
@@ -138,7 +138,7 @@ export const Onboarding: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div>
-                  <div className="flex items-start justify-between gap-4 px-2 py-1 mt-8 rounded bg-zinc-100 dark:bg-zinc-800">
+                  <div className="flex items-start justify-between px-2 py-1 mt-8 rounded gap-4 bg-zinc-100 dark:bg-zinc-800">
                     <pre className="font-mono">{curl}</pre>
                     <CopyButton value={curl} />
                   </div>
@@ -155,7 +155,7 @@ export const Onboarding: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between gap-4 px-2 py-1 mt-8 rounded bg-zinc-100 dark:bg-zinc-800">
+                <div className="flex items-center justify-between px-2 py-1 mt-8 rounded gap-4 bg-zinc-100 dark:bg-zinc-800">
                   <pre className="font-mono">{apiKey}</pre>
                   <CopyButton value={apiKey} />
                 </div>

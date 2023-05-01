@@ -22,15 +22,15 @@ export const Header: React.FC<Props> = ({ channel, stats, actions }) => {
       <Navbar channelName={channel.name} />
 
       {/* Heading */}
-      <div className="flex h-16   bg-primary-900   justify-between gap-x-8 gap-y-4  px-4 py-4 flex-row items-center sm:px-6 lg:px-8 border-b border-white/10">
+      <div className="flex flex-row items-center justify-between h-16 px-4 py-4 border-b  bg-primary-900 gap-x-8 gap-y-4 sm:px-6 lg:px-8 border-white/10">
         <div>
           <div className="flex items-center gap-x-3 ">
-            {/* <div className="flex-none rounded-full bg-green-400/10 p-1 text-green-400">
-                <div className="h-2 w-2 rounded-full bg-current" />
+            {/* <div className="flex-none p-1 text-green-400 rounded-full bg-green-400/10">
+                <div className="w-2 h-2 rounded-full bg-current" />
               </div> */}
-            <h1 className="flex gap-x-2 text-base leading-7">
+            <h1 className="flex text-base gap-x-2 leading-7">
               {/* {user.orgSlug} */}
-              <span className="font-semibold  text-white">{channel.name}</span>
+              <span className="font-semibold text-white ">{channel.name}</span>
               {/* {channel.name.split(".").map((part, i) => (
                 <>
                   {i !== 0 ? <span className="text-zinc-600">/</span> : null}
@@ -63,7 +63,7 @@ export const Header: React.FC<Props> = ({ channel, stats, actions }) => {
               )}
             >
               <p className="text-sm font-medium leading-6 text-zinc-400">{stat.label}</p>
-              <p className="mt-2 flex items-baseline gap-x-2">
+              <p className="flex items-baseline mt-2 gap-x-2">
                 <span className="text-4xl font-semibold tracking-tight text-white">
                   {stat.value}
                 </span>
