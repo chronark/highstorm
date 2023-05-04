@@ -1,7 +1,7 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BarChart, FileKey, Filter, FormInput, Home } from "lucide-react";
+import { BarChart, Database, FileKey, Filter, FormInput, Home } from "lucide-react";
 import { ChannelLink } from "./channelLink";
 import { TeamSwitcher } from "./TeamSwitcher";
 import Link from "next/link";
@@ -22,7 +22,7 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
     <aside className="relative hidden min-h-screen pb-12 border-r lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-white/10">
       <Link
         href="/overview"
-        className="flex items-center px-8 py-6 text-2xl font-semibold tracking-tight gap-2 duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
+        className="flex items-center gap-2 px-8 py-6 text-2xl font-semibold tracking-tight duration-200 stroke-zinc-800 dark:text-zinc-200 dark:stroke-zinc-500 dark:hover:stroke-white hover:stroke-zinc-700 hover:text-zinc-700 dark:hover:text-white"
       >
         <Logo className="w-8 h-8 duration-200 " />
         Highstorm
@@ -41,6 +41,12 @@ export const DesktopSidebar: React.FC<Props> = ({ navigation, channels }) => {
               <Button variant="ghost" size="sm" className="justify-start w-full">
                 <FileKey className="w-4 h-4 mr-2" />
                 API Keys
+              </Button>
+            </Link>
+            <Link href="/channels">
+              <Button variant="ghost" size="sm" className="justify-start w-full">
+                <Database className="w-4 h-4 mr-2" />
+                Channels
               </Button>
             </Link>
             <Button variant="ghost" disabled size="sm" className="justify-start w-full">

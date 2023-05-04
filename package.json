@@ -29,7 +29,9 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "next": "13.3.2"
+    "ioredis": "^5.3.2",
+    "next": "13.3.2",
+    "redis": "^4.6.6"
   },
   "config": {
     "commitizen": {

@@ -3,7 +3,7 @@
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BarChart, FileKey, Filter, FormInput, Home, Menu } from "lucide-react";
+import { BarChart, Database, FileKey, Filter, FormInput, Home, Menu } from "lucide-react";
 import { ChannelLink } from "./channelLink";
 import { TeamSwitcher } from "./TeamSwitcher";
 import Link from "next/link";
@@ -64,6 +64,12 @@ export const MobileSidebar: React.FC<Props> = ({ navigation, channels }) => {
                   <Button variant="ghost" size="sm" className="justify-start w-full">
                     <FileKey className="w-4 h-4 mr-2" />
                     API Keys
+                  </Button>
+                </Link>
+                <Link href="/channels">
+                  <Button variant="ghost" size="sm" className="justify-start w-full">
+                    <Database className="w-4 h-4 mr-2" />
+                    Channels
                   </Button>
                 </Link>
                 <Button variant="ghost" disabled size="sm" className="justify-start w-full">
