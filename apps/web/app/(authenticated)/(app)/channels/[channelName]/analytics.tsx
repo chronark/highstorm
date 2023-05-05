@@ -51,7 +51,7 @@ import {
 } from "@/components/ui/dialog";
 import { Header } from "./header";
 import { DeleteChannelButton } from "./deleteChannelButton";
-import { Menu } from "lucide-react";
+import { Menu, Trash } from "lucide-react";
 
 const sinceOptions = {
   "1h": "Last hour",
@@ -134,7 +134,12 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
-                  <DeleteChannelButton channelId={channel.id} />
+                  <DeleteChannelButton channelId={channel.id}>
+                    <DropdownMenuItem>
+                      <Trash className="w-4 h-4 mr-2" />
+                      <span>Delete</span>
+                    </DropdownMenuItem>
+                  </DeleteChannelButton>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -160,9 +165,9 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
           description="Send an event to this channel and then come back."
         />
       ) : (
-        <div className="relative flex flex-col w-full py-4  lg:flex-row lg:py-8">
+        <div className="relative flex flex-col w-full py-4 lg:flex-row lg:py-8">
           <main className="w-full px-4 lg:w-2/3 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-8">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-8">
               <Select onValueChange={(v: keyof typeof sinceOptions) => setSince(v)}>
                 <SelectTrigger>
                   <SelectValue defaultValue={"7d"} placeholder={sinceOptions["7d"]} />
@@ -220,7 +225,7 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
           {/* The desktop sidebar is 18rem wide */}
           <aside className="bg-black/10 w-full lg:w-[calc((100vw-18rem)/3)] lg:fixed top-32 bottom-0 lg:right-0 lg:border-l lg:border-white/10">
             <header className="flex items-center justify-between px-4 py-4 border-b border-white/10 sm:px-6 sm:py-6 lg:px-8">
-              <h2 className="text-base font-semibold text-white leading-7">Event Log</h2>
+              <h2 className="text-base font-semibold leading-7 text-white">Event Log</h2>
               <Link href="/overview" className="text-sm font-semibold leading-6 text-primary-400">
                 View all
               </Link>
@@ -229,20 +234,20 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
               <ul role="list" className="divide-y divide-white/10 ">
                 {events.data?.data.map((event) => (
                   <Dialog key={event.id}>
-                    <DialogTrigger className="w-full px-4 py-4 text-left sm:px-6 group lg:px-8 group-hover:bg-zinc-800 duration-1000">
-                      <div className="flex items-center justify-between w-full  gap-x-3">
+                    <DialogTrigger className="w-full px-4 py-4 text-left duration-1000 sm:px-6 group lg:px-8 group-hover:bg-zinc-800">
+                      <div className="flex items-center justify-between w-full gap-x-3">
                         {/* <img src={event.user.imageUrl} alt="" className="flex-none w-6 h-6 rounded-full bg-zinc-800" /> */}
-                        <h3 className="text-xs font-semibold text-white truncate  leading-6">
+                        <h3 className="text-xs font-semibold leading-6 text-white truncate">
                           {event.event}
                         </h3>
                         <time
                           dateTime={new Date(event.time).toISOString()}
-                          className="flex-none text-xs text-zinc-500 group-hover:text-zinc-400 duration-1000"
+                          className="flex-none text-xs duration-1000 text-zinc-500 group-hover:text-zinc-400"
                         >
                           {duration(Date.now() - event.time)} ago
                         </time>
                       </div>
-                      <p className="mt-3 text-sm truncate text-zinc-500 group-hover:text-zinc-300 duration-1000">
+                      <p className="mt-3 text-sm truncate duration-1000 text-zinc-500 group-hover:text-zinc-300">
                         {event.content}
                       </p>
                     </DialogTrigger>
@@ -262,7 +267,7 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
                           </>
                         ))}
                       </div>
-                      <div className="flex items-center justify-between pt-4 mt-4 border-t gap-4 border-zinc-100">
+                      <div className="flex items-center justify-between gap-4 pt-4 mt-4 border-t border-zinc-100">
                         <span className="text-xs text-zinc-400">
                           {new Date(event.time).toUTCString()}
                         </span>

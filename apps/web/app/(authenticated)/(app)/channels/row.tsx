@@ -51,26 +51,17 @@ export const Row: React.FC<Props> = ({ channel }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-full lg:w-56" align="end" forceMount>
-            <DropdownMenuGroup>
-              <Link href={`/channels/${channel.name}`}>
-                <DropdownMenuItem>
-                  <Key className="w-4 h-4 mr-2" />
-                  <span>Details</span>
-                </DropdownMenuItem>
-              </Link>
-
-              <DeleteChannelButton channelId={channel.id}>
-                <DropdownMenuItem
-                  onSelect={(e) => {
-                    // This magically allows multiple dialogs in a dropdown menu, no idea why
-                    e.preventDefault();
-                  }}
-                >
-                  <Trash className="w-4 h-4 mr-2" />
-                  <span>Revoke</span>
-                </DropdownMenuItem>
-              </DeleteChannelButton>
-            </DropdownMenuGroup>
+            <DeleteChannelButton channelId={channel.id}>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  // This magically allows multiple dialogs in a dropdown menu, no idea why
+                  e.preventDefault();
+                }}
+              >
+                <Trash className="w-4 h-4 mr-2" />
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DeleteChannelButton>
           </DropdownMenuContent>
         </DropdownMenu>
       </Dialog>
