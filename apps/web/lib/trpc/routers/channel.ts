@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { t, auth } from "../trpc";
+import { newId } from "@/lib/id-edge";
 
 export const channelRouter = t.router({
   list: t.procedure.use(auth).query(async ({ ctx }) => {
@@ -35,6 +36,26 @@ export const channelRouter = t.router({
       await db.channel.delete({
         where: {
           id: channel.id,
+        },
+      });
+    }),
+  create: t.procedure
+    .use(auth)
+    .input(
+      z.object({
+        name: z.string().min(1).regex(/^[a-zA-Z0-9-_\.]+$/),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await db.channel.create({
+        data: {
+          id: newId("channel"),
+          name: input.name,
+          tenant: {
+            connect: {
+              id: ctx.tenant.id,
+            },
+          },
         },
       });
     }),

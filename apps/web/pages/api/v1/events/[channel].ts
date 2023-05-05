@@ -101,7 +101,7 @@ export default async function handler(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const policy = apiKey.policy ? Policy.parse<Resources>(apiKey.policy) : null
+    const policy = apiKey.policy ? Policy.parse<Resources>(apiKey.policy) : null;
 
     const channel = await kysely
       .selectFrom("Channel")
@@ -115,10 +115,10 @@ export default async function handler(
      * Check if we have ingest permissions
      */
     if (policy && channel) {
-      const grid: GRID = `${apiKey.tenantId}::channel::${channel.id}`
-      const { error } = policy.validate("channel:ingest", grid)
+      const grid: GRID = `${apiKey.tenantId}::channel::${channel.id}`;
+      const { error } = policy.validate("channel:ingest", grid);
       if (error) {
-        console.log(`Policy denied: ${error}`)
+        console.log(`Policy denied: ${error}`);
         return NextResponse.json({ error: "Unauthorized, policy denied" }, { status: 403 });
       }
     }
@@ -128,14 +128,13 @@ export default async function handler(
      * If the channel does not exist, we need permission to create and ingest
      */
     if (policy && !channel) {
-      const grid: GRID = `${apiKey.tenantId}::channel::${channelId}`
-      const { error } = policy.validate(["channel:create", "channel:ingest"], grid)
+      const grid: GRID = `${apiKey.tenantId}::channel::${channelId}`;
+      const { error } = policy.validate(["channel:create", "channel:ingest"], grid);
       if (error) {
-        console.log(`Policy denied: ${error}`)
+        console.log(`Policy denied: ${error}`);
         return NextResponse.json({ error: "Unauthorized, policy denied" }, { status: 403 });
       }
     }
-
 
     const eventId = newId("event");
     if (!channel) {
