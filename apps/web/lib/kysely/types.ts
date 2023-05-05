@@ -4,7 +4,17 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export type Plan = "DISABLED" | "FREE" | "PRO" | "ENTERPRISE";
+export const Plan = {
+  DISABLED: "DISABLED",
+  FREE: "FREE",
+  PRO: "PRO",
+  ENTERPRISE: "ENTERPRISE",
+};
 export type WebhookType = "SLACK" | "HTTP";
+export const WebhookType = {
+  SLACK: "SLACK",
+  HTTP: "HTTP",
+};
 export type ApiKey = {
   id: string;
   createdAt: Generated<Timestamp>;
