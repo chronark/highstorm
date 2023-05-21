@@ -22,7 +22,7 @@
     "build": "tsup"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.2.1",
     "tsup": "^6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4"

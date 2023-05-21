@@ -135,10 +135,10 @@ export const Analytics: React.FC<Props> = ({ channel }) => {
 
                 <DropdownMenuGroup>
                   <DeleteChannelButton channelId={channel.id}>
-                    <DropdownMenuItem>
+                    <Button size="sm" variant="ghost">
                       <Trash className="w-4 h-4 mr-2" />
                       <span>Delete</span>
-                    </DropdownMenuItem>
+                    </Button>
                   </DeleteChannelButton>
                 </DropdownMenuGroup>
               </DropdownMenuContent>

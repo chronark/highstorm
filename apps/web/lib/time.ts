@@ -18,5 +18,5 @@ export function duration(ms: number, short?: boolean): string {
     return `${seconds} ${short ? "s" : "seconds"}`;
   }
 
-  return "a few seconds>";
+  return "a few seconds";
 }

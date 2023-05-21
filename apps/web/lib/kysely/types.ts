@@ -1,20 +1,21 @@
-import type { ColumnType } from "kysely";
+import type { ColumnType, GeneratedAlways } from "kysely";
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
-export type Plan = "DISABLED" | "FREE" | "PRO" | "ENTERPRISE";
+
 export const Plan = {
   DISABLED: "DISABLED",
   FREE: "FREE",
   PRO: "PRO",
   ENTERPRISE: "ENTERPRISE",
-};
-export type WebhookType = "SLACK" | "HTTP";
+} as const;
+export type Plan = typeof Plan[keyof typeof Plan];
 export const WebhookType = {
   SLACK: "SLACK",
   HTTP: "HTTP",
-};
+} as const;
+export type WebhookType = typeof WebhookType[keyof typeof WebhookType];
 export type ApiKey = {
   id: string;
   createdAt: Generated<Timestamp>;

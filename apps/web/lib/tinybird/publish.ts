@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { Tinybird } from "./client";
+import { Tinybird } from "@chronark/zod-bird";
 
-const tb = new Tinybird();
+const tb = new Tinybird({ token: process.env.TINYBIRD_TOKEN! });
 
 export const publishEvent = tb.buildIngestEndpoint({
   datasource: "events__v1",

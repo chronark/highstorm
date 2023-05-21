@@ -18,14 +18,14 @@
   },
   "homepage": "https://github.com/chronark/highstorm#readme",
   "dependencies": {
-    "next": "^13.4.1",
-    "nextra": "^2.5.0",
-    "nextra-theme-docs": "^2.5.0",
+    "next": "^13.4.3",
+    "nextra": "^2.5.2",
+    "nextra-theme-docs": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "20.0.0",
+    "@types/node": "20.2.1",
     "typescript": "^5.0.4"
   }
 }
