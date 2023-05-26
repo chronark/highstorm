@@ -71,11 +71,12 @@ To prepare the Tinybird database, follow these steps:
     cd apps/web/lib/tinybird
     ```
 3.  Push the necessary datasources using the following command:
-    `sh-session 
-	tb push datasources/
-	tb push
-	`
-    **Note: If the CLERK_WEBHOOK_SECRET env variable is not set, pass an empty string, and make sure to visit `/onboarding` after signing up.**
+    ```sh-session
+    tb push datasources/
+    tb push
+    ```
+
+**Note: If the CLERK_WEBHOOK_SECRET env variable is not set, pass an empty string, and make sure to visit `/onboarding` after signing up.**
 
 ## Build
 
