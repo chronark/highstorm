@@ -10,53 +10,85 @@
 
 ## Contributing
 
+Thank you for considering contributing to our open source project! We appreciate your interest and are excited to have you on board. This document outlines the steps you need to follow to contribute to the project effectively. Please read the guidelines carefully and feel free to reach out if you have any questions.
+
 ### Services
 
-There are a few 3rd party services that are required to run the app:
+Before getting started, please ensure that you have the following third-party services set up:
 
 - [planetscale](https://planetscale.com?ref=highstorm): Database
 - [tinybird](https://www.tinybird.co?ref=highstorm): Time series database
 - [upstash](https://upstash.com/qstash?ref=highstorm): Optional, only required for reports
 - [clerk](https://clerk.com?ref=highstorm): Authentication
 
-Set environment variables in `/apps/web/.env` file and populate the values from the services above.:
+## Installation
 
-```sh-session
-cp apps/web/.env.example apps/web/.env
-```
+To install the project and its dependencies, follow these steps:
 
-### Install
+1.  Ensure you have `pnpm` installed on your system. If not, you can install it by running:
 
-```sh-session
-pnpm install
-```
+    ```sh-session
+    npm install -g pnpm
+    ```
 
-### Prepare databases
+2.  Run the following command to install the project dependencies:
+    ```sh-session
+    pnpm install
+    ```
 
-#### Prisma
+### Environment Variables
 
-```sh-session
-cd apps/web
-npx prisma db push
-```
+After setting up the required services, you need to set the corresponding environment variables in the `/apps/web/.env` file. To do this, follow these steps:
 
-#### Tinybird
+1.  Make a copy of the `.env.example` file:
+    ```sh-session
+    cp apps/web/.env.example apps/web/.env
+    ```
+2.  Open the `/apps/web/.env` file in a text editor and populate the values for the services mentioned above.
 
-Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and run the following command after authenticating:
+## Database Preparation
 
-```sh-session
-cd apps/web/lib/tinybird
-tb push datasources/
-tb push
-```
+### Prisma
 
-### Build
+To prepare the Prisma database, follow these steps:
+
+1.  Navigate to the `/apps/web` directory:
+    ```sh-session
+    cd apps/web
+    ```
+2.  Run the following command to push the database schema and generate Prisma Client:
+    ```sh-session
+    npx prisma db push
+    ```
+
+### Tinybird
+
+To prepare the Tinybird database, follow these steps:
+
+1.  Download the Tinybird CLI from [here](https://www.tinybird.co/docs/cli.html) and install it on your system.
+2.  After authenticating with the Tinybird CLI, navigate to the `/apps/web/lib/tinybird` directory:
+    ```sh-session
+    cd apps/web/lib/tinybird
+    ```
+3.  Push the necessary datasources using the following command:
+    ```sh-session
+    tb push datasources/
+    tb push
+    ```
+
+**Note: If the CLERK_WEBHOOK_SECRET env variable is not set, pass an empty string, and make sure to visit `/onboarding` after signing up.**
+
+## Build
+
+To build the project, execute the following command:
 
 ```sh-session
 pnpm build
 ```
 
-### Run
+## Run
+
+To run the project locally, use the following command:
 
 ```sh-session
 pnpm turbo run dev --filter=web
