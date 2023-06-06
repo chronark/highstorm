@@ -51,7 +51,7 @@ export default function DefaultLayout({
                 href="https://github.com/chronark/highstorm"
                 className="text-gray-500 hover:text-gray-400"
               >
-                <span className="sr-only">Twitter</span>
+                <span className="sr-only">Github</span>
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path
                     fillRule="evenodd"
