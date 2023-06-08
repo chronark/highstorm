@@ -18,6 +18,7 @@ export const Hero: React.FC = () => {
                 <Link
                   className="px-3 py-1 text-sm font-medium inline-flex items-center justify-center border border-transparent rounded-full  text-zinc-300 hover:text-white transition duration-150 ease-in-out w-full group [background:linear-gradient(theme(colors.primary.900),_theme(colors.primary.900))_padding-box,_conic-gradient(theme(colors.primary.400),_theme(colors.primary.700)_25%,_theme(colors.primary.700)_75%,_theme(colors.primary.400)_100%)_border-box] relative before:absolute before:inset-0 before:bg-zinc-800/30 before:rounded-full before:pointer-events-none"
                   href="https://github.com/chronark/highstorm"
+                  target="_blank"
                 >
                   <span className="relative inline-flex items-center">
                     Highstorm is Open Source{" "}
@@ -53,6 +54,7 @@ export const Hero: React.FC = () => {
               <Link
                 className="w-full transition duration-150 ease-in-out bg-opacity-25 text-zinc-200 hover:text-white bg-zinc-900 hover:bg-opacity-30"
                 href="https://github.com/chronark/highstorm"
+                target="_blank"
               >
                 Star on GitHub
               </Link>
