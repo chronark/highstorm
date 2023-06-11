@@ -209,7 +209,7 @@ const Step: React.FC<StepProps> = ({ id, title, description, state }) => {
 
       <span
         className={cn(
-          "flex justify-center items-center rounded w-6 h-6 text-xs font-medium ring-1 ring-inset",
+          "flex justify-center items-center rounded w-6 h-6 text-xs font-medium ring-1 ring-inset select-none",
           {
             "bg-amber-400/10 text-amber-400 ring-amber-400/30 shadow-xl shadow-amber-500/50 group-hover:shadow-amber-400/70 duration-1000":
               state === "current",
