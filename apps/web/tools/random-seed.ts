@@ -18,7 +18,7 @@ async function main() {
             Authorization: "Bearer api_567UGp4fvvz23opiLURH2t",
           },
           body: JSON.stringify({
-            event: `${faker.name.fullName()} has payed ${amount}`,
+            event: `${faker.name.fullName()} has paid ${amount}`,
             time: Math.floor(Math.random() * (end - start) + start),
             content: `${faker.internet.domainName()}`,
             metadata: {
