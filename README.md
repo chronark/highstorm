@@ -1,5 +1,5 @@
 <div align="center">
- <h1 align="center">Sadly I don't have the time to maintain this project. I'm building <a href="https://unkey.dev?ref=highstorm">unkey.dev</a> to solve API authentication and authorization with DX in mind. It's also <a href="https://github.com/unkeyed/unkey">100% open source</a>!
+ <h1 align="center">Sadly I don't have the time to maintain this project. I'm building <a href="https://unkey.dev?utm_source=highstorm">unkey.dev</a> to solve API authentication and authorization with DX in mind. It's also <a href="https://github.com/unkeyed/unkey">100% open source</a>!
 </h1>
 </div>
 <br/><br/><br/>
