@@ -114,7 +114,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.12.0",
     "mdast-util-toc": "^6.1.1",
-    "postcss": "^8.4.23",
+    "postcss": "^8.4.31",
     "prettier": "^2.8.8",
     "rehype": "^12.0.1",
     "rehype-autolink-headings": "^6.1.1",
