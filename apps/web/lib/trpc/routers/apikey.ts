@@ -66,7 +66,7 @@ export const apikeyRouter = t.router({
       await db.apiKey.create({
         data: {
           id: newId("api"),
-          keyHash: crypto.createHash("SHA-256").update(apiKey).digest("base64"),
+          keyHash: crypto.createHash("sha256").update(apiKey).digest("base64"),
           firstCharacters: apiKey.substring(0, 7), // hs_ + 4 characters
           name: input.name,
           tenant: {
