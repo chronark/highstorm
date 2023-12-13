@@ -1,7 +1,7 @@
 {
   "name": "@highstorm/docs",
   "version": "0.0.1",
-  "description": "Docs",
+   "description": "Docs",
    "scripts": {
     "dev": "next dev",
     "build": "next build",
