@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/chronark/highstorm#readme",
   "dependencies": {
-  "next": "^13.4.3",
+   "next": "^13.4.3",
     "nextra": "^2.5.2",
     "nextra-theme-docs": "^2.5.2",
     "react": "^18.2.0",
