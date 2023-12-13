@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/chronark/highstorm.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+   "author": "Shu Ding <g@shud.in>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/chronark/highstorm/issues"
