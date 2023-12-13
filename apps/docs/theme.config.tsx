@@ -7,7 +7,7 @@ const config: DocsThemeConfig = {
     link: "https://github.com/chronark/highstorm",
   },
 
-  logoLink: "https://highstorm.app/favicon.png",
+   logoLink: "https://highstorm.app/favicon.png",
   primaryHue: {
     light: 217,
     dark: 43,
